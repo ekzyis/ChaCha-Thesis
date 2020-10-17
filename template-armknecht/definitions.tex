@@ -1,0 +1,131 @@
+% !TeX root = main.tex
+%%%%%%%%%% SVN Info %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% $Date: 2020-02-05 16:17:49 +0100 (Mi, 05 Feb 2020) $
+%% $Author: cmueller $
+%% $Rev: 5 $
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%% Meta data for title page;
+%%%% Please do not change anything below this line
+%%%% ------------------------
+\makeatletter
+%% The pursued degree, defaults to Bachelor
+\newcommand*{\degree}[1]{\gdef\@degree{#1}%
+}
+\newcommand*{\@degree}{Bachelor}
+%% The degree type, defaults to Science
+\newcommand*{\degreeType}[1]{\gdef\@degreeType{#1}%
+}
+\newcommand*{\@degreeType}{Science}
+%% The degree program, defaults to Business Informatics
+\newcommand*{\degreeProgram}[1]{\gdef\@degreeProgram{#1}%
+}
+\newcommand*{\@degreeProgram}{Business Informatics}
+%% The type of Thesis, uses degreeType
+\newcommand*{\thesisType}[1]{\gdef\@thesisType{#1}%
+}
+\newcommand*{\@thesisType}{\@degree 's Thesis}
+%% The supervisor, prints text if not set.
+\newcommand*{\supervisor}[1]{\gdef\@supervisor{#1}%
+}
+\newcommand*{\@supervisor}{\texttt{\textbackslash supervisor} currently not set.}
+%% The (first) advisor, prints text if not set.
+\newcommand*{\advisorA}[1]{\gdef\@advisorA{#1}%
+}
+\newcommand*{\@advisorA}{Please set \texttt{\textbackslash advisorA} if there is only one advisor.}
+%% The (second) advisor, simply blank if not set.
+\newcommand*{\advisorB}[1]{\gdef\@advisorB{#1}%
+}
+\newcommand*{\@advisorB}{}
+%% The matriculation number, defaults to 0123456.
+\newcommand*{\matriNo}[1]{\gdef\@matriNo{#1}%
+}
+\newcommand*{\@matriNo}{0123456}
+%% The keywords, defaults to empty.
+\newcommand*{\keywords}[1]{\gdef\@keywords{#1}%
+}
+\newcommand*{\@keywords}{}
+\makeatother
+%%%% ------------------------
+%%%% Please do not change anything above this line
+
+
+%%%% Names
+\newcommand{\Channel}{Link}
+\newcommand{\channel}{\expandafter\lowercase\expandafter{\Channel}}
+
+\newcommand{\outSign}{\mathrm{out}}
+\newcommand{\inSign}{\mathrm{in}}
+
+%%%% Sets
+\newcommand{\parties}{\mathcal{P}}                 %% The set of all parties P
+\newcommand{\party}[2][]{{P}_{#2}^{#1}}            %% A single Party p
+\newcommand{\tape}[2]{{T}_{#1}^{#2}}               %% A tape
+\newcommand{\inTape}[2][]{%
+  \ifthenelse{\isempty{#1}}%
+    {\tape{#2}{\inSign}}%
+    {\tape{#2}{#1, \inSign}}}                      %% A single input tape
+\newcommand{\outTape}[2][]{%
+  \ifthenelse{\isempty{#1}}%
+    {\tape{#2}{\outSign}}%
+    {\tape{#2}{#1, \outSign}}}                     %% A single output tape
+\newcommand{\dataSymbols}{\Sigma}                  %% The data alphabet
+\newcommand{\tapeSymbols}{\Gamma}                  %% The tape alphabet
+\newcommand{\N}{\mathbb{N}}                        %% The natural numbers
+\newcommand{\radioParSet}[1][]{\Phi^{#1}}                  %% All possible signal parameters to choose from
+\newcommand{\radioParSetIn}{\radioParSet[\inSign]}    %% 
+\newcommand{\radioParSetOut}{\radioParSet[\outSign]}  %% 
+
+
+%%%% Parameters
+%\newcommand{\maxTapes}{n}                          %% The maximum number of tapes, e.g., channels
+\newcommand{\timeslot}[1]{{t}_{#1}}                %% Symbol for atomic unit of time
+\newcommand{\curTime}{\timeslot{\mathrm{cur}}}     %% The current time slot (epochs)
+\newcommand{\delay}[2][]{{d}_{#2}^{#1}}            %% Propagation delay
+\newcommand{\initial}{\varepsilon}                      %% Initial symbol for tape cells
+\newcommand{\collide}{\textrm{\P}}                 %% Collision/jammed symbol
+\newcommand{\dataBit}{\mathsf{b}}                  %% A symbol from the data alphabet
+\newcommand{\tapeSymbol}{\mathsf{\theta}}          %% A symbol from the tape alphabet
+\newcommand{\sleepTime}{\tau}                      %% The random jammer's sleep time
+\newcommand{\multSymbols}{\nu}                     %% The amount of symbols per jam period
+\newcommand{\radioPar}{\varphi}                    %% Represents (radio/energy) signal parameters, e.g. RSSI/LQI
+\newcommand{\radioParDef}{\varphi_{\mathsf{def}}}  %% Represents standard/default value for signal param
+\newcommand{\dataTuple}{\mathsf{\beta}}            %% A tuple of data bit and transmission param
+%\newcommand{\aChannelOpt}[2][i]{\left( \inTape[#2]{#1}, \delay[#2]{#1}, f^{#2}_{#1} \right)}
+%\newcommand{\aChannel}[1][i]{\aChannelOpt[#1]{}}
+\newcommand{\aChannelOpt}[2][i]{\left( \tape{#1}{#2}, \delay[#2]{#1}, f^{#2}_{#1} \right)}
+\newcommand{\aChannel}[1][i]{\aChannelOpt[#1]{}}
+\newcommand{\msg}{\mathsf{m}}                      %% A message
+\newcommand{\lmax}{\ensuremath{l_{\max}}}          %% Maximum message length
+
+%%%% Functions
+%% Typesetting
+\DeclareMathOperator{\Tapes}{\mathsf{Tapes}}       %% Denotes (unspecified) tapes
+\DeclareMathOperator{\In}{\mathsf{InTapes}}             %% Denotes input tapes
+\DeclareMathOperator{\Out}{\mathsf{OutTapes}}           %% Denotes output tapes
+\DeclareMathOperator{\Chn}{\mathsf{Lnk}}           %% Denotes connection from out- to input tape
+\DeclareMathOperator{\Read}{\mathsf{Read}}         %% Denotes the read function
+\DeclareMathOperator{\Write}{\mathsf{Write}}       %% Denotes the write function
+\DeclareMathOperator{\cond}{\mathsf{cond}}         %% Denotes the selective jammer's condition
+
+%% Function definitions
+\newcommand{\allTapes}[2][]{\Tapes ( \party[#1]{#2} ) }                %% Gives the set of all Tapes for Party p
+\newcommand{\inTapes}[2][]{\In ( \party[#1]{#2} ) }                     %% Gives the set of all Input Tapes for Party p
+\newcommand{\outTapes}[2][]{\Out ( \party[#1]{#2} ) }                   %% Gives the set of all Output Tapes for Party p
+%\newcommand{\channels}[3][]{{\Chn}_{\party[#1]{#2}} ( \outTape[#1]{#3} ) }    %% Gives the set of all Channels for Party P and Output Tape T*
+%\newcommand{\readTape}[3][]{{\Read}_{\party[#1]{#2}} ( \inTape[#1]{#3} ) }          %% Read from Party P's input Tape T
+%\newcommand{\writeTape}[4][]{\Write_{\party[#1]{#2}} ( \outTape[#1]{#3}, {#4} ) }   %% Write to Party P's output Tape T
+\newcommand{\channels}[3][]{{\Chn}_{\party[#1]{#2}} ( \tape{#3}{#1} ) }    %% Gives the set of all Channels for Party P and Tape T*
+\newcommand{\readTape}[3][]{{\Read}_{\party[#1]{#2}} ( \tape{#3}{#1} ) }          %% Read from Party P's input Tape T
+\newcommand{\writeTape}[4][]{\Write_{\party[#1]{#2}} ( \tape{#3}{#1}, {#4} ) }   %% Write to Party P's output Tape T
+\newcommand{\jamCond}[1]{{\cond ( #1 )}}   %% Condition for selective jammer to become active
+
+%%%% Misc.
+\newcommand{\ie}{i.\,e., }
+\newcommand{\eg}{e.\,g., }
+\newcommand{\etal}{et\,al.}
+\newcommand{\mitm}{\mathrm{mim}}
+\newcommand{\eav}{\mathrm{eav}}
+\newcommand{\adversary}{\mathrm{adv}}
+
+%\newcommand{\noopsort}[1]{}     %% Fix some weird bibtex sorting issue  {\noopsort{Ieee}}
