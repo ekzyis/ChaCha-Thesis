@@ -1,3 +1,5 @@
+%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Plugin Implementation}
 \label{chap:PluginImplementation}
@@ -52,21 +54,6 @@ I came up with this design to have a smooth implementation experience where I on
 
 \par
 
-Since this "design flaw" was not the leading cause of the performance problem (going through a for-loop of size 3000 does not directly lead to performance issues), I want to briefly explain how the actual action implementation looked like. In Figure \ref{code.linear}, you can see sample code.
+Since this "design flaw" was not the leading cause of the performance problem (going through a for-loop of size 3000 does not directly lead to performance issues), I want to briefly explain how the actual action implementation looked like.\\
 
-\begin{figure}
-\caption{Sample for action definition in the linear navigation system}
-\label{code.linear}
-\begin{minted}[frame=single, breaklines]{csharp}
-PageAction constantsStepDescriptionAction = new PageAction(() =>
-{
-	string desc = "The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes interpreted as little-endian. The first 16 bytes consist of the constants. ";
-	pres.Nav.AddBold(pres.UIStateMatrixStepDescription, desc);
-}, pres.Nav.Undo);
-PageAction constantsInputAction = new PageAction(() =>
-{
-	pres.Nav.UnboldLast(pres.UIStateMatrixStepDescription);
-	pres.Nav.Replace(pres.UITransformInput, pres.HexConstants);
-}, pres.Nav.Undo);
-\end{minted}
-\end{figure}
+\par
