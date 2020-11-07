@@ -1,4 +1,5 @@
 %!TEX TS-program = Arara
+% arara: indent: { overwrite: yes }
 % arara: pdflatex: { shell: true }
 
 \documentclass[11pt]{mimosis}
@@ -172,37 +173,37 @@ Heidelberg,  \today \par % Location and year
 
 \frontmatter
 \thispagestyle{empty}
-  \titleGP  
-  \cleardoublepage
-  \pagestyle{empty}
-  \include{Sources/Abstract}
-  \include{Sources/Zusammenfassung}
-  \include{Sources/Acknowledgment}
-  \include{Sources/DeclarationOfAuthorship}
-  \tableofcontents
+\titleGP
+\cleardoublepage
+\pagestyle{empty}
+\include{Sources/Abstract}
+\include{Sources/Zusammenfassung}
+\include{Sources/Acknowledgment}
+\include{Sources/DeclarationOfAuthorship}
+\tableofcontents
 
 \mainmatter
-  \pagestyle{scrheadings}
+\pagestyle{scrheadings}
 
-  \include{Sources/Introduction}
-  \include{Sources/RelatedWork}
-  \include{Sources/ChaChaSpecification}
-  \include{Sources/PluginImplementation}
-  \include{Sources/FutureWork}
+\include{Sources/Introduction}
+\include{Sources/RelatedWork}
+\include{Sources/ChaChaSpecification}
+\include{Sources/PluginImplementation}
+\include{Sources/FutureWork}
 
 % This ensures that the subsequent sections are being included as root
 % items in the bookmark structure of your PDF reader.
-\bookmarksetup{startatroot} 
+\bookmarksetup{startatroot}
 \backmatter
 
-  % \begingroup 
-  %   \let\clearpage\relax 
-  %   \glsaddall
-  %   \printglossary
-  % \endgroup
+% \begingroup 
+%   \let\clearpage\relax 
+%   \glsaddall
+%   \printglossary
+% \endgroup
 
-  \label{sec:index}
-  
-  \printbibliography
-  
+\label{sec:index}
+
+\printbibliography
+
 \end{document}
