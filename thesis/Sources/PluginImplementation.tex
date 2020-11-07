@@ -67,11 +67,11 @@ The problem with that architecture was that the state saving and the execution l
 
 \par
 
-After identifying the two underlying issues, I implemented what I called a \textbf{\textit{linear navigation system with caching}}. As the name suggests, I implemented cache entries to be able to navigate in constant time between an action and an action for which I created a cache. To not only increase peformance during these transitions but between all transitions, we check before each transition, if first moving to a cached entry would decrease the amount of hops needed to go to our destination.\\
+After identifying the two underlying issues, I implemented what I called a \textbf{\textit{linear navigation system with caches}}. As the name suggests, I implemented cache entries to be able to navigate in constant time between an action and an action for which I created a cache. To not only increase peformance during these transitions but between all transitions, we check before each transition, if first moving to a cached entry would decrease the amount of hops needed to go to our destination.\\
 The cache entries consisted of instructions to restore the complete state of a page at the action index for which this cache entry was for. They contained instructions for the complete state instead of only the difference between two actions because now, moving to that cache must initialize the page from any other action. But this was no problem since the cache entries were written into the code and not generated during run time, therefore, this had only a performance impact during compile time, not during run time. Figure \ref{navsystem.cache.overview} demonstrates that the navigation system now needs less hops between any two given actions. This increased performance significantly as can be seen in \ref{navsystem.cache.stats}. \par
 
 \begin{figure}
-\caption{Navigation paths between actions in the linear navigation system with caching. The colorized state has a corresponding cache entry.}
+\caption{Navigation paths between actions in the linear navigation system with caches. The colorized state has a corresponding cache entry.}
 \label{navsystem.cache.overview}
 \includegraphics[width=\textwidth]{figures/navigationsystem-cache-overview.png}
 \end{figure}
