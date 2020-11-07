@@ -49,7 +49,15 @@ The peformance of the plugin was essentially coupled to how the navigation syste
 
 \par
 
-The root cause of the problem was the navigation system design which I called in hindsight \textbf{\textit{linear navigation system}}. It consisted of defining actions which build upon each other. This means that if we are at action 1 and want to go to action 5, we need to execute all the code inside the action definitions between 1 and 5 to arrive at the page state as it should be at action 5. \\
+The root cause of the problem was the navigation system design which I called in hindsight \textbf{\textit{linear navigation system}}. It consisted of defining actions which build upon each other. This means that if we are at action 0 (initial state of the page) and want to go to action 5, we need to execute all the code inside the action definitions between 0 and 5 to arrive at the page state as it should be at action 5. \\
+
+\begin{figure}
+\caption{Navigation paths between actions in the linear navigation system}
+\label{navsystem.linear.overview}
+\includegraphics[width=\textwidth]{figures/navigationsystem-linear-overview.png}
+\end{figure}
+
+
 I came up with this design to have a smooth implementation experience where I only have to write the actual page state changes between two actions instead of duplicating a lot of code since the page state changes which were applied during a previous page were most of the times still visible when moving to the next action. This complements how the user experiences the visualization because the actions are numbered in a sequence and thus are inherently linear. Thus it made a lot of sense to me to reflect this in the system architecture.
 
 \par
