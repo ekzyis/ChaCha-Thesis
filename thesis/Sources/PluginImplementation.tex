@@ -49,7 +49,7 @@ The peformance of the plugin was essentially coupled to how the navigation syste
 
 \par
 
-The root cause of the problem was the navigation system design which I called in hindsight \textbf{\textit{linear navigation system}}. It consisted of defining actions which build upon each other. This means that if we are at action 0 (initial state of the page) and want to go to action 5, we need to execute all the code inside the action definitions between 0 and 5 to arrive at the page state as it should be at action 5. \\
+The root cause of the problem was the navigation system design which I called in hindsight \textbf{\textit{linear navigation system}}. It consisted of defining actions which build upon each other. This means that if we are at action 0 (initial state of the page) and want to go to action 5, we need to execute all the code inside the action definitions between 0 and 5 to arrive at the page state as it should be at action 5. This is resembled in Figure \ref{navsystem.linear.overview}.
 
 \begin{figure}
 \caption{Navigation paths between actions in the linear navigation system}
@@ -57,11 +57,11 @@ The root cause of the problem was the navigation system design which I called in
 \includegraphics[width=\textwidth]{figures/navigationsystem-linear-overview.png}
 \end{figure}
 
-
 I came up with this design to have a smooth implementation experience where I only have to write the actual page state changes between two actions instead of duplicating a lot of code since the page state changes which were applied during a previous page were most of the times still visible when moving to the next action. This complements how the user experiences the visualization because the actions are numbered in a sequence and thus are inherently linear. Thus it made a lot of sense to me to reflect this in the system architecture.
 
 \par
 
 Since this "design flaw" was not the leading cause of the performance problem (going through a for-loop of size 3000 does not directly lead to performance issues), I want to briefly explain how the actual action implementation looked like.\\
+As can be seen in Figure \ref{navsystem.linear.detail}, during the transition between two page states, the state of the page elements which will change is saved such that we can undo the changes if the user decides to navigate back. This enabled me to skip writing action definitions for backwards navigation, since I could just write a function which retrieves the state corresponding to the transition and then applies it. This function would then work for all backwards navigation without further intervention which was very convenient during development.
 
 \par
