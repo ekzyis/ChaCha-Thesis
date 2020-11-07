@@ -152,12 +152,18 @@ Heidelberg,  \today \par % Location and year
 
 \usepackage{blindtext}
 
+% for code figures
+\usepackage{minted}
+\usepackage{listings}
+
 % Corrects \autoref{}: chapter -> Chapter, section -> Section, subsection -> Section
 \addto\extrasenglish{%
   \renewcommand{\chapterautorefname}{Chapter}%
   \renewcommand{\sectionautorefname}{Section}%
   \renewcommand{\subsectionautorefname}{Section}%
 }
+
+\includeonly{Sources/PluginImplementation}
 
 \begin{document}
 
