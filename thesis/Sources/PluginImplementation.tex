@@ -76,6 +76,14 @@ The cache entries consisted of instructions to restore the complete state of a p
 \includegraphics[width=\textwidth]{figures/navigationsystem-cache-overview-2.png}
 \end{figure}
 
+Further, to decrease the load on the CPU while dragging the action slider, I implemented a very simple asynchronous navigation. It was implemented by using a stack as a buffer for the values received from the values during dragging. Every 50ms, the last value from the buffer is read and the page moves to that action. Afterwards, the buffer is cleared. This did only enhance the slider but not the overall performance because at its core, it used the same navigation logic; just asynchronously. Nonetheless, it improved the performance during dragging significantly which I found quite impressing for how minimal the code for it is. In fact, the whole code for the asynchronous navigation can be seen in Figure \ref{async.navigation}.
+
+\begin{figure}
+\caption{Asynchronous navigation subsystem}
+\label{async.navigation}
+\includegraphics[width=\textwidth]{figures/async-navigation.png}
+\end{figure}
+
 One of the major drawbacks for this enhanced design was that the automatic action undoing was no longer possible. Since we can not guarantee that the state between two actions has been saved, we cannot use our undo function. The reason is that any transition between two actions may have been skipped because first moving to a cached entry needed less hops. Therefore, I needed to write the code for backwards navigation to support caching.
 
 \par
