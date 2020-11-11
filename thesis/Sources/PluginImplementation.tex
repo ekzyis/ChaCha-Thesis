@@ -57,7 +57,7 @@ The root cause of the problem was the navigation system design which I called in
 \includegraphics[width=\textwidth]{figures/navigationsystem-linear-overview.png}
 \end{figure}
 
-I came up with this design to have a smooth implementation experience where I only have to write the actual page state changes between two actions instead of duplicating a lot of code since the page state changes which were applied during a previous page were most of the times still visible when moving to the next action. This complements how the user experiences the visualization because the actions are numbered in a sequence and thus are inherently linear. Thus it made a lot of sense to me to reflect this in the system architecture.
+I came up with this design to have a smooth implementation experience where I only have to write the actual page state changes between two actions instead of duplicating a lot of code since the page state changes which were applied during a previous page were most of the times still visible when moving to the next action. This complements how the user experiences the visualization because the actions are numbered in a sequence and thus are inherently linear. Because of this, it made a lot of sense to me to reflect this in the system architecture.
 
 \par
 
