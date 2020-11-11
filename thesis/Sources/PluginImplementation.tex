@@ -73,9 +73,11 @@ The cache entries consisted of instructions to restore the complete state of a p
 \begin{figure}
 \caption{Navigation paths between actions in the linear navigation system with caches. The colorized state has a corresponding cache entry.}
 \label{navsystem.cache.overview}
-\includegraphics[width=\textwidth]{figures/navigationsystem-cache-overview.png}
+\includegraphics[width=\textwidth]{figures/navigationsystem-cache-overview-2.png}
 \end{figure}
 
 One of the major drawbacks for this enhanced design was that the automatic action undoing was no longer possible. Since we can not guarantee that the state between two actions has been saved, we cannot use our undo function. The reason is that any transition between two actions may have been skipped because first moving to a cached entry needed less hops. Therefore, I needed to write the code for backwards navigation to support caching.
 
 \par
+
+
