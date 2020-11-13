@@ -13,7 +13,7 @@ In this chapter, I will explain what the plugin has to offer, how the user inter
 The main goal of this plugin was to teach students how messages are encrypted using the ChaCha cipher family. It should focus on creating an easy to understand visualization of its internals without oversimplification.
 It should further visualize the diffusion property of the cipher on demand by making it possible for the user to enter secondary values for the key, initialization vector and initial counter.
 
-The plugin should support all variants of the cipher. This means that the user should be able to choose the key size (128-bit or 256-bit) and for how many rounds the hash function should be executed per keystream block (8, 12 or 20 rounds). 
+The plugin should support all variants of the cipher. This means that the user should be able to choose the key size (128-bit or 256-bit) and how often the hash function should be executed per keystream block (8, 12 or 20 rounds). 
 Since the Internet Engineering Task Force (IETF) introduced a slightly modified version of ChaCha which uses a 32-bit counter and 96-bit initialization vector, the user can also decide if the wants to use the original version by Daniel J. Bernstein with a 64-bit counter and 64-bit initialization vector or the one described by the IETF.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
