@@ -44,7 +44,49 @@ The last subsection then goes into technical details to explain how the plugin i
 \label{plugin.template}
 \includegraphics[width=\textwidth]{figures/plugin-template.png}
 \end{figure}
-\blindtext[2]
+
+The plugin offers the user the ability to input his own plaintext, key, initialization vector and (optionally) initial counter using the concept of visual programming (around which CT2 is built) as one can see in Figure \ref{plugin.template}. 
+
+\par
+
+As mentioned in \ref{sec:goals}, if the user wants to see the diffusion property of the cipher, he can enter secondary values on a dedicated page inside the plugin. This is shown in Figure \ref{diffusion}. Using the input values of the user, the cipher is then executed and the ChaCha hash function is visualized. Following the terms Prof. Bernstein used in his specification paper, the 512-bit state is visualized as a 4$\times$4 matrix. This makes it more clear to the user why some quarterrounds are called column rounds while others are called diagonal rounds. In Figure \ref{chachahash}, you can see the execution of a quarterround; visualized as a diagram very similar to the one which can be found on Wikipedia. The current state is shown in the top left corner.
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.99\textwidth]{figures/diffusion-inactive}
+  \caption{Hash function visualization}
+  \label{diffusion.inactive}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.99\textwidth]{figures/diffusion-active}
+  \caption{Hash function visualization with active diffusion}
+  \label{diffusion.active}
+\end{subfigure}
+\caption{Diffusion page}
+\label{diffusion}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/chachahash}
+  \caption{Diffusion inactive (no user input)}
+  \label{chachahash.inactive}
+\end{subfigure}
+
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/chachahash-diffusion}
+  \caption{Diffusion active}
+  \label{chachahash.active}
+\end{subfigure}
+\caption{ChaCha Hash Function page}
+\label{chachahash}
+\end{figure}
 
 \subsection{User Interface}
 \label{sec:userInterface}
