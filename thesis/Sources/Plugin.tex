@@ -55,6 +55,10 @@ As mentioned in \ref{sec:goals}, if the user wants to see the diffusion property
 
  In Figure \ref{chachahash}, you can see the execution of the ChaCha hash function where the quarterround execution is visualized as a diagram very similar to the one which can be found on Wikipedia. The current state is shown in the top left corner. Following the terms Prof. Bernstein used in his specification paper, the 512-bit state is visualized as a 4$\times$4 matrix. This makes it more clear to the user why some quarterrounds are called column rounds while others are called diagonal rounds.
 
+\par
+
+The variant (original DJB variant or IETF variant) and how many rounds the ChaCha hash function should be run per keystream block can be chosen in the plugin settings.
+
 \begin{figure}
 \centering
 \begin{subfigure}[t]{.5\textwidth}
