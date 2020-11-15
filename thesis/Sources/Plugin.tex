@@ -59,49 +59,10 @@ In Figure \ref{fig:chachahash}, you can see the execution of the ChaCha hash fun
 
 The variant (original DJB variant or IETF variant) and how many rounds the ChaCha hash function should be run per keystream block can be chosen in the plugin settings.
 
-\begin{figure}
-\centering
-\begin{subfigure}[t]{.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/diffusion-inactive}
-  \caption{Diffusion inactive (no user input)}
-  \label{fig:diffusion.inactive}
-\end{subfigure}%
-\begin{subfigure}[t]{.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/diffusion-active}
-  \caption{Diffusion active}
-  \label{fig:diffusion.active}
-\end{subfigure}
-\caption{Diffusion page}
-\label{fig:diffusion}
-\end{figure}
-
-\begin{figure}
-\centering
-\begin{subfigure}{\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{figures/chachahash}
-  \caption{ChaCha hash function visualization}
-  \label{fig:chachahash.inactive}
-\end{subfigure}
-
-\begin{subfigure}{\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{figures/chachahash-diffusion}
-  \caption{ChaCha hash function visualization with active diffusion}
-  \label{fig:chachahash.active}
-\end{subfigure}
-\caption{ChaCha Hash Function page}
-\label{fig:chachahash}
-\end{figure}
-
 \subsection{User Interface}
 \label{sec:userInterface}
 
 \subsubsection{General interface structure}
-
-All pages have a common interface layout which consists of three sections. Each section is inside a own dedicated row. The first section implements the navigation to move between pages. It also shows the title of the current page. The second section shows the content of the current page. The content is not always static since it can change by using the action navigation bar in the bottom section. If a page does not have actions, the action navigation is hidden but the space is still reserved for it to have a consistent canvas size for all pages. These sections can easily be identified looking at Figure \ref{fig:allpages} and comparing all pages.
 
 \begin{figure}
 \centering
@@ -134,6 +95,51 @@ All pages have a common interface layout which consists of three sections. Each 
 \end{subfigure}
 \caption{All pages of the ChaCha visualization plugin in their initial state}
 \label{fig:allpages}
+\end{figure}
+
+All pages have a common interface layout which consists of three sections. Each section is inside a own dedicated row. The first section implements the navigation to move between pages. It also shows the title of the current page. The second section shows the content of the current page. The content is not always static since it can change by using the action navigation bar in the bottom section. If a page does not have actions, the action navigation is hidden but the space is still reserved for it to have a consistent canvas size for all pages. These sections can easily be identified looking at Figure \ref{fig:allpages} and comparing all pages. I will now go into greater detail about the pages which do not have fully static content. These pages are the Diffusion page, the State Matrix Initialization page and the ChaCha Hash Function page.
+
+\subsubsection{Diffusion page}
+
+\begin{figure}
+\centering
+\begin{subfigure}[t]{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/diffusion-inactive}
+  \caption{Diffusion inactive (no user input)}
+  \label{fig:diffusion.inactive}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/diffusion-active}
+  \caption{Diffusion active}
+  \label{fig:diffusion.active}
+\end{subfigure}
+\caption{Diffusion page}
+\label{fig:diffusion}
+\end{figure}
+
+\subsubsection{State Matrix Initialization page}
+
+\subsubsection{ChaCha Hash Function page}
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/chachahash}
+  \caption{ChaCha hash function visualization}
+  \label{fig:chachahash.inactive}
+\end{subfigure}
+
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/chachahash-diffusion}
+  \caption{ChaCha hash function visualization with active diffusion}
+  \label{fig:chachahash.active}
+\end{subfigure}
+\caption{ChaCha Hash Function page}
+\label{fig:chachahash}
 \end{figure}
 
 
