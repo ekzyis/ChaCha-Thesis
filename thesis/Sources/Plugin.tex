@@ -99,6 +99,10 @@ The variant (original DJB variant or IETF variant) and how many rounds the ChaCh
 \subsection{User Interface}
 \label{sec:userInterface}
 
+\subsubsection{General interface structure}
+
+All pages have a common interface layout which consists of three sections. Each section is inside a own dedicated row. The first section implements the navigation to move between pages. It also shows the title of the current page. The second section shows the content of the current page. The content is not always static since it can change by using the action navigation bar in the bottom section. If a page does not have actions, the action navigation is hidden but the space is still reserved for it to have a consistent canvas size for all pages. These sections can easily be identified looking at Figure \ref{fig:allpages} and comparing all pages.
+
 \begin{figure}
 \centering
 \begin{subfigure}{.5\textwidth}
