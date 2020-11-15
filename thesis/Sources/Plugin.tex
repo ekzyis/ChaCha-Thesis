@@ -49,7 +49,11 @@ The plugin offers the user the ability to input his own plaintext, key, initiali
 
 \par
 
-As mentioned in \ref{sec:goals}, if the user wants to see the diffusion property of the cipher, he can enter secondary values on a dedicated page inside the plugin. This is shown in Figure \ref{diffusion}. Using the input values of the user, the cipher is then executed and the ChaCha hash function is visualized. Following the terms Prof. Bernstein used in his specification paper, the 512-bit state is visualized as a 4$\times$4 matrix. This makes it more clear to the user why some quarterrounds are called column rounds while others are called diagonal rounds. In Figure \ref{chachahash}, you can see the execution of a quarterround; visualized as a diagram very similar to the one which can be found on Wikipedia. The current state is shown in the top left corner.
+As mentioned in \ref{sec:goals}, if the user wants to see the diffusion property of the cipher, he can enter secondary values on a dedicated page inside the plugin. This is shown in Figure \ref{diffusion}.
+
+\par
+
+ In Figure \ref{chachahash}, you can see the execution of the ChaCha hash function where the quarterround execution is visualized as a diagram very similar to the one which can be found on Wikipedia. The current state is shown in the top left corner. Following the terms Prof. Bernstein used in his specification paper, the 512-bit state is visualized as a 4$\times$4 matrix. This makes it more clear to the user why some quarterrounds are called column rounds while others are called diagonal rounds.
 
 \begin{figure}
 \centering
