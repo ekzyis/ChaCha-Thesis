@@ -111,6 +111,47 @@ Last but not least, the amount of flipped bits is shown in the second to last ro
 
 \subsubsection{State Matrix Initialization page}
 
+On the State Matrix Initialization page, it is shown how the initial 512-bit state for the first keystream block is build up. The generation of the next keystream blocks start with the same state but just with a different counter (as was described in Chapter \ref{chap:chacha}). \\
+This means that only the construction of the state for the very first keystream block is shown in this page. This was done this way because I wanted to focus on one thing inside a page. I did not want to disrupt the flow of the ChaCha Hash Function page by jumping back to the visualization of the state matrix page just to encode a different counter. The information which is provided to the user in the first and only state matrix initialization should be enough for him to construct all following initial states without further guidance. \\
+Therefore, I focused on a comprehensive visualization of the encoding for each state parameter (constants, key, IV, counter). In Figure \ref{fig:statematrix.encoding}, you can see the page state during the end of each state parameter encoding. On the top-left, you see the state. On the top-right, you see descriptions which inform the user about what the next steps are.
+At the bottom-left, the encoding is visualized. At the bottom-right, the state parameters with their original values before encoding are shown.\\
+For each encoding step which corresponds to a row in the encoding section, a page action has been implemented. This means that the user can follow along each encoding step-by-step in his own speed and is not overwhelmed by a lot of information.\\
+First, the constants are encoded. Since they are shown in ASCII format in the state parameters section, they are first decoded to show the actual byte values. Then the bytes are split into 4 byte chunks whose order is then reversed in the last step. \\
+Afterwards, the key is encoded. It is just split into 4 byte chunks whose order is then reversed. \\
+The counter is again a bit special. First, the complete byte order is reversed, and then it is split into 4 byte chunks whose byte order is then again reversed. \\
+The last parameter is the IV. It is encoded exactly the same as the key. \\
+
+\begin{figure}
+\centering
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[width=0.99\textwidth]{figures/state-matrix/1-state-matrix-constants}
+  \caption{Constants encoding}
+  \label{fig:statematrix.encoding.constants}
+\end{subfigure}%
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[width=0.99\textwidth]{figures/state-matrix/2-state-matrix-key}
+  \caption{Key encoding}
+  \label{fig:statematrix.encoding.key}
+\end{subfigure}
+
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[width=0.99\textwidth]{figures/state-matrix/3-state-matrix-counter}
+  \caption{Counter encoding}
+  \label{fig:statematrix.encoding.counter}
+\end{subfigure}%
+\begin{subfigure}{0.5\textwidth}
+  \centering
+  \includegraphics[width=0.99\textwidth]{figures/state-matrix/4-state-matrix-iv}
+  \caption{IV encoding}
+  \label{fig:statematrix.encoding.iv}
+\end{subfigure}
+\caption{Encoding of the state parameters on the State Matrix Initialization page}
+\label{fig:statematrix.encoding}
+\end{figure}
+
 \subsubsection{ChaCha Hash Function page}
 
 \begin{figure}
