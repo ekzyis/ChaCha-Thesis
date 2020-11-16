@@ -46,6 +46,8 @@ The version (original DJB version or IETF version) and how often the ChaCha hash
 \subsubsection{General interface structure}
 
 \begin{figure}
+\caption{All pages of the ChaCha visualization plugin in their initial state}
+\label{fig:allpages}
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -57,7 +59,6 @@ The version (original DJB version or IETF version) and how often the ChaCha hash
   \includegraphics[width=0.99\textwidth]{figures/all-pages/2-overview}
   \caption{Overview page}
 \end{subfigure}
-
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/all-pages/3-diffusion}
@@ -68,14 +69,11 @@ The version (original DJB version or IETF version) and how often the ChaCha hash
   \includegraphics[width=0.99\textwidth]{figures/all-pages/4-statematrix}
   \caption{State Matrix Initialization page}
 \end{subfigure}
-
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/all-pages/5-chachahash}
   \caption{ChaCha Hash Function page}
 \end{subfigure}
-\caption{All pages of the ChaCha visualization plugin in their initial state}
-\label{fig:allpages}
 \end{figure}
 
 All pages have a common interface layout which consists of three sections. Each section is inside a own dedicated row. \\
@@ -92,6 +90,8 @@ To help with the input, the input field shows an error message if the user enter
 Last but not least, the amount of flipped bits is shown in the second to last row together with a state indication in the last row if the diffusion is active or not. The diffusion is active if at least one bit was flipped.
 
 \begin{figure}
+\caption{Diffusion page}
+\label{fig:diffusion}
 \centering
 \begin{subfigure}[t]{\textwidth}
   \centering
@@ -105,8 +105,6 @@ Last but not least, the amount of flipped bits is shown in the second to last ro
   \caption{Diffusion active}
   \label{fig:diffusion.active}
 \end{subfigure}
-\caption{Diffusion page}
-\label{fig:diffusion}
 \end{figure}
 
 \subsubsection{State Matrix Initialization page}
@@ -122,6 +120,8 @@ The counter is again a bit special. First, the complete byte order is reversed, 
 The last parameter is the IV. It is encoded exactly the same as the key. \\
 
 \begin{figure}
+\caption{Encoding of the state parameters on the State Matrix Initialization page}
+\label{fig:statematrix.encoding}
 \centering
 \begin{subfigure}{0.5\textwidth}
   \centering
@@ -148,8 +148,6 @@ The last parameter is the IV. It is encoded exactly the same as the key. \\
   \caption{IV encoding}
   \label{fig:statematrix.encoding.iv}
 \end{subfigure}
-\caption{Encoding of the state parameters on the State Matrix Initialization page}
-\label{fig:statematrix.encoding}
 \end{figure}
 
 \subsubsection{ChaCha Hash Function page}
@@ -172,7 +170,6 @@ The ChaCha Hash Function page visualizes the generation of a keystream block sin
   \caption{Quarterround visualization (with diffusion)}
   \label{fig:chachahash.mid.qr.diffusion}
 \end{subfigure}
-
 \end{figure}
 
 \begin{figure}
@@ -191,7 +188,6 @@ The ChaCha Hash Function page visualizes the generation of a keystream block sin
   \caption{Addition and Little-Endian step visualization (with diffusion)}
   \label{fig:chachahash.end.diffusion}
 \end{subfigure}
-
 \end{figure}
 
 \begin{figure}
@@ -250,7 +246,6 @@ The ChaCha Hash Function page visualizes the generation of a keystream block sin
   \caption{End of fourth diagonal round}
   \label{fig:chachahash.dr.4}
 \end{subfigure}
-
 \end{figure}
 
 \subsection{Architecture}
