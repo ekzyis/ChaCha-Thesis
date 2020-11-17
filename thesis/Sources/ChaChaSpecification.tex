@@ -2,5 +2,25 @@
 \chapter{ChaCha Specification}
 \label{chap:chacha}
 
-\Blindtext[8]
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+To help with understanding the plugin visualization and for the sake of completeness, I will summarize the specification of the ChaCha cipher in this chapter.
+
+ChaCha is a 256-bit stream cipher based on Salsa20, both developed by Prof. Daniel J. Bernstein. It was designed to improve diffusion per round while maintaining or even increasing the performance compared to Salsa20. This makes it more secure than Salsa20 with the same amount of rounds. It was developed in the year 2008, 3 years after Salsa20 \cite{chachaspec}.
+
+The specification can be broken apart into three main points: \\
+The \textit{quarterround} function, the \textit{littleendian} function and the hash function which utilizes the two other mentioned functions. I will start with the \textit{quarterround} function.
+
+\section{Quarterround function}
+\label{sec:chacha.qr}
+
+The ChaCha quarterround function takes in four 32-bit unsigned integers which we will name $a$, $b$, $c$ and $d$. It modifies its input values as described in the following pseudo-code: 
+
+\begin{center}
+\begin{minipage}{0.5\linewidth}
+\texttt{quarterround(a,b,c,d):} \\
+\hspace*{1em}\texttt{a += b; d  \^{}= a; d} \verb|<<<|\texttt{= 16;} \\
+\hspace*{1em}\texttt{c += d; b \^{}= c; b} \verb|<<<|\texttt{= 12;} \\
+\hspace*{1em}\texttt{a += b; d \^{}= a; d} \verb|<<<|\texttt{= 8;} \\
+\hspace*{1em}\texttt{c += d; b \^{}= c; b} \verb|<<<|\texttt{= 7;} \\
+\hspace*{1em}\texttt{return a, b, c, d}
+\end{minipage}
+\end{center}
