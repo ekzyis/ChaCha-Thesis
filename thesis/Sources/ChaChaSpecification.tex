@@ -12,7 +12,8 @@ The \textit{quarterround} function, the \textit{littleendian} function and the h
 \section{Quarterround function}
 \label{sec:chacha.qr}
 
-The ChaCha quarterround function takes in four 32-bit unsigned integers which we will name $a$, $b$, $c$ and $d$. It modifies its input values as described in the following pseudo-code: 
+The ChaCha quarterround function takes in four 32-bit unsigned integers which we will name $a$, $b$, $c$ and $d$. It also returns four 32-bit unsigned integers.\\
+It modifies its input values as described in the following pseudo-code:
 
 \begin{center}
 \begin{minipage}{0.5\linewidth}
@@ -25,4 +26,25 @@ The ChaCha quarterround function takes in four 32-bit unsigned integers which we
 \end{minipage}
 \end{center}
 
-I will call one row, consisting of one addition, one XOR and one shift operation, a \textit{quarterround step}. This name will be reused in Section \ref{sec:userInterface}.
+I will call one row, consisting of one addition, one XOR and one shift operation, a \textit{quarterround step}. This naming convention will be reused in Section \ref{sec:userInterface}.
+
+\section{Littleendian function}
+\label{sec:chacha.littleendian}
+
+The littleendian function takes in one 32-bit unsigned integer and reverses its byte order; also returning a 32-bit unsigned integer.  \\
+It can be implemented as follows:
+
+\begin{center}
+\begin{minipage}{0.8\linewidth}
+\texttt{littleendian(x):} \\
+\hspace*{1em}\texttt{x0 = (x} \verb|>>|\texttt{ 24) \& 0xff;} \\
+\hspace*{1em}\texttt{x1 = (x} \verb|>>|\texttt{ 16) \& 0xff;} \\
+\hspace*{1em}\texttt{x2 = (x} \verb|>>|\texttt{ 8) \& 0xff;} \\
+\hspace*{1em}\texttt{x3 = x \& 0xff;} \\
+\hspace*{1em}\texttt{return (x3} \verb|<<|\texttt{ 24) | (x2 }\verb|<<|\texttt{ 16) | (x1 }\verb|<<|\texttt{ 8) | x0;}
+\end{minipage}
+\end{center}
+
+\begin{remark}
+Its naming has nothing to do with system endianness, but was just named like this by Prof. Bernstein for unknown reasons (most likely because reversing the byte order is what needs to be done when transmitting data between systems of different endianess).
+\end{remark}
