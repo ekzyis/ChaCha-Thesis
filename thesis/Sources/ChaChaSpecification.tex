@@ -9,7 +9,7 @@ ChaCha is a 256-bit stream cipher based on Salsa20, both developed by Prof. Dani
 The specification can be broken apart into three main points: \\
 The \textit{quarterround} function, the \textit{littleendian} function and the hash function which utilizes the two other mentioned functions. I will start with the quarterround function.
 
-\section{Quarterround function}
+\section{Quarterround Function}
 \label{sec:chacha.qr}
 
 The ChaCha quarterround function takes in four 32-bit unsigned integers which we will name $a$, $b$, $c$ and $d$. It also returns four 32-bit unsigned integers.\\
@@ -28,7 +28,7 @@ It modifies its input values as described in the following pseudo-code:
 
 I will call one row, consisting of one addition, one XOR and one shift operation, a \textit{quarterround step}. This naming convention will be reused in Section \ref{sec:userInterface}.
 
-\section{Littleendian function}
+\section{Littleendian Function}
 \label{sec:chacha.littleendian}
 
 The littleendian function takes in one 32-bit unsigned integer and reverses its byte order; also returning a 32-bit unsigned integer.  \\
@@ -49,7 +49,7 @@ It can be implemented as follows:
 Its naming has nothing to do with system endianness, but was just named like this by Prof. Bernstein for unknown reasons (most likely because reversing the byte order is what needs to be done when transmitting data between systems of different endianess).
 \end{remark}
 
-\section{ChaCha hash function}
+\section{ChaCha Hash Function}
 \label{sec:chacha.hash}
 
 The ChaCha hash function takes in 16 32-bit unsigned integers and returns 16 32-bit unsigned integers. The input vector $(y_0, y_1, y_2, \dots, y_{15})$ can be written as a 4$\times$4 matrix:
