@@ -157,7 +157,9 @@ The ChaCha Hash Function page visualizes the generation of a keystream block by 
 At the top, you can see the current state together with a description about the ChaCha hash function.\\
 At the bottom, if we are still in the ChaCha hash function loop, you can see the visualization of the quarterrounds (Figure \ref{fig:chachahash.mid.qr}). If we are finished with the loop, you can see the original state at the left, the result of adding the original state with the state after all rounds in the middle, and at the right the result of reversing the byte order of each state entry of the state in the middle (Figure \ref{fig:chachahash.end}). This is the final state and thus one 512-bit block inside the keystream with which the input message is later XOR'ed . \\
 Below the visualization and just above the slider for the page actions is another navigation bar. This helps the user to quickly navigate through the ChaCha hash function. He can use the arrow buttons to traverse through the keystream blocks, rounds or quarterrounds or enter a number to directly go to a specific step. \\
-For example, if he wants to go to the second quarterround of the fourth round, he can enter "4" into the text input which is labeled with "Round" and press Enter or use the arrow buttons to go to the fourth round. This will take him to the start of the fourth round. He can then proceed to enter "2" into the "Quarterround" text input. Since this will also take him to the start of the quarterround, he can use the buttons to the right of the quarterround input to jump to the end of specific quarterrounds of the current round. For example, if he now wants to go to the end of the second quarterround, he can click on "End" of the second button of the buttons which are labeled with "Diagonalround". They also show the state indices that will get updated during their quarterround in parentheses. They also will be updated according to the round. This means on uneven rounds, the label will switch to "Columnround" and on even rounds, it will show "Diagonalround". \\
+For example, if he wants to go to the second quarterround of the fourth round, he can enter "4" into the text input which is labeled with "Round" and press Enter or use the arrow buttons to go to the fourth round. This will take him to the start of the fourth round. He can then proceed to enter "2" into the "Quarterround" text input. \\
+Since this will also take him to the start of the quarterround, he can use the buttons to the right of the quarterround input to jump to the end of specific quarterrounds of the current round. For example, if he now wants to go to the end of the second quarterround, he can click on "End" of the second button of the buttons which are labeled with "Diagonalround". \\
+They also show the state indices that will get updated during their quarterround in parentheses. They also will be updated according to the round. This means on uneven rounds, the label will switch to "Columnround" and on even rounds, it will show "Diagonalround". \\
 Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary how the page looks like at the end of each quarterround for round 1 (column rounds) and round 2 (diagonal rounds). As you can see, the corresponding state entry is highlighted with a light blue background. This light blue background is also used throughout the visualization to catch the user's attention about which UI elements will be updated in the next step.\\
 
 \begin{figure}
@@ -197,7 +199,7 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
 \end{figure}
 
 \begin{figure}
-\caption{End of quarterround execution of each column round of an uneven round (here: round 1)}
+\caption{End of quarterround execution of each column round of an uneven round \\(here: round 1)}
 \label{fig:chachahash.cr}
 \centering
 \begin{subfigure}{0.5\textwidth}
@@ -225,7 +227,7 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
   \label{fig:chachahash.cr.4}
 \end{subfigure}
 
-\caption{End of quarterround execution of each diagonal round of one even round (here: round 2)}
+\caption{End of quarterround execution of each diagonal round of one even round \\(here: round 2)}
 \label{fig:chachahash.dr}
 \centering
 \begin{subfigure}{0.5\textwidth}
