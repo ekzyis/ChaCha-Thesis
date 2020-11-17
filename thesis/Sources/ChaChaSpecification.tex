@@ -48,3 +48,65 @@ It can be implemented as follows:
 \begin{remark}
 Its naming has nothing to do with system endianness, but was just named like this by Prof. Bernstein for unknown reasons (most likely because reversing the byte order is what needs to be done when transmitting data between systems of different endianess).
 \end{remark}
+
+\section{ChaCha hash function}
+\label{sec:chacha.hash}
+
+The ChaCha hash function takes in 16 32-bit unsigned integers and returns 16 32-bit unsigned integers. The input vector $(y_0, y_1, y_2, \dots, y_{15})$ can be written as a 4$\times$4 matrix:
+
+\begin{equation*}
+\begin{pmatrix}
+y_0 & y_1 & y_2 & y_3 \\
+y_4 & y_5 & y_6 & y_7 \\
+y_8 & y_9 & y_{10} & y_{11} \\
+y_{12} & y_{13} & y_{14} & y_{15}\\
+\end{pmatrix}
+\end{equation*}
+
+\noindent Using this matrix representation helps with understanding why Prof. Bernstein calls some rounds \textit{column rounds} and others \textit{diagonal rounds} in his paper (one round consists of four quarterrounds): \\
+The ChaCha hash function iterates first through all columns and then through all diagonals of the matrix; applying the quarterround function to the four entries of each column/diagonal. After the first four quarterrounds it therefore has changed all columns of the matrix. This is what Prof. Bernstein calls a column round in his paper. After the next four quarterrounds, it changed all diagonals of the matrix which Prof. Bernstein analogously calls this a diagonal round.
+
+\noindent To summarize, the following quarterrounds make up one column round:
+\begin{center}
+\begin{minipage}{0.5\linewidth}
+\texttt{quarterround($y_0$, $y_4$, $y_8$, $y_{12}$)} \\
+\texttt{quarterround($y_1$, $y_5$, $y_9$, $y_{13}$)} \\
+\texttt{quarterround($y_2$, $y_6$, $y_{10}$, $y_{14}$)} \\
+\texttt{quarterround($y_3$, $y_7$, $y_{11}$, $y_{15}$)} \\
+\end{minipage}
+\end{center}
+\noindent whereas the following quarterrounds make up one diagonal round:
+\begin{center}
+\begin{minipage}{0.5\linewidth}
+\texttt{quarterround($y_0$, $y_5$, $y_{10}$, $y_{15}$)} \\
+\texttt{quarterround($y_1$, $y_6$, $y_{11}$, $y_{12}$)} \\
+\texttt{quarterround($y_2$, $y_7$, $y_8$, $y_{13}$)} \\
+\texttt{quarterround($y_3$, $y_4$, $y_9$, $y_{14}$)} \\
+\end{minipage}
+\end{center}
+
+\noindent After a set amount of rounds (8, 12, or 20), the input vector is added to the vector on which the quarterround function was run. Then the byte order of each matrix entry is reversed using the littleendian function.
+
+Having explained the basic structure of the ChaCha hash function, the following pseudo-code should complete the readers comprehension of it:
+
+\begin{center}
+\begin{minipage}{\linewidth}
+\texttt{chachahash(y):} \\
+\hspace*{1em}\texttt{z = copy(y);}\\
+\hspace*{1em}\texttt{for(i = 0; i < ROUNDS; i += 2)}\\
+\hspace*{2em}\texttt{// column round}\\
+\hspace*{2em}\texttt{y[0], y[4], y[8], y[12] = quarterround(y[0], y[4], y[8], y[12]);}\\
+\hspace*{2em}\texttt{y[1], y[5], y[9], y[13] = quarterround(y[1], y[5], y[9], y[13]);}\\
+\hspace*{2em}\texttt{y[2], y[6], y[10], y[14] = quarterround(y[2], y[6], y[10], y[14]);}\\
+\hspace*{2em}\texttt{y[3], y[7], y[11], y[15] = quarterround(y[3], y[7], y[11], y[15]);}\\
+\hspace*{2em}\texttt{// diagonal round}\\
+\hspace*{2em}\texttt{y[0], y[5], y[10], y[15] = quarterround(y[0], y[5], y[10], y[15]);}\\
+\hspace*{2em}\texttt{y[1], y[6], y[11], y[12] = quarterround(y[0], y[5], y[10], y[15]);}\\
+\hspace*{2em}\texttt{y[2], y[7], y[8], y[13] = quarterround(y[0], y[5], y[10], y[15]);}\\
+\hspace*{2em}\texttt{y[3], y[4], y[9], y[14] = quarterround(y[0], y[5], y[10], y[15]);}\\
+\hspace*{1em}\texttt{for(i = 0; i < 16; i += 1)}\\
+\hspace*{2em}\texttt{y[i] += z[i];}\\
+\hspace*{2em}\texttt{y[i] = littleendian(y[i]);}\\
+\hspace*{1em}\texttt{return y;}
+\end{minipage}
+\end{center}
