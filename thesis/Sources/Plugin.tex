@@ -148,7 +148,7 @@ At the bottom-left, the encoding is visualized. At the bottom-right, the state p
 For each encoding step which corresponds to a row in the encoding section, a page action has been implemented. This means that the user can follow along each encoding step-by-step in his own speed and is not overwhelmed by a lot of information.\\
 First, the constants are encoded. Since they are shown in ASCII format in the state parameters section, they are first decoded to show the actual byte values. Then the bytes are split into 4 byte chunks whose order is then reversed in the last step. \\
 Afterwards, the key is encoded. It is just split into 4 byte chunks whose order is then reversed. \\
-The counter is again a bit special. First, the complete byte order is reversed, and then it is split into 4 byte chunks whose byte order is then again reversed. \\
+When encoding the counter, the complete byte order is first reversed, and then it is split into 4 byte chunks whose byte order is then again reversed. \\
 The last parameter is the IV. It is encoded exactly the same as the key. \\
 
 \subsubsection{ChaCha Hash Function page}
