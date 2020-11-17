@@ -78,7 +78,12 @@ The version (original DJB version or IETF version) and how often the ChaCha hash
 
 All pages have a common interface layout which consists of three sections. Each section is inside a own dedicated row. \\
 The first section implements the navigation to move between pages. It also shows the title of the current page. \\
-The second section shows the content of the current page. The content is not always static since it can change by using the action navigation bar in the bottom section. If a page does not have actions, the action navigation is hidden but the space is still reserved for it to have a consistent canvas size for all pages. \\
+The second section shows the content of the current page. The content is not always static since it can change by using the action navigation bar in the bottom section.  \\
+It includes buttons to go to the previous or next action, a slider for quicker action navigation, a text input to go to a given action and a indicator on which action the user currently is and how many actions there are in total on the current page. \\
+I have chosen a slider over alternative solutions like individual buttons because I wanted to enable the user to quickly navigate through a page. The slider came in handy especially for the page about the ChaCha hash function where there are more than 3000 actions per keystream block. Fitting more than 3000 buttons on a single page was not feasible but would need pagination features such as showing the next set amount of buttons which would make quick navigation impossible. \\
+The user can also enter a  number into the text input to the right of the slider to go to an action. But this text input is only more helpful than the slider if the user already knows the number of the action he wants to go to. If he does not, the slider creates a much better user experience. \\
+If a page does not have actions, the action navigation is hidden but the space is still reserved for it to have a consistent canvas size for all pages.
+
 I will now go into greater detail about the pages which do not have fully static content. These pages are the Diffusion page, the State Matrix Initialization page and the ChaCha Hash Function page.
 
 \subsubsection{Diffusion page}
