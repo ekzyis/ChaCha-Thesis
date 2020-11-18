@@ -33,7 +33,7 @@ The last subsection then goes into technical details to explain how the plugin i
 \begin{figure}
 \caption{CT2 Template for the ChaCha plugin}
 \label{fig:plugin.template}
-\includegraphics[width=\textwidth]{figures/plugin-template.png}
+\includegraphics[width=\textwidth]{figures/ct2/plugin-template.png}
 \end{figure}
 
 The plugin offers the user the ability to input his own plaintext, key, initialization vector and initial counter using the concept of visual programming (around which CT2 is built) as one can see in Figure \ref{fig:plugin.template}. The counter is optional and defaults to $0$. These values are then used to visualize the cipher execution comprehensively. Descriptions complement the visualization by providing information about what is happening. \\
@@ -51,27 +51,27 @@ The version (original DJB version or IETF version) and how often the ChaCha hash
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/all-pages/1-start}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/all-pages/1-start.png}
   \caption{Start page}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/all-pages/2-overview}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/all-pages/2-overview.png}
   \caption{Overview page}
 \end{subfigure}
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/all-pages/3-diffusion}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/all-pages/3-diffusion.png}
   \caption{Diffusion page}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/all-pages/4-statematrix}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/all-pages/4-statematrix.png}
   \caption{State Matrix Initialization page}
 \end{subfigure}
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/all-pages/5-chachahash}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/all-pages/5-chachahash.png}
   \caption{ChaCha Hash Function page}
 \end{subfigure}
 \end{figure}
@@ -102,13 +102,13 @@ Last but not least, the amount of flipped bits is shown in the second to last ro
 \centering
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/diffusion-inactive}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/diffusion/diffusion-inactive.png}
   \caption{Diffusion inactive (no user input)}
   \label{fig:diffusion.inactive}
 \end{subfigure}%
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/diffusion-active}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/diffusion/diffusion-active.png}
   \caption{Diffusion active}
   \label{fig:diffusion.active}
 \end{subfigure}
@@ -117,25 +117,25 @@ Last but not least, the amount of flipped bits is shown in the second to last ro
 \label{fig:statematrix.encoding}
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/state-matrix/1-state-matrix-constants}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/state-matrix/1-state-matrix-constants.png}
   \caption{Constants encoding}
   \label{fig:statematrix.encoding.constants}
 \end{subfigure}%
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/state-matrix/2-state-matrix-key}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/state-matrix/2-state-matrix-key.png}
   \caption{Key encoding}
   \label{fig:statematrix.encoding.key}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/state-matrix/3-state-matrix-counter}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/state-matrix/3-state-matrix-counter.png}
   \caption{Counter encoding}
   \label{fig:statematrix.encoding.counter}
 \end{subfigure}%
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/state-matrix/4-state-matrix-iv}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/state-matrix/4-state-matrix-iv.png}
   \caption{IV encoding}
   \label{fig:statematrix.encoding.iv}
 \end{subfigure}
@@ -170,13 +170,13 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
 \centering
 \begin{subfigure}{\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{figures/chachahash/chachahash-mid-qr}
+  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-mid-qr.png}
   \caption{Quarterround visualization (without diffusion)}
   \label{fig:chachahash.mid.qr.without.diffusion}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{figures/chachahash/chachahash-mid-qr-diffusion}
+  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-mid-qr-diffusion.png}
   \caption{Quarterround visualization (with diffusion)}
   \label{fig:chachahash.mid.qr.with.diffusion}
 \end{subfigure}
@@ -187,13 +187,13 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
 \label{fig:wiki.qr.circuit}
 \begin{subfigure}[t]{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/wiki-qr-circuit/salsa-wiki-qr-circuit}
+  \includegraphics[width=0.99\textwidth]{figures/wiki-qr-circuit/salsa-wiki-qr-circuit.png}
   \caption{Salsa quarterround circuit diagram}
   \label{fig:wiki.qr.circuit.salsa}
 \end{subfigure}%
 \begin{subfigure}[t]{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/wiki-qr-circuit/chacha-wiki-qr-circuit}
+  \includegraphics[width=0.99\textwidth]{figures/wiki-qr-circuit/chacha-wiki-qr-circuit.png}
   \caption{ChaCha quarterround circuit diagram}
   \label{fig:wiki.qr.circuit.chacha}
 \end{subfigure}%
@@ -205,13 +205,13 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
 \centering
 \begin{subfigure}{\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{figures/chachahash/chachahash-end}
+  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-end.png}
   \caption{Addition and Little-Endian step visualization (without diffusion)}
   \label{fig:chachahash.end.without.diffusion}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{figures/chachahash/chachahash-end-diffusion}
+  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-end-diffusion.png}
   \caption{Addition and Little-Endian step visualization (with diffusion)}
   \label{fig:chachahash.end.with.diffusion}
 \end{subfigure}
@@ -223,25 +223,25 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
 \centering
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/chachahash/chachahash-cr1-end}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-cr1-end.png}
   \caption{End of first column round}
   \label{fig:chachahash.cr.1}
 \end{subfigure}%
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/chachahash/chachahash-cr2-end}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-cr2-end.png}
   \caption{End of second column round}
   \label{fig:chachahash.cr.2}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/chachahash/chachahash-cr3-end}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-cr3-end.png}
   \caption{End of third column round}
   \label{fig:chachahash.cr.3}
 \end{subfigure}%
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/chachahash/chachahash-cr4-end}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-cr4-end.png}
   \caption{End of fourth column round}
   \label{fig:chachahash.cr.4}
 \end{subfigure}
@@ -251,25 +251,25 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
 \centering
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/chachahash/chachahash-dr1-end}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-dr1-end.png}
   \caption{End of first diagonal round}
   \label{fig:chachahash.dr.1}
 \end{subfigure}%
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/chachahash/chachahash-dr2-end}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-dr2-end.png}
   \caption{End of second diagonal round}
   \label{fig:chachahash.dr.2}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/chachahash/chachahash-dr3-end}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-dr3-end.png}
   \caption{End of third diagonal round}
   \label{fig:chachahash.dr.3}
 \end{subfigure}%
 \begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/chachahash/chachahash-dr4-end}
+  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-dr4-end.png}
   \caption{End of fourth diagonal round}
   \label{fig:chachahash.dr.4}
 \end{subfigure}
@@ -307,10 +307,10 @@ Another technique (that you can also see in the mentioned Figure) is the use of 
 \begin{figure}
 \caption{Implementation of page navigation using data binding}
 \label{fig:mvvm.pagenavigation}
-\includegraphics[width=\textwidth]{figures/mvvm-page-navigation.png}
+\includegraphics[width=\textwidth]{figures/code/mvvm-arch/page-navigation-template.png}
 \caption{Implementation of action navigation inside a control template}
 \label{fig:mvvm.actionnavigation}
-\includegraphics[width=\textwidth]{figures/mvvm-action-navigation.png}
+\includegraphics[width=\textwidth]{figures/code/mvvm-arch/action-navigation-template.png}
 \end{figure}
 
 Since the most interesting part about the MVVM architecture is probably how the diffusion visualization works, I will explain this feature in more detail.
@@ -324,13 +324,13 @@ If the user enters something into the input fields for the secondary values, val
 \caption{Data binding notification in setter of \texttt{DiffusionInputKey}}
 \label{fig:mvvm.onpropertychanged}
 \centering
-\includegraphics[width=0.99\textwidth]{figures/mvvm-onpropertychanged.png}
+\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/onpropertychanged.png}
 \end{subfigure}%
 \begin{subfigure}[t]{0.5\textwidth}
 \caption{\texttt{ViewModelBase} implementation with \texttt{INotifyPropertyChanged} interface}
 \label{fig:mvvm.viewmodelbase}
 \centering
-\includegraphics[width=0.99\textwidth]{figures/mvvm-viewmodelbase.png}
+\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/viewmodelbase.png}
 \end{subfigure}
 \end{figure}
 
@@ -365,7 +365,7 @@ The problem with that architecture was that the state saving and the execution l
 \begin{figure}
 \caption{Navigation paths between actions in the linear navigation system}
 \label{fig:navsystem.linear.overview}
-\includegraphics[width=\textwidth]{figures/navigationsystem-linear-overview.png}
+\includegraphics[width=\textwidth]{figures/navigationsystem-diagram/navigationsystem-linear-overview.png}
 \end{figure}
 
 \subsubsection{Linear navigation system with caches}
@@ -381,13 +381,13 @@ One of the major drawbacks for this enhanced design was that the automatic actio
 \begin{figure}
 \caption{Navigation paths between actions in the linear navigation system with caches. The colorized state has a corresponding cache entry.}
 \label{fig:navsystem.cache.overview}
-\includegraphics[width=\textwidth]{figures/navigationsystem-cache-overview-2.png}
+\includegraphics[width=\textwidth]{figures/navigationsystem-diagram/navigationsystem-cache-overview-2.png}
 \end{figure}
 
 \begin{figure}
 \caption{Asynchronous navigation subsystem}
 \label{fig:async.navigation}
-\includegraphics[width=\textwidth]{figures/async-navigation.png}
+\includegraphics[width=\textwidth]{figures/code/nav-arch/async-navigation.png}
 \end{figure}
 
 
@@ -405,7 +405,7 @@ Essentially, the problem was that I used a lot of code-behind which was highly c
 \begin{figure}
 \caption{Example for bad scaling property in previous plugin versions}
 \label{fig:plugin.scaling.bug}
-\includegraphics[width=\textwidth]{figures/scaling-bug-example.png}
+\includegraphics[width=\textwidth]{figures/ct2/scaling-bug-example.png}
 \end{figure}
 
 \begin{description}
