@@ -6,8 +6,10 @@ To help with understanding the plugin visualization and for the sake of complete
 
 ChaCha is a 256-bit stream cipher based on Salsa20, both developed by Prof. Daniel J. Bernstein. It was designed to improve diffusion per round while maintaining or even increasing the performance compared to Salsa20. This makes it more secure than Salsa20 with the same amount of rounds. It was developed in the year 2008, 3 years after Salsa20 \cite{chachaspec}.
 
-The specification can be broken apart into three main points: \\
-The \textit{quarterround} function, the \textit{littleendian} function and the hash function which utilizes the two other mentioned functions. I will start with the quarterround function.
+The specification can be broken apart into five main points: \\
+The \textit{quarterround} function, the \textit{littleendian} function, a hash function which utilizes the two other mentioned functions, how the 512-bit state is setup and finally, how the en-/decryption process works as a whole, bringing all the individual pieces together. 
+
+I will start with the quarterround function.
 
 \section{Quarterround Function}
 \label{sec:chacha.qr}
@@ -112,4 +114,52 @@ Having explained the basic structure of the ChaCha hash function, the following 
 \end{center}
 
 \section{ChaCha State Matrix}
+
+ChaCha internally uses a 512-bit state for keystream generation. The ChaCha hash function modifies this state to generate a keystream block. \\
+In this section, I will explain how the state is setup which is then passed in 32-bit blocks to the ChaCha hash function.
+
+The state is made up of a 128-bit constant, a 256-bit key section, a 128-bit nonce section. \\
+To demonstrate that the author had no hidden intent with picking his constants (nothing-up-my-sleeve number), he defined the constants to be ``expand 16-byte k'' for 128-bit keys and ``expand 32-byte k'' for 256-bit keys in ASCII .\\
+In the 128-bit key variant, the key is concatenated with itself to create a 256-bit key. This concatenated key is then used for the state setup. If the key is already 256-bit, we do nothing and just use it as it is for the state setup.\\
+The nonce section, which consists of a block counter and the initialization vector, is where the original version and the IETF version differ. I will continue with the original version and later come back to the IETF version. In the original version, a 64-bit counter and a 64-bit initialization vector is used.
+
+All state parameters are encoded by first splitting them into 32-bit chunks whose byte order is reversed except for the counter, whose byte order is first completely reversed and afterwards split into 32-bit chunks. Their 32-bit blocks are then ordered as follows to form the 512-bit state matrix:
+
+\begin{equation*}
+\begin{pmatrix}
+\texttt{constant}& \texttt{constant} & \texttt{constant} & \texttt{constant} \\
+\texttt{key} & \texttt{key} & \texttt{key} & \texttt{key} \\
+\texttt{key} & \texttt{key} & \texttt{key} & \texttt{key} \\
+\texttt{counter} & \texttt{counter} & \texttt{IV} & \texttt{IV} \\
+\end{pmatrix}
+\end{equation*}
+\\
+\noindent Example (all numbers are in hexadecimal with \texttt{:} as separation between bytes and already split into 32-bit chunks):\\
+
+\begin{tabular}{ l l }
+ \texttt{key (256-bit)} & \texttt{01:02:03:04 05:06:07:08 09:0a:0b:0c 0d:0e:0f:10} \\ 
+ & \texttt{11:12:13:14 15:16:17:18 19:1a:1b:1c 1d:1e:1f:20}\\
+ \texttt{IV} & \texttt{00:11:22:33 44:55:66:77} \\  
+\texttt{Counter} & \texttt{00:00:00:00 00:00:00:01} \\
+\end{tabular}
+\\
+
+\noindent Since we used a 256-bit key, we will use the ASCII constants ``expand 32-byte k''. Their byte representation is:\\
+
+\begin{tabular}{ l l }
+\texttt{Constants} & \texttt{65:78:70:61 6e:64:20:33 32:2d:62:79 74:65:20:6b} \\
+\end{tabular}
+\\
+
+\noindent The resulting state matrix:
+
+\begin{equation*}
+\begin{pmatrix}
+\texttt{61:70:78:65}& \texttt{33:20:64:6e} & \texttt{79:62:2d:32} & \texttt{6b:20:65:74} \\
+\texttt{04:03:02:01} & \texttt{08:07:06:05} & \texttt{0c:0b:0a:09} & \texttt{10:0f:0e:0d} \\
+\texttt{14:13:12:11} & \texttt{18:17:16:15} & \texttt{1c:1b:1a:19} & \texttt{20:1f:1e:1d} \\
+\texttt{00:00:00:01} & \texttt{00:00:00:00} & \texttt{33:22:11:00} & \texttt{77:66:55:44} \\
+\end{pmatrix}
+\end{equation*}
+
 \label{sec:chacha.matrix}
