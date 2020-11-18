@@ -114,6 +114,7 @@ Having explained the basic structure of the ChaCha hash function, the following 
 \end{center}
 
 \section{ChaCha State Matrix}
+\label{sec:chacha.matrix}
 
 ChaCha internally uses a 512-bit state for keystream generation. The ChaCha hash function modifies this state to generate a keystream block. \\
 In this section, I will explain how the state is setup which is then passed in 32-bit blocks to the ChaCha hash function.
@@ -161,5 +162,3 @@ All state parameters are encoded by first splitting them into 32-bit chunks whos
 \texttt{00:00:00:01} & \texttt{00:00:00:00} & \texttt{33:22:11:00} & \texttt{77:66:55:44} \\
 \end{pmatrix}
 \end{equation*}
-
-\label{sec:chacha.matrix}
