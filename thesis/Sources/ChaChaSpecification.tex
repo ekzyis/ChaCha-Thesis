@@ -65,10 +65,10 @@ y_{12} & y_{13} & y_{14} & y_{15}\\
 \end{pmatrix}
 \end{equation*}
 
-\noindent Using this matrix representation helps with understanding why Prof. Bernstein calls some rounds \textit{column rounds} and others \textit{diagonal rounds} in his paper (one round consists of four quarterrounds): \\
+Using this matrix representation helps with understanding why Prof. Bernstein calls some rounds \textit{column rounds} and others \textit{diagonal rounds} in his paper (one round consists of four quarterrounds): \\
 The ChaCha hash function iterates first through all columns and then through all diagonals of the matrix; applying the quarterround function to the four entries of each column/diagonal. After the first four quarterrounds it therefore has changed all columns of the matrix. This is what Prof. Bernstein calls a column round in his paper. After the next four quarterrounds, it changed all diagonals of the matrix which Prof. Bernstein analogously calls a diagonal round.
 
-\noindent To summarize, the following quarterrounds make up one column round:
+To summarize, the following quarterrounds make up one column round:
 \begin{center}
 \begin{minipage}{0.5\linewidth}
 \texttt{quarterround($y_0$, $y_4$, $y_8$, $y_{12}$)} \\
@@ -87,7 +87,7 @@ The ChaCha hash function iterates first through all columns and then through all
 \end{minipage}
 \end{center}
 
-\noindent After a set amount of rounds (8, 12, or 20), the input vector is added to the vector on which the quarterround function was run. Then the byte order of each matrix entry is reversed using the littleendian function.
+After a set amount of rounds (8, 12, or 20), the input vector is added to the vector on which the quarterround function was run. Then the byte order of each matrix entry is reversed using the littleendian function.
 
 Having explained the basic structure of the ChaCha hash function, the following pseudo-code should complete the readers comprehension of it:
 
@@ -119,8 +119,7 @@ Having explained the basic structure of the ChaCha hash function, the following 
 ChaCha internally uses a 512-bit state for keystream generation. The ChaCha hash function modifies this state to generate a keystream block. \\
 In this section, I will explain how the state is setup which is then passed in 32-bit blocks to the ChaCha hash function.
 
-The state is made up of a 128-bit constant, a 256-bit key section, a 128-bit nonce section. \\
-To demonstrate that the author had no hidden intent with picking his constants (nothing-up-my-sleeve number), he defined the constants to be ``expand 16-byte k'' for 128-bit keys and ``expand 32-byte k'' for 256-bit keys in ASCII .\\
+The state is made up of a 128-bit constant, a 256-bit key section, a 128-bit nonce section. To demonstrate that the author had no hidden intent with picking his constants (nothing-up-my-sleeve number), he defined the constants to be ``expand 16-byte k'' for 128-bit keys and ``expand 32-byte k'' for 256-bit keys in ASCII .\\
 In the 128-bit key variant, the key is concatenated with itself to create a 256-bit key. This concatenated key is then used for the state setup. If the key is already 256-bit, we do nothing and just use it as it is for the state setup.\\
 The nonce section, which consists of a block counter and the initialization vector, is where the original version and the IETF version differ. I will continue with the original version and later come back to the IETF version. In the original version, a 64-bit counter and a 64-bit initialization vector is used.
 
@@ -134,8 +133,8 @@ All state parameters are encoded by first splitting them into 32-bit chunks whos
 \texttt{counter} & \texttt{counter} & \texttt{IV} & \texttt{IV} \\
 \end{pmatrix}
 \end{equation*}
-\\
-\noindent Example (all numbers are in hexadecimal with \texttt{:} as separation between bytes and already split into 32-bit chunks):\\
+
+Example (all numbers are in hexadecimal with \texttt{:} as separation between bytes and already split into 32-bit chunks):\\
 
 \begin{tabular}{ l l }
  \texttt{key (256-bit)} & \texttt{01:02:03:04 05:06:07:08 09:0a:0b:0c 0d:0e:0f:10} \\ 
@@ -167,7 +166,8 @@ All state parameters are encoded by first splitting them into 32-bit chunks whos
 \label{sec:chacha.encryption}
 
 To en- or decrypt a input text, it is XOR'ed with the keystream. \\
-To generate the keystream, the ChaCha hash function is continously used to create 512-bit keystream blocks until we have enough to XOR every byte of the input text. The input to the ChaCha hash function is the 512-bit initial state as explained in the previous section. After each keystream block, the counter is incremented to have a different initial state as the input each time. \\
+To generate the keystream, the ChaCha hash function is continously used to create 512-bit keystream blocks until we have enough to XOR every byte of the input text. The input to the ChaCha hash function is the 512-bit initial state as explained in the previous section. After each keystream block, the counter is incremented to have a different initial state as the input each time.
+
 Since we are operating on streams, if the input message is not a multiple of 512-bit, the bits of the last block of the input message are left-aligned and the remaining bits of the keystream are dropped. This means that the output will always be the exact same length as the input.
 
 There is no difference between en- or decryption because XOR is the inverse to itself.
