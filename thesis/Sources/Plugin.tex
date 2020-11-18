@@ -302,10 +302,15 @@ ViewModels connect the model data with the views. However, they do not directly 
 
 In Figure \ref{fig:mvvm.pagenavigation}, I have provided an example for how this data binding looks in code. What you see is the view code for the page navigation.
 
+Another technique (that you can also see in the mentioned Figure) is the use of templates. I have used data templates to attach views to viewmodels and control templates to implement the general UI structure with the three sections I mentioned in Section \ref{sec:userInterface}. This enabled me to define the UI layout for all pages in one place and also reuse a single implementation of the page and action navigation across all pages. This way, modifications down the road which applied to all pages were easy and fast. \\ In Figure \ref{fig:mvvm.actionnavigation}, you can see the view implementation of the action navigation bar which is only visible on pages which do have actions.
+
 \begin{figure}
 \caption{Implementation of page navigation using data binding}
 \label{fig:mvvm.pagenavigation}
 \includegraphics[width=\textwidth]{figures/mvvm-page-navigation.png}
+\caption{Implementation of action navigation inside a control template}
+\label{fig:mvvm.actionnavigation}
+\includegraphics[width=\textwidth]{figures/mvvm-action-navigation.png}
 \end{figure}
 
 \subsubsection{Centralized navigation system}
