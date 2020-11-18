@@ -162,3 +162,12 @@ All state parameters are encoded by first splitting them into 32-bit chunks whos
 \texttt{00:00:00:01} & \texttt{00:00:00:00} & \texttt{33:22:11:00} & \texttt{77:66:55:44} \\
 \end{pmatrix}
 \end{equation*}
+
+\section{En-/Decryption}
+\label{sec:chacha.encryption}
+
+To en- or decrypt a input text, it is XOR'ed with the keystream. \\
+To generate the keystream, the ChaCha hash function is continously used to create 512-bit keystream blocks until we have enough to XOR every byte of the input text. The input to the ChaCha hash function is the 512-bit initial state as explained in the previous section. After each keystream block, the counter is incremented to have a different initial state as the input each time. \\
+Since we are operating on streams, if the input message is not a multiple of 512-bit, the bits of the last block of the input message are left-aligned and the remaining bits of the keystream are dropped. This means that the output will always be the exact same length as the input.
+
+There is no difference between en- or decryption because XOR is the inverse to itself.
