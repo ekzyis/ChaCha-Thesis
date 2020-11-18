@@ -346,6 +346,35 @@ The notification raising and the implementation of the \texttt{INotifyPropertyCh
 \end{subfigure}
 \end{figure}
 
+On page exit, \texttt{ChaChaPresentationViewModel}, which is the view model which implements navigation between the different pages (with their own viewmodels) and has access to the ChaCha cipher component, calls \texttt{Teardown} on the page we are leaving. This triggers the ChaCha execution with the given secondary values. This can be seen in Figure \ref{fig:mvvm.chachatrigger}.
+
+\begin{figure}
+\centering
+\caption{Triggering ChaCha execution with values entered in Diffusion page}
+\label{fig:mvvm.chachatrigger}
+\begin{subfigure}[t]{0.5\textwidth}
+\label{fig:mvvm.chachapresentationviewmodel}
+\centering
+\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/chachaPresentationViewModel.png}
+\caption{\texttt{ChaChaPresentationViewModel}: Implements page navigation and has access to the ChaCha component}
+\end{subfigure}%
+\begin{subfigure}[t]{0.5\textwidth}
+\label{fig:mvvm.viewmodelbase}
+\centering
+\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/diffusionViewModel.png}
+\caption{\texttt{DiffusionViewModel}: Triggers ChaCha execution on page exit using the \texttt{ChaChaPresentationViewModel} instance that was passed in its constructor}
+\end{subfigure}
+\end{figure}
+
+Before execution, a flag was set which instructs the list getters into which the ChaCha component would save its intermediate values to return a different list. This means that the ChaCha component is agnostic of where it saves its intermediate values. During the execution, the intermediate values for the diffusion run are therefore saved in parallel lists. This is shown exemplary for the quarterround input values in Figure \ref{}). The other pages then simply bind to these lists to display the intermediate values of the diffusion run. Converting the 32-bit unsigned integers into hex strings and marking their characters which are different red then happens in the view models.
+
+\begin{figure}
+\centering
+\caption{Saving of intermediate values during ChaCha execution in lists}
+\label{fig:mvvm.chacha}
+\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/chacha.png}
+\end{figure}
+
 \subsubsection{Centralized navigation system}
 
 
