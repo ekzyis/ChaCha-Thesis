@@ -305,7 +305,7 @@ ViewModels connect the model data with the views. However, they do not directly 
 
 In Figure \ref{fig:mvvm.pagenavigation}, I have provided an example for how this data binding looks in code. What you see is the view code for the page navigation.
 
-Another technique (that you can also see in the mentioned Figure) is the use of templates. I have used data templates to attach views to viewmodels and control templates to implement the general UI structure with the three sections I mentioned in Section \ref{sec:userInterface}. This enabled me to define the UI layout for all pages in one place and also reuse a single implementation of the page and action navigation across all pages. This way, modifications down the road which applied to all pages were easy and fast. \\ In Figure \ref{fig:mvvm.actionnavigation}, you can see the view implementation of the action navigation bar which is only visible on pages which do have actions.
+Another technique (that you can also see in the mentioned Figure) is the use of templates. I have used data templates to attach views to view models and control templates to implement the general UI structure with the three sections I mentioned in Section \ref{sec:userInterface}. This enabled me to define the UI layout for all pages in one place and also reuse a single implementation of the page and action navigation across all pages. This way, view modifications down the road which applied to all pages were easy and fast. \\ In Figure \ref{fig:mvvm.actionnavigation}, you can see the view implementation of the action navigation bar which is only visible on pages which do have actions.
 
 \begin{figure}
 \caption{Implementation of page navigation using data binding}
@@ -321,9 +321,9 @@ Since the most interesting part about the MVVM architecture is probably how the 
 
 \subsubsection{Diffusion implementation using MVVM}
 
-If the user enters something into the input fields of the Diffusion page, validation of the input occurs. It checks if the input contains only valid hexadecimal characters and if the size is not too large. This is done by using a two-way binding and extending the \texttt{ValidationRule} class which is a built-in module of WPF. Only if the input is valid, the value is saved into a property of the underlying view model. This way, we can be sure that we always have sane data with which we later can execute the cipher with.
+If the user enters something into the input fields of the Diffusion page, validation of the input occurs. It checks if the input contains only valid hexadecimal characters and if the size is not too large. This is done by using two-way bindings and extending the \texttt{ValidationRule} class which is a built-in module of WPF. Only if the input is valid, the value is saved into a property of the underlying view model. This way, we can be sure that we always have sane data with which we later can execute the cipher with.
 
-Furthermore, I am using converters which are also built into WPF to convert data into user-friendly formats. Here, I am converting the byte arrays into hex strings and vice versa.
+Furthermore, I am using converters which are also built into WPF to convert data into user-friendly formats. Converters are always attached to bindings, so inside the two-way bindings, I am converting the byte arrays into hex strings and vice versa.
 
 Since data binding works by notifying the view if a variable has changed, WPF provides an interface named \texttt{INotifyPropertyChanged} which helps with implementing these data binding notifications. It provides a method named \texttt{OnPropertyChanged} and  an event named \texttt{PropertyChangedEventHandler} which must be called with the name of the variable to raise such an notification. The data binding system then updates the variables.
 
@@ -347,7 +347,7 @@ The notification raising and the implementation of the \texttt{INotifyPropertyCh
 \end{subfigure}
 \end{figure}
 
-On page exit, \texttt{ChaChaPresentationViewModel}, which is the view model which implements navigation between the different pages (with their own viewmodels) and has access to the ChaCha cipher component, calls \texttt{Teardown} on the page we are leaving. This triggers the ChaCha execution with the given secondary values. This can be seen in Figure \ref{fig:mvvm.chachatrigger}.
+On page exit, \texttt{ChaChaPresentationViewModel}, which is the view model which implements navigation between the different pages (which have their own view models) and has access to the ChaCha cipher component, calls \texttt{Teardown} on the page we are leaving. This triggers the ChaCha execution with the given secondary values. This can be seen in Figure \ref{fig:mvvm.chachatrigger}.
 
 \begin{figure}
 \centering
