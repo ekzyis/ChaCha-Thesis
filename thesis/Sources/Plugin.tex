@@ -313,6 +313,27 @@ Another technique (that you can also see in the mentioned Figure) is the use of 
 \includegraphics[width=\textwidth]{figures/mvvm-action-navigation.png}
 \end{figure}
 
+Since the most interesting part about the MVVM architecture is probably how the diffusion visualization works, I will explain this feature in more detail.
+
+If the user enters something into the input fields for the secondary values, validation of the input occurs. It checks if the input contains only valid hexadecimal characters and if the size is not too large. This is done by extending the \texttt{ValidationRule} class which is a built-in module of WPF. Only if the input is valid, the value is saved into a property of the underlying view model. This way, we can be sure that we always have a sane data with which we later can execute the cipher with. Since data binding works by notifying the view if a variable has changed. WPF provides an interface named \texttt{INotifyPropertyChanged} which helps with implementing these data binding notifications. It provides a method named \texttt{OnPropertyChanged()}
+
+\begin{figure}
+\centering
+\caption{Data binding notification implementation}
+\begin{subfigure}[t]{0.5\textwidth}
+\caption{Data binding notification in setter of \texttt{DiffusionInputKey}}
+\label{fig:mvvm.onpropertychanged}
+\centering
+\includegraphics[width=0.99\textwidth]{figures/mvvm-onpropertychanged.png}
+\end{subfigure}%
+\begin{subfigure}[t]{0.5\textwidth}
+\caption{\texttt{ViewModelBase} implementation with \texttt{INotifyPropertyChanged} interface}
+\label{fig:mvvm.viewmodelbase}
+\centering
+\includegraphics[width=0.99\textwidth]{figures/mvvm-viewmodelbase.png}
+\end{subfigure}
+\end{figure}
+
 \subsubsection{Centralized navigation system}
 
 
