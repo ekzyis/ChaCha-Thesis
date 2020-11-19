@@ -419,7 +419,13 @@ To implement this concept, I created an extension method for the \texttt{Action}
 \includegraphics[width=\textwidth]{figures/code/nav-arch/IActionCreator-full.png}
 \end{figure}
 
-As one can see in the documentation of \texttt{IActionCreator}, I also wanted nested sequences. This means that a sequences could be started inside other sequence. A nested or child sequence would extend all the actions from its parent sequence. From the perspective of the nested sequence, it is no different than if all the actions from the parent sequence were created inside it. When ending a nested sequence, from the perspective of the parent sequence, the nested sequence never existed.
+As one can see in the documentation of \texttt{IActionCreator}, I also wanted nested sequences. This means that a sequences could be started inside other sequence. A nested or child sequence would extend all the actions from its parent sequence. From the perspective of the nested sequence, it is no different than if all the actions from the parent sequence were created inside it. When ending a nested sequence, from the perspective of the parent sequence, the nested sequence never existed. Figure \ref{fig:navsystem.test} shows a test which asserts that this nesting does indeed work as expected.
+\begin{figure}
+\centering
+\caption{Test method for nested sequences}
+\label{fig:navsystem.test}
+\includegraphics[width=\textwidth]{figures/code/nav-arch/TestNestedSequentialExecutionOrder.png}
+\end{figure}
 
 This was very helpful for implementing the actions for the ChaCha Hash Function page. Since each keystream block started with a cleared quarterround visualization and the initial state visible in the state matrix, it made sense to declare a sequence for each keystream. The same was true for each round and quarterround. This meant that I would not introduce too much computational overhead inside the transitional code (even though only one transition was executed by design) since I could just reset the sequence if it made no longer sense to include the code of previous actions. \\
 Essentially, this prevented the system degrading back to a linear navigation system as described in Section \ref{sec:encounteredProblems}. The system would have less transitions but would still execute the same code as a linear navigation system would when moving from action 0 to any other action; undoing any positive effect this approach of minimizing transitions could have had.
