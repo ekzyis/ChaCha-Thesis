@@ -2,8 +2,22 @@
 \chapter{Future Work}
 \label{chap:futureWork}
 
-\blindtext[2]
+In this chapter, I will describe how the plugin could be further improved to make it more useful for the audience of CrypTool 2.
 
-\blindtext[1]
+\begin{description}[style=nextline]
+\item[Diffusion: XOR input and button to toggle between XOR and actual values] 
+
+Adding a third input to the Diffusion page where the user can explicitly set the XOR between the primary and secondary value would better fit the needs of cryptanalysist who want to study the diffusion property of the cipher since one is more interested in the difference between two values than in their actual values. For example, if we just want to flip one bit, we could just type in a single 1 anywhere into the XOR input. \\
+Using the same argument, a button with which one can see the XOR between the intermediate values during visualization would be useful.
+
+\item[Salsa20 visualization]
+
+As mentioned in Section \ref{sec:salsaCT2Plugin}, using the now existing codebase for ChaCha visualization to create a Salsa20 visualization would definitely increase the value gained from this thesis. It would most likely even increase the value of the ChaCha visualization, since both ciphers could then be compared side-by-side. Since the visualizations would be very similar, comparing them and their diffusion property should be very easy.
+
+\item[Localization and online help]
+
+Currently, most texts are only localized in English. Only the memofields, component labels and plaintext value are also available in German. This should be changed in the near future. Further, there should be an online help for the ChaCha plugin which opens by selecting it and pressing F1.
+
+\end{description}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
