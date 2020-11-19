@@ -25,6 +25,13 @@ The specification of Salsa20 is very relevant for ChaCha because the specificati
 \section{Salsa20 CrypTool 2 Plugin}
 \label{sec:salsaCT2Plugin}
 
+\begin{figure}
+\caption{CT2 Template for the already existing Salsa20 plugin}
+\label{fig:salsa.template}
+\centering
+\includegraphics[width=\textwidth]{figures/ct2/salsa-crop.png}
+\end{figure}
+
 CrypTool 2 already has a plugin for the Salsa20 cipher but without a visualization.
 
 During my work on the ChaCha visualization, I thought about how I could reuse my code for the ChaCha visualization to create a visualization for the Salsa20 cipher. I figured that it would not be as straight-forward as I assumed in the beginning since the visualization goes very into detail and thus the differences would involve at least different XAML code. For example, since the state is built up differently, the visualization about the state matrix initialization would need to be adapted. Also, the quarterround is slightly different which also needs to be reflected in the visualization. 
