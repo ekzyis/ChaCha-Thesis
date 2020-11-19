@@ -1,20 +1,28 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Related Work}
 \label{sec:relatedWork}
+
+This chapter will be about work which is related to the ChaCha plugin implementation and was therefore reviewed by me during the work on this thesis.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Salsa Cipher}
+\section{Salsa20 Cipher Family}
 \label{sec:salsaCipher}
 
-Do not forget to use references~\cite{AESVisualization} like done here~\cite{AvalancheVisualization} to enable the bibliography.
-~\cite{rfc8439}
-~\cite{salsaspec}
-~\cite{chachaspec}
-~\cite{salsasec}
-\blindtext[3]
+The 256-bit stream cipher family Salsa20 is the cipher family on which the ChaCha cipher family is based.
+
+Salsa20/20, the 20 rounds variant, was developed by Prof. Daniel J. Bernstein in 2005 \cite{salsaspec} and submitted to eSTREAM, an european project to ``to promote the design of efficient and compact stream ciphers suitable for widespread adoption'' \cite{estream}.
+
+It uses only add-rotate-XOR (ARX) operations for encryption which prevents timing attacks since they run in constant time on basically all platforms. Beside 256-bit keys, it also supports 128-bit keys. It internally uses a round function which transform a 512-bit state, consisting of the key, four 32-bit constants, a 64-bit initialization vector and a 64-bit counter, into a keystream block. Since for the next keystream block, only the counter is incremented in the initial state, Salsa20 shares the same implementation advantages as block ciphers in counter mode, in particular the ability to generate output blocks in any order and in parallel \cite{salsaspec}.
+
+Prof. Bernstein later introduced other variants with 8 and 12 rounds, named Salsa20/8 and Salsa20/12, to let users decide between a faster, but less secure cipher. Other round variants like 9, 10 or 11 were not introduced because the difference in speed would be insignificant \cite{salsa812}. The ChaCha cipher family received the same round variants. 
+
+There is also a variant of Salsa20 called XSalsa20 which supports 192-bit initialization vectors. Since its implementation varies quite a bit from the Salsa20/r variants and Prof. Bernstein introduced XSalsa20 as part of a new cipher family (based on Salsa20), this cipher is of no relevance for this thesis \cite{xsalsa20spec}. There is a XChaCha20 variant but it ``is currently not widely implemented outside the libsodium library [a software library for cryptography], due to the absence of formal specification'' \cite{xchacha20}.
+
+The specification of Salsa20 is very relevant for ChaCha because the specification for ChaCha only mentions the differences \cite{chachaspec}. Therefore, to implement ChaCa, one has to read through the specification of Salsa20.  However, in Chapter \ref{chap:chacha}, I will go over the specification of ChaCha without assuming prior knowledge about Salsa20.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Salsa CrypTool 2 Plugin}
+\section{Salsa20 CrypTool 2 Plugin}
 \label{sec:salsaCT2Plugin}
 \blindtext[2]
 
