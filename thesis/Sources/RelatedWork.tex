@@ -48,6 +48,27 @@ In this section, I will discuss ideas that I got from existing CrypTool 2 cipher
 \subsection{AES Visualization}
 \label{sec:aesVisualization}
 
+\begin{figure}
+\caption{AES visualization plugin}
+\label{fig:aes}
+\centering
+\includegraphics[width=\textwidth]{figures/ct2/aes.png}
+\end{figure}
+
+Matthias Becher created a visualization for the AES cipher during his bachelor thesis in 2016. It was the visualization of which I took the most inspiration for my own implementation. I also read through his bachelor thesis to see how he solved some of the problems that I encountered. For example, he wrote the following:
+
+``The first big decision that had to be made was whether the states after each encryption operation would be calculated during the visualization or precalculated and stored at the start of the execution. One feature the plugin should have was to not only jump ahead to later operations but also to go back to previous ones. That means if the values were calculated during the visualization every time you went back they would have to be recalculated from the start. Therefore, I decided to precompute and store results of each operation in an array of byte arrays..'' \cite{aesthesis}
+
+I came to the exact same conclusion that the values need to be precalculated for the reasons he mentioned.
+
+Looking through his visualization, I liked how he changed the background of the elements to catch the user's attention. This is shown in Figure \ref{fig:aes}. I have used a similar mechanic during the ChaCha hash function visualization where I put a light blue background onto the state elements which will be used as the quarterround input. Also during the quarterround, I extensively used background coloring to tell the user where he should pay his attention.
+
+Another thing I adopted from his visualization was the navigation in the top-left corner. I placed my page navigation there.
+
+What I wanted to do differently in my navigation was to not show so many buttons all the time to the user. I was quite overwhelmed by all the buttons in the bottom navigation bar on the start even though they were disabled. Therefore, on pages which have no actions, I had no buttons in the bottom row. On pages with actions, a simple slider with a previous and next button did suffice. For the ChaCha hash function, which needed additional navigation, my navigation bar looked similar but still felt in my opinion less crowded, especially because I did not use buttons for every single round but a text input .
+
+Further, I was confused why I could not use the ``Back'' button during the ``Expansion'' or ``Encryption'' step. For my plugin, I wanted to let the user navigate to any step in the visualization fairly simple. To achieve this, I needed to make sure that the user even knows where he is and where he needs to click to go to a particular step. To give the user the information he needed, I used the dedicated page navigation in the top-left corner which stays the same on every page and tells the user on which page he currently is using bold font. Further, I numbered every single action on each page together with an action text input and how many actions a page has. The text input enables the feature that I mentioned to let the user navigate to any step in the visualization fairly simple.
+
 \subsection{Avalanche Visualization}
 \label{sec:avalancheVisualization}
 
