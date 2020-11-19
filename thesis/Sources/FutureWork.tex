@@ -19,7 +19,7 @@ I have thought about using a plot instead of the simple text which is updated at
 
 \item[Automatic navigation]
 
-As mentioned in Section \ref{sec:aesVisualization}, in the AES visualization, I have seen a button which lets the visualization run without further user interaction needed. A slider was provided to adjust the speed. I think that such a button could be useful for the ChaCha visualization, too, especially for the page about the ChaCha hash function with its many actions. \\
+In the AES visualization, I have seen a button named ``Auto'' which lets the visualization run without further user interaction needed. A slider was provided to adjust the speed (see Figure \ref{fig:aes}). I think that such a button could be useful for the ChaCha visualization, too, especially for the page about the ChaCha hash function with its many actions. \\
 Since I am already using asynchronous navigation for the action slider (which I think would be needed to let a timer run without blocking the UI), I think implementing this feature could easily be integrated within the existing navigation system. Only page switches could maybe get tricky since the action navigation is handled within each page thus navigating out of a page may not be straight-forward. I have noticed that the automatic navigation in the AES visualization does stop between each step so switching the page automatically may not even be desired.
 
 \item[Salsa20 visualization]
