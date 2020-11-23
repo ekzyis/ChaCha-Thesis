@@ -7,7 +7,7 @@ To help with understanding the plugin visualization and for the sake of complete
 ChaCha is a 256-bit stream cipher based on Salsa20, both developed by Prof. Daniel J. Bernstein. It was designed to improve diffusion per round while maintaining or even increasing the performance compared to Salsa20. This makes it more secure than Salsa20 with the same amount of rounds. It was developed in the year 2008, 3 years after Salsa20 \cite{chachaspec}.
 
 The specification can be broken apart into five main points: \\
-The \textit{quarterround} function, the \textit{littleendian} function, a hash function which utilizes the two other mentioned functions, how the 512-bit state is setup and finally, how the encryption/decryption process works as a whole, bringing all the individual pieces together. 
+The \textit{quarterround} function, the \textit{little-endian} function, a hash function which utilizes the two other mentioned functions, how the 512-bit state is setup and finally, how the encryption/decryption process works as a whole, bringing all the individual pieces together. 
 
 I will start with the quarterround function.
 
@@ -30,10 +30,10 @@ It modifies its input values as described in the following pseudo-code:
 
 I will call one row, consisting of one 32-bit addition, one XOR and one shift operation, a \textit{quarterround step}. This naming convention will be reused in Section \ref{sec:userInterface}.
 
-\section{Littleendian Function}
+\section{Little-endian Function}
 \label{sec:chacha.littleendian}
 
-The littleendian function takes in one 32-bit unsigned integer and reverses its byte order; also returning a 32-bit unsigned integer.  \\
+The little-endian function takes in one 32-bit unsigned integer and reverses its byte order; also returning a 32-bit unsigned integer.  \\
 It can be implemented as follows:
 
 \begin{center}
@@ -87,7 +87,7 @@ To summarize, the following quarterrounds make up one column round:
 \end{minipage}
 \end{center}
 
-After a set amount of rounds (8, 12, or 20), the input vector is added to the vector on which the quarterround function was run. Then the byte order of each matrix entry is reversed using the littleendian function.
+After a set amount of rounds (8, 12, or 20), the input vector is added to the vector on which the quarterround function was run. Then the byte order of each matrix entry is reversed using the little-endian function.
 
 Having explained the basic structure of the ChaCha hash function, the following pseudo-code should complete the readers comprehension of it:
 
