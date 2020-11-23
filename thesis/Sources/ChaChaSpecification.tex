@@ -7,7 +7,7 @@ To help with understanding the plugin visualization and for the sake of complete
 ChaCha is a 256-bit stream cipher based on Salsa20, both developed by Prof. Daniel J. Bernstein. It was designed to improve diffusion per round while maintaining or even increasing the performance compared to Salsa20. This makes it more secure than Salsa20 with the same amount of rounds. It was developed in the year 2008, 3 years after Salsa20 \cite{chachaspec}.
 
 The specification can be broken apart into five main points: \\
-The \textit{quarterround} function, the \textit{littleendian} function, a hash function which utilizes the two other mentioned functions, how the 512-bit state is setup and finally, how the en-/decryption process works as a whole, bringing all the individual pieces together. 
+The \textit{quarterround} function, the \textit{littleendian} function, a hash function which utilizes the two other mentioned functions, how the 512-bit state is setup and finally, how the encryption/decryption process works as a whole, bringing all the individual pieces together. 
 
 I will start with the quarterround function.
 
@@ -162,12 +162,12 @@ Example (all numbers are in hexadecimal with \texttt{:} as separation between by
 \end{pmatrix}
 \end{equation*}
 
-\section{En-/Decryption}
+\section{Encryption/Decryption}
 \label{sec:chacha.encryption}
 
-To en- or decrypt a input text, it is XOR'ed with the keystream. \\
+To encrypt or decrypt a input text, it is XOR'ed with the keystream. \\
 To generate the keystream, the ChaCha hash function is continously used to create 512-bit keystream blocks until we have enough to XOR every byte of the input text. The input to the ChaCha hash function is the 512-bit initial state as explained in the previous section. After each keystream block, the counter is incremented to have a different initial state as the input each time.
 
 Since we are operating on streams, if the input message is not a multiple of 512-bit, the bits of the last block of the input message are left-aligned and the remaining bits of the keystream are dropped. This means that the output will always be the exact same length as the input.
 
-There is no difference between en- or decryption because XOR is the inverse to itself.
+There is no difference between encryption or decryption because XOR is the inverse to itself.
