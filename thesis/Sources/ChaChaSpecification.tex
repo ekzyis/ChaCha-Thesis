@@ -4,7 +4,7 @@
 
 To help with understanding the plugin visualization and for the sake of completeness, I will summarize the specification of the ChaCha cipher in this chapter.
 
-ChaCha is a 256-bit stream cipher based on Salsa20, both developed by Prof. Daniel J. Bernstein. It was designed to improve diffusion per round while maintaining or even increasing the performance compared to Salsa20. This makes it more secure than Salsa20 with the same amount of rounds. It was developed in the year 2008, 3 years after Salsa20 \cite{chachaspec}.
+ChaCha is a 256-bit stream cipher based on Salsa20, both developed by Daniel J. Bernstein. It was designed to improve diffusion per round while maintaining or even increasing the performance compared to Salsa20. This makes it more secure than Salsa20 with the same amount of rounds. It was developed in the year 2008, 3 years after Salsa20 \cite{chachaspec}.
 
 The specification can be broken apart into five main points: \\
 The \textit{quarterround} function, the \textit{little-endian} function, a hash function which utilizes the two other mentioned functions, how the 512-bit state is setup and finally, how the encryption/decryption process works as a whole, bringing all the individual pieces together. 
@@ -48,7 +48,7 @@ It can be implemented as follows:
 \end{center}
 
 \begin{remark}
-Its naming has nothing to do with system endianness, but was just named like this by Prof. Bernstein for unknown reasons (most likely because reversing the byte order is what needs to be done when transmitting data between systems of different endianess).
+Its naming has nothing to do with system endianness, but was just named like this by Bernstein for unknown reasons (most likely because reversing the byte order is what needs to be done when transmitting data between systems of different endianess).
 \end{remark}
 
 \section{ChaCha Hash Function}
@@ -65,8 +65,8 @@ y_{12} & y_{13} & y_{14} & y_{15}\\
 \end{pmatrix}
 \end{equation*}
 
-Using this matrix representation helps with understanding why Prof. Bernstein calls some rounds \textit{column rounds} and others \textit{diagonal rounds} in his paper (one round consists of four quarterrounds): \\
-The ChaCha hash function iterates first through all columns and then through all diagonals of the matrix; applying the quarterround function to the four entries of each column/diagonal. After the first four quarterrounds it therefore has changed all columns of the matrix. This is what Prof. Bernstein calls a column round in his paper. After the next four quarterrounds, it changed all diagonals of the matrix which Prof. Bernstein analogously calls a diagonal round.
+Using this matrix representation helps with understanding why Bernstein calls some rounds \textit{column rounds} and others \textit{diagonal rounds} in his paper (one round consists of four quarterrounds): \\
+The ChaCha hash function iterates first through all columns and then through all diagonals of the matrix; applying the quarterround function to the four entries of each column/diagonal. After the first four quarterrounds it therefore has changed all columns of the matrix. This is what Bernstein calls a column round in his paper. After the next four quarterrounds, it changed all diagonals of the matrix which Bernstein analogously calls a diagonal round.
 
 To summarize, the following quarterrounds make up one column round:
 \begin{center}
