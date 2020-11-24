@@ -119,9 +119,12 @@ Having explained the basic structure of the ChaCha hash function, the following 
 ChaCha internally uses a 512-bit state for keystream generation. The ChaCha hash function modifies this state to generate a keystream block. \\
 In this section, I will explain how the state is setup which is then passed in 32-bit blocks to the ChaCha hash function.
 
-The state is made up of a 128-bit constant, a 256-bit key section, a 128-bit nonce section. To demonstrate that the author had no hidden intent with picking his constants (nothing-up-my-sleeve number), he defined the constants to be ``expand 16-byte k'' for 128-bit keys and ``expand 32-byte k'' for 256-bit keys in ASCII .\\
-In the 128-bit key variant, the key is concatenated with itself to create a 256-bit key. This concatenated key is then used for the state setup. If the key is already 256-bit, we do nothing and just use it as it is for the state setup.\\
-The nonce section, which consists of a block counter and the initialization vector, is where the original version and the IETF version differ. I will continue with the original version and later come back to the IETF version. In the original version, a 64-bit counter and a 64-bit initialization vector is used.
+The state is made up of a 128-bit constant, a 256-bit key section and a 128-bit nonce section. To demonstrate that the author had no hidden intent with picking his constants (nothing-up-my-sleeve number), he defined the constants to be ``expand 16-byte k'' for 128-bit keys and ``expand 32-byte k'' for 256-bit keys in ASCII .
+
+In the 128-bit key variant, the key is concatenated with itself to create a 256-bit key. This concatenated key is then used for the state setup. If the key is already 256-bit, we do nothing and just use it as it is for the state setup.
+
+The nonce section, which consists of a block counter and the initialization vector, is where the original version and the IETF version differ. In the original version, a 64-bit counter and a 64-bit initialization vector is used whereas the IETF version is using a 32-bit counter and a 96-bit initialization vector. \\
+This means that the IETF version only partitions the nonce differently. Their reasoning to have a longer initialization vector was that with a 32-bit counter, one can encrypt messages up to 256GiB which should be enough and therefore one could make use of a bigger initialization vector. Since we need to make sure that a initialization vector is never reused with the same key, we can use a bigger initialization vector to make it more secure in cases where the same key is used by multiple senders. This is done by partitioning the 96-bit word into one 32-bit and one 64-bit section. The 32-bit section could be a unique value per sender and the last 64 bits could be a counter which is incremented for every message \cite{rfc8439}.
 
 All state parameters are encoded by first splitting them into 32-bit chunks whose byte order is reversed except for the counter, whose byte order is first completely reversed and afterwards split into 32-bit chunks. Their 32-bit blocks are then ordered as follows to form the 512-bit state matrix:
 
@@ -130,7 +133,7 @@ All state parameters are encoded by first splitting them into 32-bit chunks whos
 \texttt{constant}& \texttt{constant} & \texttt{constant} & \texttt{constant} \\
 \texttt{key} & \texttt{key} & \texttt{key} & \texttt{key} \\
 \texttt{key} & \texttt{key} & \texttt{key} & \texttt{key} \\
-\texttt{counter} & \texttt{counter} & \texttt{IV} & \texttt{IV} \\
+\texttt{counter} & \texttt{counter/IV} & \texttt{IV} & \texttt{IV} \\
 \end{pmatrix}
 \end{equation*}
 
