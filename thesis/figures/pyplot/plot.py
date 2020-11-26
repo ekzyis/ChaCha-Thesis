@@ -15,8 +15,8 @@ benchmark_1 = [0, 933.18, 843, 4.75, 1017.09, 304.14, 849.67]
 
 import matplotlib.pyplot as plt
 
-plt.plot(x, benchmark_0)
-plt.plot(x, benchmark_1)
+plt.plot(x, benchmark_0, 'o')
+plt.plot(x, benchmark_1, 'o')
 plt.ylabel('time in milliseconds')
 plt.xlabel('action')
 plt.show()
