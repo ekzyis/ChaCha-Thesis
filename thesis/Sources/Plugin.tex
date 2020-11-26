@@ -30,10 +30,10 @@ The last subsection then goes into technical details to explain how the plugin i
 \label{sec:keyFeatures}
 
 \begin{figure}
-\label{fig:plugin.template}
 \centering
 \includegraphics[width=\textwidth]{figures/ct2/plugin-template.png}
 \caption[ChaCha CT2 template]{CT2 template for the ChaCha plugin}
+\label{fig:plugin.template}
 \end{figure}
 
 The plugin offers the user the ability to input his own plaintext, key, initialization vector and initial counter using the concept of visual programming (around which CT2 is built) as one can see in Figure \ref{fig:plugin.template}. The counter is optional and defaults to $0$. These values are then used to visualize the cipher execution comprehensively. Descriptions complement the visualization by providing information about what is happening. \\
@@ -46,7 +46,6 @@ The version (original DJB version or IETF version) and how often the ChaCha hash
 \subsubsection{General interface structure}
 
 \begin{figure}
-\label{fig:allpages}
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -74,6 +73,7 @@ The version (original DJB version or IETF version) and how often the ChaCha hash
   \caption{ChaCha Hash Function page}
 \end{subfigure}
 \caption[All pages of the ChaCha visualization plugin]{All pages of the ChaCha visualization plugin in their initial state}
+\label{fig:allpages}
 \end{figure}
 
 All pages have a common interface layout which consists of three sections. Each section is inside a own dedicated row. \\
@@ -97,7 +97,6 @@ Last but not least, the amount of flipped bits is shown in the second to last ro
 \subsubsection{State Matrix Initialization page}
 
 \begin{figure}
-\label{fig:diffusion}
 \centering
 \begin{subfigure}{0.5\textwidth}
   \centering
@@ -112,8 +111,7 @@ Last but not least, the amount of flipped bits is shown in the second to last ro
   \label{fig:diffusion.active}
 \end{subfigure}
 \caption{Diffusion page}
-
-\label{fig:statematrix.encoding}
+\label{fig:diffusion}
 \begin{subfigure}{0.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/ct2/state-matrix/1-state-matrix-constants.png}
@@ -139,6 +137,7 @@ Last but not least, the amount of flipped bits is shown in the second to last ro
   \label{fig:statematrix.encoding.iv}
 \end{subfigure}
 \caption[State Matrix Initialization page]{Encoding of the state parameters on the State Matrix Initialization page}
+\label{fig:statematrix.encoding}
 \end{figure}
 
 On the State Matrix Initialization page, it is shown how the initial 512-bit state for the first keystream block is build up. The generation of the next keystream blocks start with the same state but just with a different counter (as was described in Chapter \ref{chap:chacha}). \\
@@ -165,7 +164,6 @@ They also show the state indices that will get updated during their quarterround
 Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary how the page looks like at the end of each quarterround for round 1 (column rounds) and round 2 (diagonal rounds). As you can see, the corresponding state entry is highlighted with a light blue background. This light blue background is also used throughout the visualization to catch the user's attention about which UI elements will be updated in the next step.\\
 
 \begin{figure}
-\label{fig:chachahash.mid.qr}
 \centering
 \begin{subfigure}{\textwidth}
   \centering
@@ -180,10 +178,10 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
   \label{fig:chachahash.mid.qr.with.diffusion}
 \end{subfigure}
 \caption[Quarterround visualization]{Quarterround visualization during ChaCha hash function}
+\label{fig:chachahash.mid.qr}
 \end{figure}
 
 \begin{figure}
-\label{fig:wiki.qr.circuit}
 \centering
 \begin{subfigure}[t]{0.5\textwidth}
   \centering
@@ -198,10 +196,10 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
   \label{fig:wiki.qr.circuit.chacha}
 \end{subfigure}%
 \caption{Quarterround circuit diagram}
+\label{fig:wiki.qr.circuit}
 \end{figure}
 
 \begin{figure}
-\label{fig:chachahash.end}
 \centering
 \begin{subfigure}{\textwidth}
   \centering
@@ -216,10 +214,10 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
   \label{fig:chachahash.end.with.diffusion}
 \end{subfigure}
 \caption[Addition and Little-Endian step visualization]{Addition and Little-Endian step visualization at the end of the ChaCha hash function}
+\label{fig:chachahash.end}
 \end{figure}
 
 \begin{figure}
-\label{fig:chachahash.cr}
 \centering
 \begin{subfigure}{0.5\textwidth}
   \centering
@@ -246,7 +244,7 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
   \label{fig:chachahash.cr.4}
 \end{subfigure}
 \caption[End of column rounds]{End of quarterround execution of each column round of an uneven round \\(here: round 1)}
-\label{fig:chachahash.dr}
+\label{fig:chachahash.cr}
 \centering
 \begin{subfigure}{0.5\textwidth}
   \centering
@@ -273,6 +271,7 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
   \label{fig:chachahash.dr.4}
 \end{subfigure}
 \caption[End of diagonal rounds]{End of quarterround execution of each diagonal round of one even round \\(here: round 2)}
+\label{fig:chachahash.dr}
 \end{figure}
 
 \subsection{Architecture}
@@ -306,13 +305,13 @@ In Figure \ref{fig:mvvm.pagenavigation}, I have provided an example for how this
 Another technique (that you can also see in the mentioned Figure) is the use of templates. I have used data templates to attach views to view models and control templates to implement the general UI structure with the three sections I mentioned in Section \ref{sec:userInterface}. This enabled me to define the UI layout for all pages in one place and also reuse a single implementation of the page and action navigation across all pages. This way, view modifications down the road which applied to all pages were easy and fast. \\ In Figure \ref{fig:mvvm.actionnavigation}, you can see the view implementation of the action navigation bar which is only visible on pages which do have actions.
 
 \begin{figure}
-\label{fig:mvvm.pagenavigation}
 \centering
 \includegraphics[width=\textwidth]{figures/code/mvvm-arch/page-navigation-template.png}
 \caption[Page navigation]{Implementation of page navigation using data binding}
-\label{fig:mvvm.actionnavigation}
+\label{fig:mvvm.pagenavigation}
 \includegraphics[width=\textwidth]{figures/code/mvvm-arch/action-navigation-template.png}
 \caption[Action navigation]{Implementation of action navigation inside a control template}
+\label{fig:mvvm.actionnavigation}
 \end{figure}
 
 Since the most interesting part about the MVVM architecture is probably how the diffusion visualization works, I will explain this feature in more detail.
@@ -329,49 +328,48 @@ The notification raising and the implementation of the \texttt{INotifyPropertyCh
 
 \begin{figure}
 \centering
-\label{fig:mvvm.databindingnotification}
 \begin{subfigure}[t]{0.5\textwidth}
-\label{fig:mvvm.onpropertychanged}
 \centering
 \includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/onpropertychanged.png}
 \caption{Data binding notification in setter of \texttt{DiffusionInputKey}}
+\label{fig:mvvm.onpropertychanged}
 \end{subfigure}%
 \begin{subfigure}[t]{0.5\textwidth}
-\label{fig:mvvm.viewmodelbase}
 \centering
 \includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/viewmodelbase.png}
 \caption{\texttt{ViewModelBase} implementation with \texttt{INotifyPropertyChanged} interface}
+\label{fig:mvvm.viewmodelbase}
 \end{subfigure}
 \caption{Data binding notification implementation}
+\label{fig:mvvm.databindingnotification}
 \end{figure}
 
 On page exit, \texttt{ChaChaPresentationViewModel}, which is the view model which implements navigation between the different pages (which have their own view models) and has access to the ChaCha cipher component, calls \texttt{Teardown} on the page we are leaving. This triggers the ChaCha execution with the given secondary values. This can be seen in Figure \ref{fig:mvvm.chachatrigger}.
 
 \begin{figure}
 \centering
-\label{fig:mvvm.chachatrigger}
 \begin{subfigure}[t]{0.5\textwidth}
-\label{fig:mvvm.chachapresentationviewmodel}
 \centering
 \includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/chachaPresentationViewModel.png}
-\caption{\texttt{ChaChaPresentationViewModel}: Implements page navigation and has access to the ChaCha component}
+\caption{\texttt{ChaChaPresentationViewModel}: Implements page navigation and has access to the ChaCha component}\label{fig:mvvm.chachapresentationviewmodel}
 \end{subfigure}%
 \begin{subfigure}[t]{0.5\textwidth}
-\label{fig:mvvm.viewmodelbase}
 \centering
 \includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/diffusionViewModel.png}
 \caption{\texttt{DiffusionViewModel}: Triggers ChaCha execution on page exit using the \texttt{ChaChaPresentationViewModel} instance that was passed in its constructor}
+ \label{fig:mvvm.viewmodelbase}
 \end{subfigure}
 \caption[ChaCha diffusion execution]{Triggering ChaCha execution with values entered in Diffusion page}
+\label{fig:mvvm.chachatrigger}
 \end{figure}
 
 Before execution, a flag was set which instructs the list getters into which the ChaCha component would save its intermediate values to return a different list. This means that the ChaCha component is agnostic of where it saves its intermediate values. During the execution, the intermediate values for the diffusion run are therefore saved in parallel lists. This is shown exemplary for the quarterround input values in Figure \ref{fig:mvvm.chacha}. The other pages then simply bind to these lists to display the intermediate values of the diffusion run. Converting the 32-bit unsigned integers into hex strings and marking their characters which are different red then happens in the view models.
 
 \begin{figure}
 \centering
-\label{fig:mvvm.chacha}
 \includegraphics[width=\textwidth]{figures/code/mvvm-arch/chacha.png}
 \caption[Intermediate values saving]{Saving of intermediate values during ChaCha execution in lists}
+\label{fig:mvvm.chacha}
 \end{figure}
 
 \subsubsection{Centralized navigation system}
@@ -385,16 +383,16 @@ I came to the conclusion that the best trade-off would be to have a navigation s
 
 \begin{figure}
 \centering
-\label{fig:navsystem.all.overview}
 \includegraphics[width=0.5\textwidth]{figures/navigationsystem-diagram/navigationsystem-all-overview.png}
 \caption[Navigation paths (no reset state)]{Navigation paths between actions if no reset state was used.}
+\label{fig:navsystem.all.overview}
 \end{figure}
 
 \begin{figure}
 \centering
-\label{fig:navsystem.central.overview}
 \includegraphics[width=0.5\textwidth]{figures/navigationsystem-diagram/navigationsystem-central-overview.png}
 \caption[Navigation paths in centralized navigation system]{Navigation paths between actions in the centralized navigation system. \\The colorized state is the reset state which corresponds to the initial state.\\For every new action, possible transitions increase by 2.}
+\label{fig:navsystem.central.overview}
 \end{figure}
 
 During implementation, I realized I could bring the amount of new transitions for each action down to one. Defining the initial state as the central state meant that transitioning from any action to it could be done by just resetting the whole page to the first action. Due to this, I started calling the central state the reset or initial state since they were the same.
@@ -405,24 +403,24 @@ To implement this concept, I created an extension method for the \texttt{Action}
 
 \begin{figure}
 \centering
-\label{fig:navsystem.sequences.extension}
 \includegraphics[width=0.5\textwidth]{figures/code/nav-arch/action-extensions.png}
 \caption[Extending \texttt{Action} type]{Extension method for the \texttt{Action} type to extend actions}
+\label{fig:navsystem.sequences.extension}
 \end{figure}
 
 \begin{figure}
 \centering
-\label{fig:navsystem.iactioncreator}
 \includegraphics[width=\textwidth]{figures/code/nav-arch/IActionCreator-full.png}
 \caption[Sequence interface implementation]{\texttt{IActionCreator}: Interface to implement sequences}
+\label{fig:navsystem.iactioncreator}
 \end{figure}
 
 As one can see in the documentation of \texttt{IActionCreator}, I also wanted nested sequences. This means that a sequences could be started inside other sequence. A nested or child sequence would extend all the actions from its parent sequence. From the perspective of the nested sequence, it is no different than if all the actions from the parent sequence were created inside it. When ending a nested sequence, from the perspective of the parent sequence, the nested sequence never existed. Figure \ref{fig:navsystem.test} shows a test which asserts that this nesting does indeed work as expected.
 \begin{figure}
 \centering
-\label{fig:navsystem.test}
 \includegraphics[width=\textwidth]{figures/code/nav-arch/TestNestedSequentialExecutionOrder.png}
 \caption{Test method for nested sequences}
+\label{fig:navsystem.test}
 \end{figure}
 
 This was very helpful for implementing the actions for the ChaCha Hash Function page. Since each keystream block started with a cleared quarterround visualization and the initial state visible in the state matrix, it made sense to declare a sequence for each keystream. The same was true for each round and quarterround. This meant that I would not introduce too much computational overhead inside the transitional code (even though only one transition was executed by design) since I could just reset the sequence if it made no longer sense to include the code of previous actions.
@@ -455,10 +453,10 @@ As can be seen in Figure \ref{fig:navsystem.linear.detail}, during the transitio
 The problem with that architecture was that the state saving and the execution logic inside the action definitions were changing a lot of page elements directly by accessing them via their name that I gave them in the XAML code. That this was against best practices in writing WPF applications I only noticed later on, when I read more about them. This issue combined with the restricted, linear pathing between actions resulted in that huge performance loss that was described in Figure \ref{fig:navsystem.linear.stats}.
 
 \begin{figure}
-\label{fig:navsystem.linear.overview}
 \centering
 \includegraphics[width=\textwidth]{figures/navigationsystem-diagram/navigationsystem-linear-overview.png}
 \caption[Navigation paths in linear navigation system]{Navigation paths between actions in the linear navigation system}
+\label{fig:navsystem.linear.overview}
 \end{figure}
 
 \subsubsection{Linear navigation system with caches}
@@ -472,17 +470,17 @@ This did only enhance the slider but not the overall performance because at its 
 One of the major drawbacks for this enhanced design was that the automatic action undoing was no longer possible. Since we can not guarantee that the state between two actions has been saved, we cannot use our undo function. The reason is that any transition between two actions may have been skipped because first moving to a cached entry needed less hops. Therefore, I needed to write the code for backwards navigation to support caching.
 
 \begin{figure}
-\label{fig:navsystem.cache.overview}
 \centering
 \includegraphics[width=\textwidth]{figures/navigationsystem-diagram/navigationsystem-cache-overview-2.png}
 \caption[Navigation paths in linear navigation system with caches]{Navigation paths between actions in the linear navigation system with caches. The colorized state has a corresponding cache entry.}
+\label{fig:navsystem.cache.overview}
 \end{figure}
 
 \begin{figure}
-\label{fig:async.navigation}
 \centering
 \includegraphics[width=\textwidth]{figures/code/nav-arch/async-navigation.png}
 \caption{Asynchronous navigation subsystem}
+\label{fig:async.navigation}
 \end{figure}
 
 
@@ -497,10 +495,10 @@ I summarized all the problems I currently had with my code which not only consis
 Essentially, the problem was that I used a lot of code-behind which was highly coupled to the XAML code. I did it like this because it was very straight-forward to do so and lead to fast results. At first, I thought the trade-off between loss of maintainability/flexibility in the future and not having to spend precious time to learn design patterns for WPF applications was worth it. I thought so because I was not writing an enterprise application on which the long-term success of a company depended and which would get regular updates in the future thus high maintainability or being easy to extend was not a priority. I got proven wrong when I realized I already reached the limit of "code smells" which slowed me down in updating, fixing or creating new features. What follows is the list of problems together with what requirement the new navigation system would need to meet to solve them:
 
 \begin{figure}
-\label{fig:plugin.scaling.bug}
 \centering
 \includegraphics[width=\textwidth]{figures/ct2/scaling-bug-example.png}
 \caption{Example for bad scaling property in previous plugin versions}
+\label{fig:plugin.scaling.bug}
 \end{figure}
 
 \begin{description}
