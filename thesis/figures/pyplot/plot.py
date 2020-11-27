@@ -1,22 +1,42 @@
 #!/usr/bin/env python
 
-"""
-Create the performance plots.
-"""
+import csv
+from dataclasses import dataclass
+from typing import List
+from pprint import pprint
 
-# x axis tags. all benchmarks are starting from action zero.
-x = [0, 100, 200, 283, 400, 800, 3200]
+@dataclass
+class DataPoint:
+  action: int
+  samples: List[int]
 
-# benchmark at 283 is 4516.4ms which is weird. Leaving it out and replacing with linear .
-benchmark_0 = [0, 773.27, 1898.92, None, 4033.5, 8961.2, 37003]
-benchmark_0[3] = 4033.5 * 3 / 4
+  def average(self):
+    return sum(self.samples)/len(self.samples)
 
-benchmark_1 = [0, 933.18, 843, 4.75, 1017.09, 304.14, 849.67]
+@dataclass
+class CacheDataPoint(DataPoint):
+  cache: bool
 
-import matplotlib.pyplot as plt
+@dataclass
+class PlotData:
+  name: str
+  data: List[DataPoint]
 
-plt.plot(x, benchmark_0, 'o')
-plt.plot(x, benchmark_1, 'o')
-plt.ylabel('time in milliseconds')
-plt.xlabel('action')
-plt.show()
+def read_data(file: str) -> PlotData:
+  with open(file) as csvfile:
+    r = csv.reader(csvfile, delimiter='|')
+    data = []
+    for row in r:
+      if len(row) == 3:
+        data.append(CacheDataPoint(action=row[0], cache=row[1] == 'x', samples=row[2].split(',')))
+      else:
+        data.append(DataPoint(action=row[0], samples=row[1].split(',')))
+    return PlotData(name=file.replace('benchmark/', '').replace('.benchmark.csv', ''), data=data)
+
+data: List[PlotData] = []
+data.append(read_data('benchmark/navsystem-cache-qr.benchmark.csv'))
+data.append(read_data('benchmark/navsystem-cache-round.benchmark.csv'))
+data.append(read_data('benchmark/navsystem-central.benchmark.csv'))
+data.append(read_data('benchmark/navsystem-linear.benchmark.csv'))
+
+pprint(data)
