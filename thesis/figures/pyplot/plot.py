@@ -85,8 +85,7 @@ def insert_interpolation(plotData: PlotData, cache_step: int):
     if t is None:
       plotData.data.append(CacheDataPoint(action=x, samples=[avg_mid_cache_time], cache=False, interpolated=True))
 
-def plot_cache(plotData: PlotData, title):
-  fig, ax = plt.subplots(figsize=(20, 5))
+def plot_cache(plotData: PlotData, title, ax):
   x, y = plotData.x(), plotData.y()
 
   cache_data = list(map(lambda d: (d.action, d.average()), filter(lambda d: d.cache == True and d.interpolated == False, sorted(plotData.data, key=lambda d: d.action))))
@@ -105,45 +104,39 @@ def plot_cache(plotData: PlotData, title):
 
   ax.legend()
   ax.set(title=title, xlabel='action', ylabel='time [ms]')
-  plt.ylim(0, max(y)+10)
-  plt.show()
-
-def plot_cache_qr(plotData: PlotData):
+  
+def plot_cache_qr(plotData: PlotData, ax):
   """
   Create the plot for the navigation system with caches at every quarterround.
   """
   insert_interpolation(plotData, 46)
-  plot_cache(plotData, title='Performance of navigation system with caches for every quarterround')
+  plot_cache(plotData, 'Performance of navigation system with caches for every quarterround', ax)
 
-plot_cache_qr(data[0])
-
-def plot_cache_round(plotData: PlotData):
+def plot_cache_round(plotData: PlotData, ax):
   """
   Create the plot for the navigation system with caches at every round.
   """
   insert_interpolation(plotData, 184)
-  plot_cache(plotData, title='Performance of navigation system with caches for every round')
-  
-plot_cache_round(data[1])
+  plot_cache(plotData, 'Performance of navigation system with caches for every round', ax)
 
-def plot_linear(plotData: PlotData):
-  fig, ax = plt.subplots(figsize=(20, 5))
+def plot_linear(plotData: PlotData, ax):
   x, y = plotData.x(), plotData.y()
 
   ax.plot(x, y, '-o')
   ax.set(title='Performance of linear navigation system', xlabel='action', ylabel='time [ms]')
-  plt.ylim(0, max(y) + 10)
-  plt.show()
 
-plot_linear(data[3])
-
-def plot_central(plotData: PlotData):
-  fig, ax = plt.subplots(figsize=(20, 5))
+def plot_central(plotData: PlotData, ax):
   x, y = plotData.x(), plotData.y()
 
   ax.plot(x, y, '-o')
   ax.set(title='Performance of centralized navigation system', xlabel='action', ylabel='time [ms]')
-  plt.ylim(0, max(y) + 10)
-  plt.show()
 
-plot_central(data[2])
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
+
+plot_cache_qr(data[0], ax1)
+plot_cache_round(data[1], ax2)
+plot_central(data[2], ax3)
+plot_linear(data[3], ax4)
+fig.tight_layout()
+plt.subplots_adjust(left=0.05, right=0.95, bottom=0.1, top=0.9, wspace=0.15, hspace=0.2)
+plt.show()
