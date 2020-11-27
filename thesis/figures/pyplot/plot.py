@@ -133,10 +133,10 @@ def plot_central(plotData: PlotData, ax):
 
 fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
 
-plot_cache_qr(data[0], ax1)
+plot_linear(data[3], ax1)
 plot_cache_round(data[1], ax2)
-plot_central(data[2], ax3)
-plot_linear(data[3], ax4)
+plot_cache_qr(data[0], ax3)
+plot_central(data[2], ax4)
 fig.tight_layout()
 plt.subplots_adjust(left=0.05, right=0.95, bottom=0.1, top=0.9, wspace=0.15, hspace=0.2)
 plt.show()
