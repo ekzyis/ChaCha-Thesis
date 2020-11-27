@@ -1,22 +1,142 @@
 #!/usr/bin/env python
 
-"""
-Create the performance plots.
-"""
-
-# x axis tags. all benchmarks are starting from action zero.
-x = [0, 100, 200, 283, 400, 800, 3200]
-
-# benchmark at 283 is 4516.4ms which is weird. Leaving it out and replacing with linear .
-benchmark_0 = [0, 773.27, 1898.92, None, 4033.5, 8961.2, 37003]
-benchmark_0[3] = 4033.5 * 3 / 4
-
-benchmark_1 = [0, 933.18, 843, 4.75, 1017.09, 304.14, 849.67]
-
+import csv
+from dataclasses import dataclass
+from typing import List
+from pprint import pprint
+import matplotlib
 import matplotlib.pyplot as plt
+import numpy as np
+import random
 
-plt.plot(x, benchmark_0, 'o')
-plt.plot(x, benchmark_1, 'o')
-plt.ylabel('time in milliseconds')
-plt.xlabel('action')
+def avg(n):
+  return sum(n)/len(n)
+
+@dataclass
+class DataPoint:
+  action: int
+  samples: List[int]
+  interpolated: bool
+
+  def average(self):
+    return avg(self.samples)
+
+@dataclass
+class CacheDataPoint(DataPoint):
+  cache: bool
+
+@dataclass
+class PlotData:
+  name: str
+  data: List[DataPoint]
+
+  def x(self):
+    return [d.action for d in sorted(self.data, key=lambda d: d.action)]
+
+  def y(self):
+    return [d.average() for d in sorted(self.data, key=lambda d: d.action)]
+
+  def getY(self, x):
+    return next((d.average() for d in self.data if d.action == x), None)
+
+def read_data(file: str) -> PlotData:
+  with open(file) as csvfile:
+    r = csv.reader(csvfile, delimiter='|')
+    data = []
+    next(r)
+    for row in r:
+      if len(row) == 3:
+        data.append(
+          CacheDataPoint(
+            action=int(row[0]), cache=row[1] == 'x', samples=[int(x) for x in row[2].split(',')], interpolated=False
+          )
+        )
+      else:
+        data.append(
+          DataPoint(
+            action=int(row[0]), samples=[int(x) for x in row[1].split(',')], interpolated=False
+          )
+        )
+    return PlotData(name=file.replace('benchmark/', '').replace('.benchmark.csv', ''), data=data)
+
+data: List[PlotData] = []
+data.append(read_data('benchmark/navsystem-cache-qr.benchmark.csv'))
+data.append(read_data('benchmark/navsystem-cache-round.benchmark.csv'))
+data.append(read_data('benchmark/navsystem-central.benchmark.csv'))
+data.append(read_data('benchmark/navsystem-linear.benchmark.csv'))
+
+def insert_interpolation(plotData: PlotData, cache_step: int):
+  first_cache = 2
+  max_actions = 3600
+  # Interpolate data for cached action which are missing in the benchmark data
+  caches = np.arange(first_cache, max_actions, cache_step)
+  cache_times = [plotData.getY(x) for x in caches]
+  avg_cache_time = round(avg(list(filter(lambda y: y is not None, cache_times))), 2)
+  pprint(plotData)
+  for (x,t) in zip(caches, cache_times):
+    if t is None:
+      plotData.data.append(CacheDataPoint(action=x, samples=[avg_cache_time], cache=True, interpolated=True))
+
+  # Interpolate data for actions between caches which are missing in the benchmark data
+  mid_caches = np.arange(first_cache + (cache_step / 2), max_actions, cache_step)
+  mid_cache_times = [plotData.getY(x) for x in mid_caches]
+  avg_mid_cache_time = round(avg(list(filter(lambda y: y is not None, mid_cache_times))), 2)
+  for (x, t) in zip(mid_caches, mid_cache_times):
+    if t is None:
+      plotData.data.append(CacheDataPoint(action=x, samples=[avg_mid_cache_time], cache=False, interpolated=True))
+
+def plot_cache(plotData: PlotData, title, ax):
+  x, y = plotData.x(), plotData.y()
+
+  cache_data = list(map(lambda d: (d.action, d.average()), filter(lambda d: d.cache == True and d.interpolated == False, sorted(plotData.data, key=lambda d: d.action))))
+  cache_x, cache_y = [d[0] for d in cache_data], [d[1] for d in cache_data]
+
+  cache_data_int = list(map(lambda d: (d.action, d.average()), filter(lambda d: d.cache == True and d.interpolated == True, sorted(plotData.data, key=lambda d: d.action))))
+  cache_x_int, cache_y_int = [d[0] for d in cache_data_int], [d[1] for d in cache_data_int]
+
+  non_cache_data_int = list(map(lambda d: (d.action, d.average()), filter(lambda d: d.cache == False and d.interpolated == True, sorted(plotData.data, key=lambda d: d.action))))
+  non_cache_x_int, non_cache_y_int = [d[0] for d in non_cache_data_int], [d[1] for d in non_cache_data_int]
+
+  ax.plot(x, y, '-o', zorder=1)
+  ax.scatter(non_cache_x_int, non_cache_y_int, marker='s', zorder=2, label='interpolated')
+  ax.scatter(cache_x, cache_y, c='g', zorder=3, label='cached actions')
+  ax.scatter(cache_x_int, cache_y_int, marker='s', c='g', zorder=4, label='cached actions (interpolated)')
+
+  ax.legend()
+  ax.set(title=title, xlabel='Action', ylabel='Time [ms]')
+  
+def plot_cache_qr(plotData: PlotData, ax):
+  """
+  Create the plot for the navigation system with caches at every quarterround.
+  """
+  insert_interpolation(plotData, 46)
+  plot_cache(plotData, 'Performance of navigation system with caches for every quarterround', ax)
+
+def plot_cache_round(plotData: PlotData, ax):
+  """
+  Create the plot for the navigation system with caches at every round.
+  """
+  insert_interpolation(plotData, 184)
+  plot_cache(plotData, 'Performance of navigation system with caches for every round', ax)
+
+def plot_linear(plotData: PlotData, ax):
+  x, y = plotData.x(), plotData.y()
+
+  ax.plot(x, y, '-o')
+  ax.set(title='Performance of linear navigation system', xlabel='Action', ylabel='Time [ms]')
+
+def plot_central(plotData: PlotData, ax):
+  x, y = plotData.x(), plotData.y()
+
+  ax.plot(x, y, '-o')
+  ax.set(title='Performance of centralized navigation system', xlabel='Action', ylabel='Time [ms]')
+
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
+
+plot_cache_qr(data[0], ax1)
+plot_cache_round(data[1], ax2)
+plot_central(data[2], ax3)
+plot_linear(data[3], ax4)
+fig.tight_layout()
+plt.subplots_adjust(left=0.05, right=0.95, bottom=0.1, top=0.9, wspace=0.15, hspace=0.2)
 plt.show()
