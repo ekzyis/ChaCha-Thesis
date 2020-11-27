@@ -56,6 +56,8 @@ for d in data:
   y = d.y()
   fig, ax = plt.subplots()
   ax.plot(x, y, '-o')
+  for xy in zip(x, y):
+    ax.annotate('(%s, %s)' % xy, xy=xy, textcoords='data')
   ax.set(title=d.name, xlabel='action', ylabel='Time [ms]')
   plt.show()
 
