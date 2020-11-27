@@ -442,15 +442,22 @@ I hope that the description of these problems and the solutions I have found may
 
 \subsubsection{Linear navigation system}
 
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-linear.png}
+\caption{Performance of linear navigation system}
+\label{fig:navsystem.performance.linear}
+\end{figure}
+
 The peformance of the plugin was essentially coupled to how the navigation system was designed. Other things like the aforementioned calculation of the intermediate values for the visualization were compared to the navigation system design unsignificant because they are created by the ChaCha cipher anyway and must just be saved somewhere to not lose them. This means that storing them was only a necessary but not sufficient condition for a overall good performance. \\
-I realized this early in development when I had my first page with many page actions on it and wanted to skip ahead a lot of actions. While implementing this feature which would enable the user to skip from any action to any other action, I realized that when skipping more than 100 actions, it already took about 750ms during which the UI was unresponsive. As can be seen in Figure \ref{fig:navsystem.linear.stats}, this time increased linearly so it was quite clear that I needed to do something about this, especially because the page with the most actions had over 3000 actions. This meant that going from the start to the end on that page took over 35 seconds (!).
+I realized this early in development when I had my first page with many page actions on it and wanted to skip ahead a lot of actions. While implementing this feature which would enable the user to skip from any action to any other action, I realized that when skipping more than 100 actions, it already took about 750ms during which the UI was unresponsive. As can be seen in Figure \ref{fig:navsystem.performance.linear}, this time increased linearly so it was quite clear that I needed to do something about this, especially because the page with the most actions had over 3000 actions. All measurements were taken by starting at action 0 and skipping to the action specified at the x axis.
 
 The root cause of the problem was the navigation system design which I called in hindsight \textbf{\textit{linear navigation system}}. It consisted of defining actions which build upon each other. This means that if we are at action 0 (initial state of the page) and want to go to action 5, we need to execute all the code inside the action definitions between 0 and 5 to arrive at the page state as it should be at action 5. This is resembled in Figure \ref{fig:navsystem.linear.overview}. \\
 I came up with this design to have a smooth implementation experience where I only have to write the actual page state changes between two actions instead of duplicating a lot of code since the page state changes which were applied during a previous page were most of the times still visible when moving to the next action. This complements how the user experiences the visualization because the actions are numbered in a sequence and thus are inherently linear. Because of this, it made a lot of sense to me to reflect this in the system architecture.
 
 Since this "design flaw" was not the leading cause of the performance problem (going through a for-loop of size 3000 does not directly lead to performance issues), I want to briefly explain how the actual action implementation looked like.\\
 During the transition between two page states, the state of the page elements which will change is saved such that we can undo the changes if the user decides to navigate back. This enabled me to skip writing action definitions for backwards navigation, since I could just write a function which retrieves the state corresponding to the transition and then applies it. This function would then work for all backwards navigation without further intervention which was very convenient during development. \\
-The problem with that architecture was that the state saving and the execution logic inside the action definitions were changing a lot of page elements directly by accessing them via their name that I gave them in the XAML code. That this was against best practices in writing WPF applications I only noticed later on, when I read more about them. This issue combined with the restricted, linear pathing between actions resulted in that huge performance loss that was described in Figure \ref{fig:navsystem.linear.stats}.
+The problem with that architecture was that the state saving and the execution logic inside the action definitions were changing a lot of page elements directly by accessing them via their name that I gave them in the XAML code. That this was against best practices in writing WPF applications I only noticed later on, when I read more about them. This issue combined with the restricted, linear pathing between actions resulted in that huge performance loss that was described in Figure \ref{fig:navsystem.performance.linear}.
 
 \begin{figure}
 \centering
@@ -461,8 +468,24 @@ The problem with that architecture was that the state saving and the execution l
 
 \subsubsection{Linear navigation system with caches}
 
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-round-cache.png}
+\caption{Performance of linear navigation system with caches for each round}
+\label{fig:navsystem.performance.round}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-qr-cache.png}
+\caption{Performance of linear navigation system with caches for each quarterround}
+\label{fig:navsystem.performance.qr}
+\end{figure}
+
 After identifying the two underlying issues, I implemented what I called a \textbf{\textit{linear navigation system with caches}}. As the name suggests, I implemented cache entries to be able to navigate in constant time between an action and an action for which I created a cache. To not only increase peformance during these transitions but between all transitions, we check before each transition, if first moving to a cached entry would decrease the amount of hops needed to go to our destination. \\
-The cache entries consisted of instructions to restore the complete state of a page at the action index for which this cache entry was for. They contained instructions for the complete state instead of only the difference between two actions because now, moving to that cache must initialize the page, independent at which action / page state we were before. This means that there was some overhead in initializing the page because essentially, I cleared the whole page and then initialized the page elements with their appropriate content, potentially leading to some unnecessary code execution because the content prior to cleaning was already the one we needed. But this overhead was . Figure \ref{fig:navsystem.cache.overview} demonstrates that the navigation system now needs less hops between any two given actions. This increased performance significantly as can be seen in \ref{fig:navsystem.cache.stats}.
+The cache entries consisted of instructions to restore the complete state of a page at the action index for which this cache entry was for. They contained instructions for the complete state instead of only the difference between two actions because now, moving to that cache must initialize the page, independent at which action / page state we were before. This means that there was some overhead in initializing the page because essentially, I cleared the whole page and then initialized the page elements with their appropriate content, potentially leading to some unnecessary code execution because the content prior to cleaning was already the one we needed. 
+
+Figure \ref{fig:navsystem.cache.overview} demonstrates that the navigation system now needs less hops between any two given actions. Creating a cache entry for every start of a round increased performance significantly as can be seen in \ref{fig:navsystem.performance.qr}. The maximum response time went down from 40 seconds in the system without any caches to 1.5 seconds. This could further be decreased to 200 milliseconds by creating cache entries for every start of a quarterround (see Figure \ref{fig:navsystem.performance.qr}). Since it was not feasible to time every single data point, the data points marked as squares were just interpolated using previously timed data points. This means that for example, for the interpolated cache data points, I took the average of all previous measurements for skips to cached actions.
 
 Further, to decrease the load on the CPU while dragging the action slider, I implemented a very simple asynchronous navigation. It was implemented by using a stack as a buffer for the values received from the slider during dragging. Every 50ms, the last value from the buffer is read and the page moves to that action. Afterwards, the buffer is cleared. \\
 This did only enhance the slider but not the overall performance because at its core, it used the same navigation logic; just asynchronously. Nonetheless, it improved the performance during dragging significantly which I found quite impressing for how minimal the code for it is. In fact, the whole code for the asynchronous navigation can be seen in Figure \ref{fig:async.navigation}.
@@ -501,6 +524,13 @@ Essentially, the problem was that I used a lot of code-behind which was highly c
 \label{fig:plugin.scaling.bug}
 \end{figure}
 
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-central.png}
+\caption{Performance of final (centralized) navigation system}
+\label{fig:navsystem.performance.central}
+\end{figure}
+
 \begin{description}
 \item [(Inconsistent) Performance] The underlying linear design was crippling the performance for the reasons already mentioned. The introduction of caches did only fight the symptoms but did not solve the main issue. Further, it made the performance confusing for the users since sometimes, it took close to no time at all to move to a certain action but on the other hand, it sometimes took quite a lot of time to move to a different action (because it was not cached). \\
 \textit{\textbf{Requirement}}: Moving to any action should be done in $O(1)$. This means, it should not matter how many actions we needed to skip to arrive at the destination.
@@ -510,4 +540,4 @@ Essentially, the problem was that I used a lot of code-behind which was highly c
 \textit{\textbf{Requirement}}: The new system should make it clear what piece of code is responsible for what and thus be highly modular. This should also make it clear where new code must be added to implement a new feature without increasing technical debt; while also decreasing the possibility to introduce bugs since code is less coupled. To summarize, the new architecture should strive for high cohesion, but low coupling.
 \end{description}
 
-All these problems were solved using the MVVM design pattern with a new navigation system design. To implement them, I completely rewrote the existing code from scratch, which was time-consuming (took about two weeks) but in the end worth it. The MVVM architecture and the final navigation system are described in Section \ref{sec:Architecture}.
+All these problems were solved using the MVVM design pattern with a new navigation system design. To implement them, I completely rewrote the existing code from scratch, which was time-consuming (took about two weeks) but in the end worth it. Figure \ref{fig:navsystem.performance.central} shows the performance of the final navigation system. As one can see, the time it takes to skip actions is constantly very low and only varies between a few milliseconds, making the user interface very responsive.
