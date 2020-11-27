@@ -126,3 +126,24 @@ def plot_cache_round(plotData: PlotData):
   
 plot_cache_round(data[1])
 
+def plot_linear(plotData: PlotData):
+  fig, ax = plt.subplots(figsize=(20, 5))
+  x, y = plotData.x(), plotData.y()
+
+  ax.plot(x, y, '-o')
+  ax.set(title='Performance of linear navigation system', xlabel='action', ylabel='time [ms]')
+  plt.ylim(0, max(y) + 10)
+  plt.show()
+
+plot_linear(data[3])
+
+def plot_central(plotData: PlotData):
+  fig, ax = plt.subplots(figsize=(20, 5))
+  x, y = plotData.x(), plotData.y()
+
+  ax.plot(x, y, '-o')
+  ax.set(title='Performance of centralized navigation system', xlabel='action', ylabel='time [ms]')
+  plt.ylim(0, max(y) + 10)
+  plt.show()
+
+plot_central(data[2])
