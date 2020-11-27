@@ -103,7 +103,7 @@ def plot_cache(plotData: PlotData, title, ax):
   ax.scatter(cache_x_int, cache_y_int, marker='s', c='g', zorder=4, label='cached actions (interpolated)')
 
   ax.legend()
-  ax.set(title=title, xlabel='action', ylabel='time [ms]')
+  ax.set(title=title, xlabel='Action', ylabel='Time [ms]')
   
 def plot_cache_qr(plotData: PlotData, ax):
   """
@@ -123,13 +123,13 @@ def plot_linear(plotData: PlotData, ax):
   x, y = plotData.x(), plotData.y()
 
   ax.plot(x, y, '-o')
-  ax.set(title='Performance of linear navigation system', xlabel='action', ylabel='time [ms]')
+  ax.set(title='Performance of linear navigation system', xlabel='Action', ylabel='Time [ms]')
 
 def plot_central(plotData: PlotData, ax):
   x, y = plotData.x(), plotData.y()
 
   ax.plot(x, y, '-o')
-  ax.set(title='Performance of centralized navigation system', xlabel='action', ylabel='time [ms]')
+  ax.set(title='Performance of centralized navigation system', xlabel='Action', ylabel='Time [ms]')
 
 fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
 
