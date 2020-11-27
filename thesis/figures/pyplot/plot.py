@@ -100,10 +100,11 @@ def plot_cache_qr(plotData: PlotData):
   non_cache_x_int, non_cache_y_int = [d[0] for d in non_cache_data_int], [d[1] for d in non_cache_data_int]
 
   ax.plot(x, y, '-o', zorder=1)
-  ax.scatter(cache_x, cache_y, c='g', zorder=2)
-  ax.scatter(cache_x_int, cache_y_int, marker='s', c='g', zorder=3)
-  ax.scatter(non_cache_x_int, non_cache_y_int, marker='s', zorder=4)
-  
+  ax.scatter(non_cache_x_int, non_cache_y_int, marker='s', zorder=2, label='interpolated')
+  ax.scatter(cache_x, cache_y, c='g', zorder=3, label='cached actions')
+  ax.scatter(cache_x_int, cache_y_int, marker='s', c='g', zorder=4, label='cached actions (interpolated)')
+
+  ax.legend()
   ax.set(title='Performance of navigation system with caches for every quarterround', xlabel='action', ylabel='time [ms]')
   plt.ylim(0, max(y)+10)
   plt.show()
