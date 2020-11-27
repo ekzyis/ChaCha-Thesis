@@ -65,13 +65,11 @@ data.append(read_data('benchmark/navsystem-cache-round.benchmark.csv'))
 data.append(read_data('benchmark/navsystem-central.benchmark.csv'))
 data.append(read_data('benchmark/navsystem-linear.benchmark.csv'))
 
-def plot_cache_qr(plotData: PlotData):
-  """
-  Create the plot for the navigation system with caches at every quarterround.
-  """
-
+def insert_interpolation(plotData: PlotData, cache_step: int):
+  first_cache = 2
+  max_actions = 3600
   # Interpolate data for cached action which are missing in the benchmark data
-  caches = np.arange(2, 3600, 46)
+  caches = np.arange(first_cache, max_actions, cache_step)
   cache_times = [plotData.getY(x) for x in caches]
   avg_cache_time = round(avg(list(filter(lambda y: y is not None, cache_times))), 2)
   pprint(plotData)
@@ -80,13 +78,14 @@ def plot_cache_qr(plotData: PlotData):
       plotData.data.append(CacheDataPoint(action=x, samples=[avg_cache_time], cache=True, interpolated=True))
 
   # Interpolate data for actions between caches which are missing in the benchmark data
-  mid_caches = np.arange(25, 3600, 46)
+  mid_caches = np.arange(first_cache + (cache_step / 2), max_actions, cache_step)
   mid_cache_times = [plotData.getY(x) for x in mid_caches]
   avg_mid_cache_time = round(avg(list(filter(lambda y: y is not None, mid_cache_times))), 2)
   for (x, t) in zip(mid_caches, mid_cache_times):
     if t is None:
       plotData.data.append(CacheDataPoint(action=x, samples=[avg_mid_cache_time], cache=False, interpolated=True))
 
+def plot_cache(plotData: PlotData, title):
   fig, ax = plt.subplots(figsize=(20, 5))
   x, y = plotData.x(), plotData.y()
 
@@ -105,9 +104,25 @@ def plot_cache_qr(plotData: PlotData):
   ax.scatter(cache_x_int, cache_y_int, marker='s', c='g', zorder=4, label='cached actions (interpolated)')
 
   ax.legend()
-  ax.set(title='Performance of navigation system with caches for every quarterround', xlabel='action', ylabel='time [ms]')
+  ax.set(title=title, xlabel='action', ylabel='time [ms]')
   plt.ylim(0, max(y)+10)
   plt.show()
 
+def plot_cache_qr(plotData: PlotData):
+  """
+  Create the plot for the navigation system with caches at every quarterround.
+  """
+  insert_interpolation(plotData, 46)
+  plot_cache(plotData, title='Performance of navigation system with caches for every quarterround')
+
 plot_cache_qr(data[0])
+
+def plot_cache_round(plotData: PlotData):
+  """
+  Create the plot for the navigation system with caches at every round.
+  """
+  insert_interpolation(plotData, 184)
+  plot_cache(plotData, title='Performance of navigation system with caches for every round')
+  
+plot_cache_round(data[1])
 
