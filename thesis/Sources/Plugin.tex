@@ -10,9 +10,9 @@ This chapter describes the goals of the plugin and how the implementation accomo
 \section{Goals}
 \label{sec:goals}
 
-The main goal of this plugin was to teach students how messages are encrypted with the ChaCha cipher family. It should focus on creating an easy to understand visualization of its internals without oversimplification. \\
+The main goal of this plugin was to teach students how messages are encrypted with the ChaCha cipher family. It should focus on creating an easy to understand visualization of its internals without oversimplification.\\
 It should further visualize the diffusion property of the cipher on demand by making it possible for the user to enter secondary values for the key, initialization vector and initial counter.\\
-The plugin should also support all variants of the cipher. This means that the user should be able to choose the key size (128-bit or 256-bit) and how often the hash function will be executed per keystream block (8, 12 or 20 rounds). 
+The plugin should also support all variants of the cipher. This means that the user should be able to choose the key size (128-bit or 256-bit) and how often the hash function will be executed per keystream block (8, 12 or 20 rounds).\\
 Since the Internet Engineering Task Force (IETF) introduced a slightly modified version of ChaCha which uses a 32-bit counter and 96-bit initialization vector, the user can also decide if he wants to use the original version by Bernstein with a 64-bit counter and 64-bit initialization vector or the one described by the IETF.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -76,10 +76,12 @@ The version (original DJB version or IETF version) and how often the ChaCha hash
 \label{fig:allpages}
 \end{figure}
 
-All pages have a common interface layout which consists of three sections. Each section is inside a own dedicated row. \\
-The first section implements the navigation to move between pages. It also shows the title of the current page. \\
-The second section shows the content of the current page. The content is not always static since it can change by using the action navigation bar in the bottom section.  \\
-It includes buttons to go to the previous or next action, a slider for quicker action navigation, a text input to go to a given action and a indicator on which action the user currently is and how many actions there are in total on the current page. \\
+All pages have a common interface layout which consists of three sections. Each section is inside a own dedicated row.
+
+The first section implements the navigation to move between pages. It also shows the title of the current page.
+
+The second section shows the content of the current page. The content is not always static since it can change by using the action navigation bar in the bottom section. It includes buttons to go to the previous or next action, a slider for quicker action navigation, a text input to go to a given action and a indicator on which action the user currently is and how many actions there are in total on the current page.
+
 I have chosen a slider over alternative solutions like individual buttons because I wanted to enable the user to quickly navigate through a page. The slider came in handy especially for the page about the ChaCha hash function where there are more than 3000 actions per keystream block. Fitting more than 3000 buttons on a single page was not feasible but would need pagination features such as showing the next set amount of buttons which would make quick navigation impossible. \\
 The user can also enter a  number into the text input to the right of the slider to go to an action. But this text input is only more helpful than the slider if the user already knows the number of the action he wants to go to. If he does not, the slider creates a much better user experience. \\
 If a page does not have actions, the action navigation is hidden but the space is still reserved for it to have a consistent canvas size for all pages.
@@ -88,10 +90,14 @@ I will now go into greater detail about the pages which do not have fully static
 
 \subsubsection{Diffusion page}
 
-As already mentioned in Section \ref{sec:keyFeatures}, on the Diffusion page, the user can enter secondary values for the key, IV and initial counter in hexadecimal. They will be used to visualize the diffusion property. This means that during cipher execution, hexadecimal letters which are different are marked red. An example of this is shown on the Diffusion page at the right side (see Figure \ref{fig:diffusion}).\\
-I have used hexadecimal text inputs because the alternative, individual buttons for each bit, would have resulted in a lot of buttons because the key can be 256-bit. Together with the 128-bit from the counter and IV, this would have resulted in 384 individual buttons. Furthermore, clicking on individual buttons instead of entering text was more cumbersome. \\
-Since when studying the diffusion property of a cipher, one is more interested in the difference of values (XOR) during two cipher runs instead of their actual values, the user can also explicitly input the XOR between the primary and secondary value. Additionally, if diffusion is active, the user can toggle between showing the XOR or the actual values by using the button in the top-right corner of each page.\\
-To help with the input, the input fields show an error message if the user entered invalid characters or a too large string since the secondary hexstring must be of equal size as the primary value. If the hex string is too short, it gets left-padded with zeroes to align it with the primary value. \\
+As already mentioned in Section \ref{sec:keyFeatures}, on the Diffusion page, the user can enter secondary values for the key, IV and initial counter in hexadecimal. They will be used to visualize the diffusion property. This means that during cipher execution, hexadecimal letters which are different are marked red. An example of this is shown on the Diffusion page at the right side (see Figure \ref{fig:diffusion}).
+
+I have used hexadecimal text inputs because the alternative, individual buttons for each bit, would have resulted in a lot of buttons because the key can be 256-bit. Together with the 128-bit from the counter and IV, this would have resulted in 384 individual buttons. Furthermore, clicking on individual buttons instead of entering text was more cumbersome.
+
+Since when studying the diffusion property of a cipher, one is more interested in the difference of values (XOR) during two cipher runs instead of their actual values, the user can also explicitly input the XOR between the primary and secondary value. Additionally, if diffusion is active, the user can toggle between showing the XOR or the actual values by using the button in the top-right corner of each page.
+
+To help with the input, the input fields show an error message if the user entered invalid characters or a too large string since the secondary hexstring must be of equal size as the primary value. If the hex string is too short, it gets left-padded with zeroes to align it with the primary value.
+
 Last but not least, the amount of flipped bits is shown in the second to last row together with a state indication in the last row if the diffusion is active or not. The diffusion is active if at least one bit was flipped.
 
 \subsubsection{State Matrix Initialization page}
@@ -140,10 +146,12 @@ Last but not least, the amount of flipped bits is shown in the second to last ro
 \label{fig:statematrix.encoding}
 \end{figure}
 
-On the State Matrix Initialization page, it is shown how the initial 512-bit state for the first keystream block is build up. The generation of the next keystream blocks start with the same state but just with a different counter (as was described in Chapter \ref{chap:chacha}). \\
-This means that only the construction of the state for the very first keystream block is shown in this page. This was done this way because I wanted to focus on one thing inside a page. I did not want to disrupt the flow of the ChaCha Hash Function page by jumping back to the visualization of the state matrix initialization just to encode a different counter. The information which is provided to the user in the first and only state matrix initialization should be enough for him to construct all following initial states without further guidance. \\
-Therefore, I focused on a comprehensive visualization of the encoding for each state parameter (constants, key, IV, counter). In Figure \ref{fig:statematrix.encoding}, you can see the page state during the end of each state parameter encoding. In the top-left inside each picture, you see the state. On the top-right, you see descriptions which inform the user about what the next steps are.
-At the bottom-left, the encoding is visualized. At the bottom-right, the state parameters with their original values before encoding are shown.\\
+On the State Matrix Initialization page, it is shown how the initial 512-bit state for the first keystream block is build up. The generation of the next keystream blocks start with the same state but just with a different counter (as was described in Chapter \ref{chap:chacha}).
+
+This means that only the construction of the state for the very first keystream block is shown in this page. This was done this way because I wanted to focus on one thing inside a page. I did not want to disrupt the flow of the ChaCha Hash Function page by jumping back to the visualization of the state matrix initialization just to encode a different counter. The information which is provided to the user in the first and only state matrix initialization should be enough for him to construct all following initial states without further guidance. Therefore, I focused on a comprehensive visualization of the encoding for each state parameter (constants, key, IV, counter). 
+
+In Figure \ref{fig:statematrix.encoding}, you can see the page state during the end of each state parameter encoding. In the top-left inside each picture, you see the state. On the top-right, you see descriptions which inform the user about what the next steps are. At the bottom-left, the encoding is visualized. At the bottom-right, the state parameters with their original values before encoding are shown.
+
 For each encoding step which corresponds to a row in the encoding section, a page action has been implemented. This means that the user can follow along each encoding step-by-step in his own speed and is not overwhelmed by a lot of information.\\
 First, the constants are encoded. Since they are shown in ASCII format in the state parameters section, they are first decoded to show the actual byte values. Then the bytes are split into 4 byte chunks whose order is then reversed in the last step. \\
 Afterwards, the key is encoded. It is just split into 4 byte chunks whose order is then reversed. \\
@@ -152,16 +160,20 @@ The last parameter is the IV. It is encoded exactly the same as the key. \\
 
 \subsubsection{ChaCha Hash Function page}
 
-The ChaCha Hash Function page visualizes the generation of a keystream block by using two kind of visualizations: The quarterround visualization  and the addition / reverse bytes step at the end of the hash function. \\
+The ChaCha Hash Function page visualizes the generation of a keystream block by using two kind of visualizations: The quarterround visualization  and the addition / reverse bytes step at the end of the hash function.
+
 At the top, you can see the current state together with a description about the ChaCha hash function.\\
-At the bottom, if we are still in the ChaCha hash function loop, you can see the visualization of the quarterrounds (Figure \ref{fig:chachahash.mid.qr}). The quarterround visualization is split into four cells on either side and four boxes in the middle . The boxes on the two ends contain the four input and output values of the quarterround. The boxes in the middle visualize one quarterround step as was described in Section \ref{sec:chacha.qr}. \\
-I have used a circuit diagram to visualize the quarterround similar to the one found in the ChaCha section on the Wikipedia page about Salsa20 (see Figure \ref{fig:wiki.qr.circuit}). This way, I could easily show the intermediate values by putting them on the circuit lines. Furthermore, following along the visualization was very clear because all next steps are already shown just with empty values yet. \\
-If we are finished with the loop, you can see the original state at the left, the result of adding the original state with the state after all rounds in the middle, and at the right the result of reversing the byte order of each state entry of the state in the middle (Figure \ref{fig:chachahash.end}). This is the final state and thus one 512-bit block inside the keystream with which the input message is later XOR'ed . \\
+At the bottom, if we are still in the ChaCha hash function loop, you can see the visualization of the quarterrounds (Figure \ref{fig:chachahash.mid.qr}). The quarterround visualization is split into four cells on either side and four boxes in the middle . The boxes on the two ends contain the four input and output values of the quarterround. The boxes in the middle visualize one quarterround step as was described in Section \ref{sec:chacha.qr}.
+
+I have used a circuit diagram to visualize the quarterround similar to the one found in the ChaCha section on the Wikipedia page about Salsa20 (see Figure \ref{fig:wiki.qr.circuit}). This way, I could easily show the intermediate values by putting them on the circuit lines. Furthermore, following along the visualization was very clear because all next steps are already shown just with empty values yet.
+
+If we are finished with the loop, you can see the original state at the left, the result of adding the original state with the state after all rounds in the middle, and at the right the result of reversing the byte order of each state entry of the state in the middle (Figure \ref{fig:chachahash.end}). This is the final state and thus one 512-bit block inside the keystream with which the input message is later XOR'ed .
+
 Below the visualization and just above the slider for the page actions is another navigation bar. This helps the user to quickly navigate through the ChaCha hash function. He can use the arrow buttons to traverse through the keystream blocks, rounds or quarterrounds or enter a number to directly go to a specific step. \\
-For example, if he wants to go to the second quarterround of the fourth round, he can enter "4" into the text input which is labeled with "Round" and press Enter or use the arrow buttons to go to the fourth round. This will take him to the start of the fourth round. He can then proceed to enter "2" into the "Quarterround" text input. \\
-Since this will also take him to the start of the quarterround, he can use the buttons to the right of the quarterround input to jump to the end of specific quarterrounds of the current round. For example, if he now wants to go to the end of the second quarterround, he can click on "End" of the second button of the buttons which are labeled with "Diagonalround". \\
-They also show the state indices that will get updated during their quarterround in parentheses. They also will be updated according to the round. This means on uneven rounds, the label will switch to "Columnround" and on even rounds, it will show "Diagonalround". \\
-Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary how the page looks like at the end of each quarterround for round 1 (column rounds) and round 2 (diagonal rounds). As you can see, the corresponding state entry is highlighted with a light blue background. This light blue background is also used throughout the visualization to catch the user's attention about which UI elements will be updated in the next step.\\
+For example, if he wants to go to the second quarterround of the fourth round, he can enter "4" into the text input which is labeled with "Round" and press Enter or use the arrow buttons to go to the fourth round. This will take him to the start of the fourth round. He can then proceed to enter "2" into the "Quarterround" text input. Since this will also take him to the start of the quarterround, he can use the buttons to the right of the quarterround input to jump to the end of specific quarterrounds of the current round. For example, if he now wants to go to the end of the second quarterround, he can click on "End" of the second button of the buttons which are labeled with "Quarterround". \\
+They also show the state indices in parentheses that will get updated during their quarterround. Since column and diagonal rounds take turns, these state indices will get updated according to the current round.
+
+Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary how the page looks like at the end of each quarterround for round 1 (column round) and round 2 (diagonal round). As you can see, the corresponding state entry is highlighted with a light blue background. This light blue background is also used throughout the visualization to catch the user's attention about which UI elements will be updated in the next step.\\
 
 \begin{figure}
 \centering
@@ -297,24 +309,22 @@ The first part is about the MVVM (Model-View-ViewModel) architecture to create t
 
 The second part is about the action navigation system which plays a huge role regarding performance. It powers the slider and buttons in the bottom row of each page. The page navigation is handled by the first part because it is very simple and uses MVVM design patterns.
 
-I have named the action navigation system \textit{\textbf{centralized navigation system}} for reasons I will explain in its subsection.
-
 \subsubsection{MVVM architecture}
 
-I have used a MVVM architecture because in previous attempts, I have discovered that without following a design pattern with its standards and rules, the code becomes complicated over time; making it harder to fix bugs or implement new features. \\
+I have used a MVVM architecture because in previous attempts, I have discovered that the code becomes quite complicated over time if one is not following a design pattern with its standards and rules. This makes it harder to fix bugs or implement new features. \\
 Even though I tried to follow some self-chosen guidelines like naming conventions and which code should go where, most of the time I went the path of least effort to have results as fast as possible which I could showcase to my supervisors and ask for feedback. The internal code structure was of no importance as long as the feature worked. Only when I realized that it got too cumbersome to maintain this workflow, I read about using design patterns in WPF applications and found out that MVVM is the most popular design pattern to use in conjuction with WPF \cite{mvvm-wpf}.
 
 As the name suggest, MVVM is all about separating the code into three parts: Models, Views and View Models.
 
-Models hold the raw application data. In our case, this would be the classes which hold the values generated by the ChaCha cipher. It should be completely unaware of any View or ViewModels.
+Models hold the raw application data. In our case, this would be the classes which hold the values generated by the ChaCha cipher. It should be completely unaware of any view or view Model.
 
-Views define how the data should be presented. They consist mainly of XAML code with as little code-behind as possible. They do not maintain their own state but rather use data binding to synchronize themselves with the data inside the ViewModels. Therefore, it is aware of the existence of ViewModels.
+Views define how the data should be presented. They consist mainly of XAML code with as little code-behind as possible. They do not maintain their own state but rather use data binding to synchronize themselves with the data inside view models. Therefore, views are aware of view models and in fact depend on them to show any relevant data.
 
-ViewModels connect the model data with the views. However, they do not directly manipulate the views but just define properties and methods to which the views can attach themselves to implement the logic for user interactions.
+View models connect the model data with the views. However, they do not directly manipulate the views but just define properties and methods which implement the logic for user interactions. The views then use data binding to be notified about any property changes or call methods if a button is clicked etc. This means that view models should not rely on any code inside a view. This essentially decouples the backend from the frontend.
 
 In Figure \ref{fig:mvvm.pagenavigation}, I have provided an example for how this data binding looks in code. What you see is the view code for the page navigation.
 
-Another technique (that you can also see in the mentioned Figure) is the use of templates. I have used data templates to attach views to view models and control templates to implement the general UI structure with the three sections I mentioned in Section \ref{sec:userInterface}. This enabled me to define the UI layout for all pages in one place and also reuse a single implementation of the page and action navigation across all pages. This way, view modifications down the road which applied to all pages were easy and fast. \\ In Figure \ref{fig:mvvm.actionnavigation}, you can see the view implementation of the action navigation bar which is only visible on pages which do have actions.
+Another technique (that you can also see in the mentioned Figure) is the use of templates. I have used data templates to attach views to view models and control templates to implement the general UI structure with the three sections I mentioned in Section \ref{sec:userInterface}. This enabled me to define the UI layout for all pages in one place and also reuse a single implementation of the page and action navigation across all pages. This way, view modifications down the road which applied to all pages were easy and fast. In Figure \ref{fig:mvvm.actionnavigation}, you can see the view implementation of the action navigation bar which is only visible on pages which do have actions.
 
 \begin{figure}
 \centering
@@ -334,7 +344,7 @@ If the user enters something into the input fields of the Diffusion page, valida
 
 Furthermore, I am using converters which are also built into WPF to convert data into user-friendly formats. Converters are always attached to bindings, so inside the two-way bindings, I am converting the byte arrays into hex strings and vice versa.
 
-Since data binding works by notifying the view if a variable has changed, WPF provides an interface named \texttt{INotifyPropertyChanged} which helps with implementing these data binding notifications. It provides a method named \texttt{OnPropertyChanged} and  an event named \texttt{PropertyChangedEventHandler} which must be called with the name of the variable to raise such an notification. The data binding system then updates the variables.
+Since data binding works by notifying the view if a variable has changed, WPF provides an interface named \texttt{INotifyPropertyChanged} which helps with implementing these data binding notifications. It provides a method named \texttt{OnPropertyChanged} and  an event named \texttt{PropertyChangedEventHandler} which must be called with the name of the variable to raise such an notification. The data binding system then updates the variables in the view.
 
 The notification raising and the implementation of the \texttt{INotifyPropertyChanged} interface can be seen in Figure \ref{fig:mvvm.databindingnotification}. The setter of \texttt{DiffusionInputKey} raises multiple notifications because other variables which depend on \texttt{DiffusionInputKey} also need updating. (The first call of \texttt{OnPropertyChanged}  in the setter has no argument because the attribute \texttt{CallerMemberName} in the function signature automatically enters the name of the caller if no argument is provided.)
 
@@ -356,7 +366,7 @@ The notification raising and the implementation of the \texttt{INotifyPropertyCh
 \label{fig:mvvm.databindingnotification}
 \end{figure}
 
-On page exit, \texttt{ChaChaPresentationViewModel}, which is the view model which implements navigation between the different pages (which have their own view models) and has access to the ChaCha cipher component, calls \texttt{Teardown} on the page we are leaving. This triggers the ChaCha execution with the given secondary values. This can be seen in Figure \ref{fig:mvvm.chachatrigger}.
+On page exit, \texttt{ChaChaPresentationViewModel}, which is the view model which implements navigation between the different pages (which have their own view models), calls \texttt{Teardown} on the page we are leaving. This triggers the ChaCha execution with the given secondary values. This can be seen in Figure \ref{fig:mvvm.chachatrigger}.
 
 \begin{figure}
 \centering
@@ -375,7 +385,7 @@ On page exit, \texttt{ChaChaPresentationViewModel}, which is the view model whic
 \label{fig:mvvm.chachatrigger}
 \end{figure}
 
-Before execution, a flag was set which instructs the list getters into which the ChaCha component would save its intermediate values to return a different list. This means that the ChaCha component is agnostic of where it saves its intermediate values. During the execution, the intermediate values for the diffusion run are therefore saved in parallel lists. This is shown exemplary for the quarterround input values in Figure \ref{fig:mvvm.chacha}. The other pages then simply bind to these lists to display the intermediate values of the diffusion run. Converting the 32-bit unsigned integers into hex strings and marking their characters which are different red then happens in the view models.
+Before execution, a flag was set which instructs the list getters into which the ChaCha component would save its intermediate values to return a different list. This means that the ChaCha component is agnostic of where it ultimately saves its intermediate values. During the execution, the intermediate values for the diffusion run are therefore saved in parallel lists. This is shown exemplary for the quarterround input values in Figure \ref{fig:mvvm.chacha}. The other pages then simply bind to these lists to display the intermediate values of the diffusion run. Converting the 32-bit unsigned integers into hex strings and marking their characters which are different red is then done in the view models.
 
 \begin{figure}
 \centering
@@ -388,7 +398,7 @@ Before execution, a flag was set which instructs the list getters into which the
 
 The final design of the navigation system was characterized by reflecting on the problems previous iterations had. In this subsection, I will only describe the current, final implementation of the navigation system. The previous implementations with their problems are described in Section \ref{sec:encounteredProblems}.
 
-The core idea of the navigation system was to decrease hops between actions without having too many possible transitions since for every transition from action $A$ to another action $B$ and vice versa, code needs to be written to perform the transition. Figure \ref{fig:navsystem.all.overview} shows how a navigation system would look like where the maximum amount of hops is minimized to one. Total transitions are $2n(n-1)$ and for every new action, transitions increase by $2(n-1)$ ($n$ is the total number of actions). The factor 2 comes from the fact that for every transition from action $A$ to $B$, we also need a transition back from $B$ to $A$. We can conclude that such an architecture does not scale very well from the perspective of a developers who needs to write all of that transitional code. \\
+The core idea of the navigation system was to decrease hops between actions without having too many possible transitions since for every transition from action $A$ to another action $B$ and vice versa, code needs to be written to perform the transition. Figure \ref{fig:navsystem.all.overview} shows how a navigation system would look like where the maximum amount of hops is minimized to one. Total transitions are $2n(n-1)$ and for every new action, transitions increase by $2(n-1)$ ($n$ is the total number of actions). The factor 2 comes from the fact that for every transition from action $A$ to $B$, we also need a transition back from $B$ to $A$. We can conclude that such an architecture does not scale very well from the perspective of a developer who needs to write all of that transitional code. \\
 On the other hand, decreasing the amount of possible transitions by introducing more hops would degrade performance due to computational overhead, so a system with a very high average amount of hops would not scale very well regarding performance.
 
 I came to the conclusion that the best trade-off would be to have a navigation system where every action has a transition to a centralized state and this central state then has a transition to all other actions. This would result in a maximum of two hops between any two actions. Further, adding a new action would only add two new transitions to the system. This system design is shown in Figure \ref{fig:navsystem.central.overview}.
@@ -403,7 +413,7 @@ I came to the conclusion that the best trade-off would be to have a navigation s
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{figures/navigationsystem-diagram/navigationsystem-central-overview.png}
-\caption[Navigation paths in centralized navigation system]{Navigation paths between actions in the centralized navigation system. \\The colorized state is the reset state which corresponds to the initial state.\\For every new action, possible transitions increase by 2.}
+\caption[Navigation paths in centralized navigation system]{Navigation paths between actions in the centralized navigation system. \\The colorized state is the reset state which corresponds to the initial state.}
 \label{fig:navsystem.central.overview}
 \end{figure}
 
@@ -427,7 +437,7 @@ To implement this concept, I created an extension method for the \texttt{Action}
 \label{fig:navsystem.iactioncreator}
 \end{figure}
 
-As one can see in the documentation of \texttt{IActionCreator}, I also wanted nested sequences. This means that a sequences could be started inside other sequence. A nested or child sequence would extend all the actions from its parent sequence. From the perspective of the nested sequence, it is no different than if all the actions from the parent sequence were created inside it. When ending a nested sequence, from the perspective of the parent sequence, the nested sequence never existed. Figure \ref{fig:navsystem.test} shows a test which asserts that this nesting does indeed work as expected.
+As one can see in the documentation of \texttt{IActionCreator}, I also wanted nested sequences. This means that a sequence could be started inside another sequence. A nested or child sequence would extend all the actions from its parent sequence. From the perspective of the nested sequence, it is no different than if all the actions from the parent sequence were created inside it. When ending a nested sequence, from the perspective of the parent sequence, the nested sequence never existed. Figure \ref{fig:navsystem.test} shows a test which asserts that this nesting does indeed work as expected.
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{figures/code/nav-arch/TestNestedSequentialExecutionOrder.png}
@@ -435,11 +445,11 @@ As one can see in the documentation of \texttt{IActionCreator}, I also wanted ne
 \label{fig:navsystem.test}
 \end{figure}
 
-This was very helpful for implementing the actions for the ChaCha Hash Function page. Since each keystream block started with a cleared quarterround visualization and the initial state visible in the state matrix, it made sense to declare a sequence for each keystream. The same was true for each round and quarterround. This meant that I would not introduce too much computational overhead inside the transitional code (even though only one transition was executed by design) since I could just reset the sequence if it made no longer sense to include the code of previous actions.
+This was very helpful for implementing the actions for the ChaCha Hash Function page. Since each keystream block started with a cleared quarterround visualization and the initial state visible in the state matrix, it made sense to declare a sequence for each keystream block. The same was true for each round and quarterround. This meant that I would not introduce too much computational overhead inside the transitional code (even though only one transition was executed by design) since I could just reset the sequence if it made no longer sense to include the code of previous actions.
 
-Essentially, this prevented the system degrading back to a linear navigation system as described in Section \ref{sec:encounteredProblems}. The system would have less transitions but would still execute the same code as a linear navigation system would when moving from action 0 to any other action; undoing any positive effect this approach of minimizing transitions could have had.
+Essentially, this prevented the system degrading back to a linear navigation system as will be described in Section \ref{sec:encounteredProblems}. The system would have less transitions but would still execute the same code as a linear navigation system would when moving from action 0 to any other action; undoing any positive effect this approach of minimizing transitions could have had.
 
-The weakness of this design was that there was still some overhead when navigating through the page in a linear manner since the system is basically designed to always go back to the first action first and from there to the desired action. This leads to a lot of unnecessary resetting because as mentioned, most of the times the next page state is only a slight modification of the previous one. But this is the trade-off I had to make for a good overall performance. To summarize, this design had a a higher overhead for small steps but did scale much better for bigger steps which were necessary for the keystream, round and quarterround navigation. 
+The weakness of this design was that there was still some overhead when navigating through the page in a linear manner since the system is basically designed to always go back to the first action first and from there to the desired action. This leads to a lot of unnecessary resetting because as mentioned, most of the times the next page state is only a slight modification of the previous one. But this is the trade-off I had to make for a good overall performance. To summarize, this design had a higher overhead for small steps but did scale much better for bigger steps which were necessary for the keystream, round and quarterround navigation. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -468,7 +478,7 @@ The root cause of the problem was the navigation system design which I called in
 I came up with this design to have a smooth implementation experience where I only have to write the actual page state changes between two actions instead of duplicating a lot of code since the page state changes which were applied during a previous page were most of the times still visible when moving to the next action. This complements how the user experiences the visualization because the actions are numbered in a sequence and thus are inherently linear. Because of this, it made a lot of sense to me to reflect this in the system architecture.
 
 Since this "design flaw" was not the leading cause of the performance problem (going through a for-loop of size 3000 does not directly lead to performance issues), I want to briefly explain how the actual action implementation looked like.\\
-During the transition between two page states, the state of the page elements which will change is saved such that we can undo the changes if the user decides to navigate back. This enabled me to skip writing action definitions for backwards navigation, since I could just write a function which retrieves the state corresponding to the transition and then applies it. This function would then work for all backwards navigation without further intervention which was very convenient during development. \\
+During the transition between two page states, the state of the page elements which will change is saved such that we can undo the changes if the user decides to navigate back. This enabled me to skip writing transitional code for backwards navigation, since I could just write a function which retrieves the state corresponding to the transition and then applies it. This function would then work for all backwards navigation without further intervention which was very convenient during development. \\
 The problem with that architecture was that the state saving and the execution logic inside the action definitions were changing a lot of page elements directly by accessing them via their name that I gave them in the XAML code. That this was against best practices in writing WPF applications I only noticed later on, when I read more about them. This issue combined with the restricted, linear pathing between actions resulted in that huge performance loss that was described in Figure \ref{fig:navsystem.performance.linear}.
 
 \begin{figure}
@@ -522,12 +532,12 @@ One of the major drawbacks for this enhanced design was that the automatic actio
 \subsubsection{Centralized navigation system}
 
 While implementing other features such as the diffusion, I noticed that having to implement for each page action the forward and backwards code, my code became quite error-prone. It was hard to notice bugs because it was not feasible to check every single action from both directions manually and creating a testing framework just because of this was out of scope. \\
-Some navigation bugs were easy to find because due to the overall still linear nature of the navigation system, errors did propagate. This means that a error in a previous action most likely did break the page state on future actions because they depend on each other. \\
+Some navigation bugs were easy to notice because due to the overall still linear nature of the navigation system, errors did propagate. This means that a error in a previous action most likely did break the page state on future actions because they depend on each other. \\
 Nonetheless, this did not help in tracking down the bug because I did not know on which action the error happened. This only further incentivised me to reiterate on the navigation system again.
 
 I summarized all the problems I currently had with my code which not only consisted of performance problems but also with visualization problems. Resizing the window did not appropriately scale the UI elements as can be seen in Figure \ref{fig:plugin.scaling.bug}. Additionally, the current navigation system was quite restricted in what kind of UI elements it supported without further hassle. Since I only updated the existing code during the last time I revisited the navigation system, the core design was still all about directly manipulating and creating UI elements on demand. The functions I wrote revolved around the UI elements I was using thus I could not reuse them if I wanted to use different UI elements; leading to the limited support of the navigation system I mentioned.
 
-Essentially, the problem was that I used a lot of code-behind which was highly coupled to the XAML code. I did it like this because it was very straight-forward to do so and lead to fast results. At first, I thought the trade-off between loss of maintainability/flexibility in the future and not having to spend precious time to learn design patterns for WPF applications was worth it. I thought so because I was not writing an enterprise application on which the long-term success of a company depended and which would get regular updates in the future thus high maintainability or being easy to extend was not a priority. I got proven wrong when I realized I already reached the limit of "code smells" which slowed me down in updating, fixing or creating new features. What follows is the list of problems together with what requirement the new navigation system would need to meet to solve them:
+Essentially, the problem was that I used a lot of code-behind which was highly coupled to the XAML code. I did it like this because it was very straight-forward to do so and lead to fast results. At first, I thought the trade-off between loss of maintainability/flexibility in the future and not having to spend precious time to learn design patterns for WPF applications was worth it. I thought so because I was not writing software on which the long-term success of a company depended and which would get regular updates in the future thus high maintainability or being easy to extend was not a priority. I got proven wrong when I realized I already reached the limit of "code smells" I could handle about one month before I had to hand in my thesis. Every code change kept increasing the accumulated technical debt; killing any motivation I still had left to work on the existing code base. Continuing like this for another month seemed impossible. So I created a list of all current problems together with what requirements a new software architecture would need to meet to solve them:
 
 \begin{figure}
 \centering
@@ -544,7 +554,7 @@ Essentially, the problem was that I used a lot of code-behind which was highly c
 \end{figure}
 
 \begin{description}
-\item [(Inconsistent) Performance] The underlying linear design was crippling the performance for the reasons already mentioned. The introduction of caches did only fight the symptoms but did not solve the main issue. Further, it made the performance confusing for the users since sometimes, it took close to no time at all to move to a certain action but on the other hand, it sometimes took quite a lot of time to move to a different action (because it was not cached). \\
+\item [(Inconsistent) Performance] The underlying linear design was crippling the performance for the reasons already mentioned. The introduction of caches did only fight the symptoms and not solve the main issue. Further, it made the performance confusing for the users. Sometimes, it took close to no time at all to move to a certain action (action was cached) and on other times, it took quite a lot of time to move to a different action (action was not cached). \\
 \textit{\textbf{Requirement}}: Moving to any action should be done in $O(1)$. This means, it should not matter how many actions we needed to skip to arrive at the destination.
 \item [Error-prone design for action creation] Writing new actions was error-prone because I needed to write code for forward and backwards navigation which introduced mental overhead because it depended on the code of all previous actions. This also lead to error propagation. Errors were easily noticeable by users but were hard to track down to their origin.\\
 \textit{\textbf{Requirement}}: New actions should be able to be written without having to write backwards navigation code. Backwards navigation should be handled automatically and thus be "error-free by design".
