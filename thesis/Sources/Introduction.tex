@@ -1,6 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Introduction}
 
-\blindtext[2]
+Applications of cryptology, the science behind creating encryptions (cryptography) and breaking them (cryptanalysis), date back far into ancient times. Around 3500 BC, the earliest known example of  cryptography was found which was a substitution cipher to conceal a formula for pottery glaze \cite{history}. Ever since, advancements in technology pushed the boundary for secure ciphers. Nowadays, in the Age of Information, the need for keeping sensitive information private is as important as ever before and will only get more important with widespread adoption of new technologies such as the Internet of Things. This is why research into new encryption standards has to continously take place.
 
-\blindtext[1]
+The ChaCha cipher family by Daniel J. Bernstein is the result of such research. Because AES-GCM does not perform very well on devices without hardware acceleration such as wearable or mobile devices, Google has started to replace it in the TLS cipher suite of its browser Chrome with ChaCha20 for symmetric encryption and Poly1305 for authentication in 2014. Additionally, ChaCha is by design immune to previous TLS attacks such as padding-oracle or timing attacks and thus should improve security of HTTPS connections \cite{googlesecurityblog}.
+
+This usage in TLS makes the ChaCha cipher family very attractive to include it in \textit{CrypTool 2 (CT2)}, a open-source e-learning platform for cryptography and cryptanalysis. It uses visual programming to teach cryptographic concepts and attacks.
