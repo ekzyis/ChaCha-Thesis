@@ -121,7 +121,7 @@ Having explained the basic structure of the ChaCha hash function, the following 
 ChaCha internally uses a 512-bit state for keystream generation. The ChaCha hash function modifies this state to generate a keystream block. \\
 In this section, I will explain how the state is setup which is then passed in 32-bit blocks to the ChaCha hash function.
 
-The state is made up of a 128-bit constant, a 256-bit key section and a 128-bit nonce section. To demonstrate that the author had no hidden intent with picking his constants (nothing-up-my-sleeve number), he defined the constants to be ``expand 16-byte k'' for 128-bit keys and ``expand 32-byte k'' for 256-bit keys in ASCII .
+The state is made up of a 128-bit constant, a 256-bit key section and a 128-bit nonce section. To demonstrate that the author had no hidden intent with picking his constants (nothing-up-my-sleeve number), he defined the constants to be ``expand 16-byte k'' for 128-bit keys and ``expand 32-byte k'' for 256-bit keys in ASCII.
 
 In the 128-bit key variant, the key is concatenated with itself to create a 256-bit key. This concatenated key is then used for the state setup. If the key is already 256-bit, we do nothing and just use it as it is for the state setup.
 
