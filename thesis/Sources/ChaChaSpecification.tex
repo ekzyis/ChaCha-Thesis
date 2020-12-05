@@ -1,20 +1,22 @@
+% !TeX spellcheck = en_GB
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{ChaCha Specification}
 \label{chap:chacha}
 
-To help with understanding the plugin visualization and for the sake of completeness, I will summarize the specification of the ChaCha cipher in this chapter.
+To help with understanding the plug-in visualization and for the sake of completeness, I will summarize the specification of the ChaCha cipher in this chapter.
 
 ChaCha is a 256-bit stream cipher based on Salsa20, both developed by Daniel J. Bernstein. It was designed to improve diffusion per round while maintaining or even increasing the performance compared to Salsa20. This makes it more secure than Salsa20 with the same amount of rounds. It was developed in the year 2008, 3 years after Salsa20 \cite{chachaspec}.
 
 The specification can be broken apart into five main points: \\
-The \textit{quarterround} function, the \textit{little-endian} function, a hash function which utilizes the two other mentioned functions, how the 512-bit state is setup and finally, how the encryption/decryption process works as a whole, bringing all the individual pieces together. 
+The \textit{quarter-round} function, the \textit{little-endian} function, a hash function which utilizes the two other mentioned functions, how the 512-bit state is setup and finally, how the encryption/decryption process works as a whole, bringing all the individual pieces together. 
 
-I will start with the quarterround function.
+I will start with the quarter round function.
 
-\section{Quarterround Function}
+\section{Quarter-round Function}
 \label{sec:chacha.qr}
 
-The ChaCha quarterround function takes in four 32-bit unsigned integers which we will name $a$, $b$, $c$ and $d$. It also returns four 32-bit unsigned integers.\\
+The ChaCha quarter-round function takes in four 32-bit unsigned integers which we will name $a$, $b$, $c$ and $d$. It also returns four 32-bit unsigned integers.\\
 It modifies its input values as described in the following pseudo-code:
 
 \begin{center}
@@ -28,9 +30,9 @@ It modifies its input values as described in the following pseudo-code:
 \end{minipage}
 \end{center}
 
-I will call one row, consisting of one 32-bit addition, one XOR and one shift operation, a \textit{quarterround step}. This naming convention will be reused in Section \ref{sec:userInterface}.
+I will call one row, consisting of one 32-bit addition, one XOR and one shift operation, a \textit{quarter-round step}. This naming convention will be reused in Section \ref{sec:userInterface}.
 
-\section{Little-endian Function}
+\section{Little-Endian Function}
 \label{sec:chacha.littleendian}
 
 The little-endian function takes in one 32-bit unsigned integer and reverses its byte order; also returning a 32-bit unsigned integer.  \\
@@ -48,7 +50,7 @@ It can be implemented as follows:
 \end{center}
 
 \begin{remark}
-Its naming has nothing to do with system endianness, but was just named like this by Bernstein for unknown reasons (most likely because reversing the byte order is what needs to be done when transmitting data between systems of different endianess).
+Its naming has nothing to do with system endianness, but was just named like this by Bernstein for unknown reasons (most likely because reversing the byte order is what needs to be done when transmitting data between systems of different endianness).
 \end{remark}
 
 \section{ChaCha Hash Function}
@@ -65,10 +67,10 @@ y_{12} & y_{13} & y_{14} & y_{15}\\
 \end{pmatrix}
 \end{equation*}
 
-Using this matrix representation helps with understanding why Bernstein calls some rounds \textit{column rounds} and others \textit{diagonal rounds} in his paper (one round consists of four quarterrounds): \\
-The ChaCha hash function iterates first through all columns and then through all diagonals of the matrix; applying the quarterround function to the four entries of each column/diagonal. After the first four quarterrounds it therefore has changed all columns of the matrix. This is what Bernstein calls a column round in his paper. After the next four quarterrounds, it changed all diagonals of the matrix which Bernstein analogously calls a diagonal round.
+Using this matrix representation helps with understanding why Bernstein calls some rounds \textit{column rounds} and others \textit{diagonal rounds} in his paper (one round consists of four quarter-rounds): \\
+The ChaCha hash function iterates first through all columns and then through all diagonals of the matrix; applying the quarter-round function to the four entries of each column/diagonal. After the first four quarter-rounds it therefore has changed all columns of the matrix. This is what Bernstein calls a column round in his paper. After the next four quarter-rounds, it changed all diagonals of the matrix which Bernstein analogously calls a diagonal round.
 
-To summarize, the following quarterrounds make up one column round:
+To summarize, the following quarter-rounds make up one column round:
 \begin{center}
 \begin{minipage}{0.5\linewidth}
 \texttt{quarterround($y_0$, $y_4$, $y_8$, $y_{12}$)} \\
@@ -87,7 +89,7 @@ To summarize, the following quarterrounds make up one column round:
 \end{minipage}
 \end{center}
 
-After a set amount of rounds (8, 12, or 20), the input vector is added to the vector on which the quarterround function was run. Then the byte order of each matrix entry is reversed using the little-endian function.
+After a set amount of rounds (8, 12, or 20), the input vector is added to the vector on which the quarter-round function was run. Then the byte order of each matrix entry is reversed using the little-endian function.
 
 Having explained the basic structure of the ChaCha hash function, the following pseudo-code should complete the readers comprehension of it:
 
@@ -119,7 +121,7 @@ Having explained the basic structure of the ChaCha hash function, the following 
 ChaCha internally uses a 512-bit state for keystream generation. The ChaCha hash function modifies this state to generate a keystream block. \\
 In this section, I will explain how the state is setup which is then passed in 32-bit blocks to the ChaCha hash function.
 
-The state is made up of a 128-bit constant, a 256-bit key section and a 128-bit nonce section. To demonstrate that the author had no hidden intent with picking his constants (nothing-up-my-sleeve number), he defined the constants to be ``expand 16-byte k'' for 128-bit keys and ``expand 32-byte k'' for 256-bit keys in ASCII .
+The state is made up of a 128-bit constant, a 256-bit key section and a 128-bit nonce section. To demonstrate that the author had no hidden intent with picking his constants (nothing-up-my-sleeve number), he defined the constants to be ``expand 16-byte k'' for 128-bit keys and ``expand 32-byte k'' for 256-bit keys in ASCII.
 
 In the 128-bit key variant, the key is concatenated with itself to create a 256-bit key. This concatenated key is then used for the state setup. If the key is already 256-bit, we do nothing and just use it as it is for the state setup.
 
@@ -169,7 +171,7 @@ Example (all numbers are in hexadecimal with \texttt{:} as separation between by
 \label{sec:chacha.encryption}
 
 To encrypt or decrypt a input text, it is XOR'ed with the keystream. \\
-To generate the keystream, the ChaCha hash function is continously used to create 512-bit keystream blocks until we have enough to XOR every byte of the input text. The input to the ChaCha hash function is the 512-bit initial state as explained in the previous section. After each keystream block, the counter is incremented to have a different initial state as the input each time.
+To generate the keystream, the ChaCha hash function is continuously used to create 512-bit keystream blocks until we have enough to XOR every byte of the input text. The input to the ChaCha hash function is the 512-bit initial state as explained in the previous section. After each keystream block, the counter is incremented to have a different initial state as the input each time.
 
 Since we are operating on streams, if the input message is not a multiple of 512-bit, the bits of the last block of the input message are left-aligned and the remaining bits of the keystream are dropped. This means that the output will always be the exact same length as the input.
 

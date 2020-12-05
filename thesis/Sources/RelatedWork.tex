@@ -1,3 +1,5 @@
+% !TeX spellcheck = en_GB
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Related Work}
 \label{sec:relatedWork}
@@ -32,9 +34,9 @@ The specification of Salsa20 is very relevant for ChaCha because the specificati
 \label{fig:salsa.template}
 \end{figure}
 
-CrypTool 2 already has a plugin for the Salsa20 cipher but without a visualization.
+CrypTool 2 already has a plug-in for the Salsa20 cipher but without a visualization.
 
-During my work on the ChaCha visualization, I thought about how I could reuse my code for the ChaCha visualization to create a visualization for the Salsa20 cipher. I figured that it would not be as straight-forward as I assumed in the beginning since the visualization goes very into detail and thus the differences would involve at least different XAML code. For example, since the state is built up differently, the visualization about the state matrix initialization would need to be adapted. Also, the quarterround is slightly different which also needs to be reflected in the visualization. 
+During my work on the ChaCha visualization, I thought about how I could reuse my code for the ChaCha visualization to create a visualization for the Salsa20 cipher. I figured that it would not be as straight-forward as I assumed in the beginning since the visualization goes very into detail and thus the differences would involve at least different XAML code. For example, since the state is built up differently, the visualization about the state matrix initialization would need to be adapted. Also, the quarter-round is slightly different which also needs to be reflected in the visualization. 
 
 Nonetheless, I think that most of the codebase used for the ChaCha cipher could be reused to create a Salsa20 visualization, especially the navigation system and how the intermediate results are stored and retrieved for visualization. I will further discuss this in Chapter \ref{chap:futureWork}.
 
@@ -61,13 +63,13 @@ Matthias Becher created a visualization for the AES cipher during his bachelor t
 
 I came to the exact same conclusion that the values need to be precalculated for the reasons he mentioned.
 
-Looking through his visualization, I liked how he changed the background of the elements to catch the user's attention. This is shown in Figure \ref{fig:aes}. I have used a similar mechanic during the ChaCha hash function visualization where I put a light blue background onto the state elements which will be used as the quarterround input. Also during the quarterround, I extensively used background coloring to tell the user where he should pay his attention.
+Looking through his visualization, I liked how he changed the background of the elements to catch the user's attention. This is shown in Figure \ref{fig:aes}. I have used a similar mechanic during the ChaCha hash function visualization where I put a light blue background onto the state elements which will be used as the quarter-round input. Also during the quarter-round, I extensively used background colouring to tell the user where he should pay his attention.
 
 Another thing I adopted from his visualization was the navigation in the top-left corner. I placed my page navigation there.
 
 What I wanted to do differently in my navigation was to not show so many buttons all the time to the user. I was quite overwhelmed by all the buttons in the bottom navigation bar on the start even though they were disabled. Therefore, on pages which have no actions, I had no buttons in the bottom row. On pages with actions, a simple slider with a previous and next button did suffice. For the ChaCha hash function, which needed additional navigation, my navigation bar looked similar but still felt in my opinion less crowded, especially because I did not use buttons for every single round but a text input .
 
-Further, I was confused why I could not use the ``Back'' button during the ``Expansion'' or ``Encryption'' step. For my plugin, I wanted to let the user navigate to any step in the visualization fairly simple. To achieve this, I needed to make sure that the user knows where he is and where he needs to click to go to a particular step. To give the user the information he needed, I used the dedicated page navigation in the top-left corner which stays the same on every page and tells the user on which page he currently is with bold font. Further, I numbered every single action on each page together with an action text input and how many actions a page has. The text input makes it possible for the user to immediately jump to an action.
+Further, I was confused why I could not use the ``Back'' button during the ``Expansion'' or ``Encryption'' step. For my plug-in, I wanted to let the user navigate to any step in the visualization fairly simple. To achieve this, I needed to make sure that the user knows where he is and where he needs to click to go to a particular step. To give the user the information he needed, I used the dedicated page navigation in the top-left corner which stays the same on every page and tells the user on which page he currently is with bold font. Further, I numbered every single action on each page together with an action text input and how many actions a page has. The text input makes it possible for the user to immediately jump to an action.
 
 \subsection{DES Visualization}
 \label{sec:desVisualization}
@@ -83,7 +85,7 @@ The DES visualization was created by Lars Hoffman. His approach to visualizing t
 
 Throughout the visualization, all values are shown in binary. This makes it possible to just mark flipped bits red since if a bit is marked red, we immediately know the value of the diffusion run (we just flip the red bit). 
 
-I used the same coloring approach but noticed that since the ChaCha cipher was using longer keys and 512-bit blocks compared to the 64-bit blocks of DES, I needed to use hex strings for my values to save canvas space. This lead to a loss of information about the value of the diffusion run if only marking red the hexadecimal characters which are different. Therefore, I combined the usage of red color together with showing both values in two rows. In the row for the diffusion value, the difference is still marked red for easier visual recognition. This is shown in Figure \ref{fig:chachahash.mid.qr.with.diffusion}.
+I used the same colouring approach but noticed that since the ChaCha cipher was using longer keys and 512-bit blocks compared to the 64-bit blocks of DES, I needed to use hex strings for my values to save canvas space. This lead to a loss of information about the value of the diffusion run if only marking red the hexadecimal characters which are different. Therefore, I combined the usage of red colour together with showing both values in two rows. In the row for the diffusion value, the difference is still marked red for easier visual recognition. This is shown in Figure \ref{fig:chachahash.mid.qr.with.diffusion}.
 
 \subsection{Avalanche Visualization}
 \label{sec:avalancheVisualization}
@@ -106,8 +108,8 @@ I used the same coloring approach but noticed that since the ChaCha cipher was u
 \label{fig:avalanche}
 \end{figure}
 
-The Avalanche visualization plugin was created by Camilo Echeverri in 2016. The most noticeable part about it is probably that it is visually very appealing. Camilo seemed to be very experienced in creating nice user interfaces. Especially the pie chart for the amount of flipped bits with its shadow (Figure \ref{fig:avalanche.roundsend}) and the gradient background stood out for me. It motivated me to also put effort into creating a visually appealing and not just functional user interface for my plugin.
+The Avalanche visualization plug-in was created by Camilo Echeverri in 2016. The most noticeable part about it is probably that it is visually very appealing. Camilo seemed to be very experienced in creating nice user interfaces. Especially the pie chart for the amount of flipped bits with its shadow (Figure \ref{fig:avalanche.roundsend}) and the gradient background stood out for me. It motivated me to also put effort into creating a visually appealing and not just functional user interface for my plug-in.
 
-I also liked the overview over all rounds (Figure \ref{fig:avalanche.overview}). I wanted to do something similar for my plugin since I found it important for studying the diffusion property of ciphers to see how many rounds were needed for half of all bits to be flipped.
+I also liked the overview over all rounds (Figure \ref{fig:avalanche.overview}). I wanted to do something similar for my plug-in since I found it important for studying the diffusion property of ciphers to see how many rounds were needed for half of all bits to be flipped.
 
 On the other hand, I wanted to prevent usage of scrollbars as seen in Figure \ref{fig:avalanche.roundsend} because I wanted to create an interface where the user can see everything he needs immediately.
