@@ -4,7 +4,7 @@
 \chapter{Future Work}
 \label{chap:futureWork}
 
-In this chapter, I will describe how the plugin could be further improved to make it more useful for the audience of CrypTool 2.
+In this chapter, I will describe how the plug-in could be further improved to make it more useful for the audience of CrypTool 2.
 
 \begin{description}[style=nextline]
 
@@ -16,7 +16,7 @@ I have thought about using a plot instead of the simple text which is updated at
 \item[Improve performance during diffusion]
 
 All measurements in Section \ref{sec:Architecture} were done with inactive diffusion since the performance during active diffusion improved in a similar manner. This means that thanks to the centralized navigation system architecture, moving to any action is still done in constant time even if diffusion is active. \\
-The problem is that it takes around one or two seconds for each move (instead of 5ms if diffusion was inactive) which is quite annoying. I suspect that this is the case because the red color is implemented by creating an inline element for every character and marking it red if it is different. This was done like this because it was the easiest way to mark single characters in a different color. \\
+The problem is that it takes around one or two seconds for each move (instead of 5ms if diffusion was inactive) which is quite annoying. I suspect that this is the case because the red colour is implemented by creating an inline element for every character and marking it red if it is different. This was done like this because it was the easiest way to mark single characters in a different colour. \\
 An idea would be to not create these elements on each action move but beforehand. This means that the differences only need to be calculated once and not over and over again. But since this calculation seems to take already a few seconds for one action, calculating it beforehand for every action would probably increase loading time a lot since the ChaCha Hash Function page has a lot of actions. \\
 Fixing this will thus probably be the most difficult point in this list. One needs to first find out where exactly the performance issues come from (basically confirm or disprove my hypothesis) and then find a solution for it. This could result in the need to make some major architectural decisions with a lot of code changes.
 
@@ -27,11 +27,11 @@ Since I am already using asynchronous navigation for the action slider (which I 
 
 \item[Salsa20 visualization]
 
-As mentioned in Section \ref{sec:salsaCT2Plugin}, using the now existing codebase for ChaCha visualization to create a Salsa20 visualization would definitely increase the value gained from this thesis. This would at least need adaption of the XAML code for the state matrix initialization and the quarterround since ChaCha and Salsa20 differ in this aspects from each other. It would most likely even increase the value of the ChaCha visualization, since both ciphers could then be compared side-by-side. Since the visualizations would be very similar, comparing them and their diffusion property should be very easy.
+As mentioned in Section \ref{sec:salsaCT2Plugin}, using the now existing codebase for ChaCha visualization to create a Salsa20 visualization would definitely increase the value gained from this thesis. This would at least need adaption of the XAML code for the state matrix initialization and the quarter-round since ChaCha and Salsa20 differ in this aspects from each other. It would most likely even increase the value of the ChaCha visualization, since both ciphers could then be compared side-by-side. Since the visualizations would be very similar, comparing them and their diffusion property should be very easy.
 
 \item[Localization and online help]
 
-Currently, most texts are only localized in English. Only the memofields, component labels and plaintext value are also available in German. This should be changed in the near future. Further, there should be an online help for the ChaCha plugin which opens by selecting it and pressing F1.
+Currently, most texts are only localized in English. Only the memo fields, component labels and plaintext value are also available in German. This should be changed in the near future. Further, there should be an online help for the ChaCha plug-in which opens by selecting it and pressing F1.
 
 \end{description}
 

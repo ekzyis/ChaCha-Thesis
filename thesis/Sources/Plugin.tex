@@ -4,15 +4,15 @@
 \chapter{Plugin}
 \label{chap:Plugin}
 
-This chapter describes the goals of the plugin and how the implementation accomodates these goals. It also includes the thought process behind some architectural decisions that were made. Description of alternative solutions that I have taken into consideration but were eventually abandoned complement this reasoning about the final architecture.
+This chapter describes the goals of the plug-in and how the implementation accommodates these goals. It also includes the thought process behind some architectural decisions that were made. Description of alternative solutions that I have taken into consideration but were eventually abandoned complement this reasoning about the final architecture.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Goals}
 \label{sec:goals}
 
-The main goal of this plugin was to teach students how messages are encrypted with the ChaCha cipher family. It should focus on creating an easy to understand visualization of its internals without oversimplification.\\
+The main goal of this plug-in was to teach students how messages are encrypted with the ChaCha cipher family. It should focus on creating an easy to understand visualization of its internals without oversimplification.\\
 It should further visualize the diffusion property of the cipher on demand by making it possible for the user to enter secondary values for the key, initialization vector and initial counter.\\
-The plugin should also support all variants of the cipher. This means that the user should be able to choose the key size (128-bit or 256-bit) and how often the hash function will be executed per keystream block (8, 12 or 20 rounds).\\
+The plug-in should also support all variants of the cipher. This means that the user should be able to choose the key size (128-bit or 256-bit) and how often the hash function will be executed per keystream block (8, 12 or 20 rounds).\\
 Since the Internet Engineering Task Force (IETF) introduced a slightly modified version of ChaCha which uses a 32-bit counter and 96-bit initialization vector, the user can also decide if he wants to use the original version by Bernstein with a 64-bit counter and 64-bit initialization vector or the one described by the IETF.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,9 +20,9 @@ Since the Internet Engineering Task Force (IETF) introduced a slightly modified 
 \label{sec:implementationDetails}
 
 In this section, I will go into detail how the goals described in the previous section were achieved. \\
-In the first subsection, the key features of the plugin are described to give a rough overview what a user can expect from the actual plugin implementation. \\
+In the first subsection, the key features of the plug-in are described to give a rough overview what a user can expect from the actual plugin implementation. \\
 The second subsection will then explain the user interface which is used to navigate through the plugin and communicate to the user what is currently happening inside the cipher. \\
-The last subsection then goes into technical details to explain how the plugin internally was designed to make the user interface behave as it does.
+The last subsection then goes into technical details to explain how the plug-in internally was designed to make the user interface behave as it does.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -32,13 +32,13 @@ The last subsection then goes into technical details to explain how the plugin i
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{figures/ct2/plugin-template.png}
-\caption[ChaCha CT2 template]{CT2 template for the ChaCha plugin}
+\caption[ChaCha CT2 template]{CT2 template for the ChaCha plug-in}
 \label{fig:plugin.template}
 \end{figure}
 
-The plugin offers the user the ability to input his own plaintext, key, initialization vector and initial counter using the concept of visual programming (around which CT2 is built) as one can see in Figure \ref{fig:plugin.template}. The counter is optional and defaults to $0$. These values are then used to visualize the cipher execution comprehensively. Descriptions complement the visualization by providing information about what is happening. \\
-As mentioned in Section \ref{sec:goals}, if the user wants to see the diffusion property of the cipher, he can enter secondary values on a dedicated page inside the plugin. This is shown in Figure \ref{fig:diffusion}. \\
-The version (original DJB version or IETF version) and how often the ChaCha hash function should be run per keystream block can be chosen in the plugin settings.
+The plug-in offers the user the ability to input his own plaintext, key, initialization vector and initial counter using the concept of visual programming (around which CT2 is built) as one can see in Figure \ref{fig:plugin.template}. The counter is optional and defaults to zero. These values are then used to visualize the cipher execution comprehensively. Descriptions complement the visualization by providing information about what is happening. \\
+As mentioned in Section \ref{sec:goals}, if the user wants to see the diffusion property of the cipher, he can enter secondary values on a dedicated page inside the plug-in. This is shown in Figure \ref{fig:diffusion}. \\
+The version (original DJB version or IETF version) and how often the ChaCha hash function should be run per keystream block can be chosen in the plug-in settings.
 
 \subsection{User Interface}
 \label{sec:userInterface}
@@ -72,7 +72,7 @@ The version (original DJB version or IETF version) and how often the ChaCha hash
   \includegraphics[width=0.99\textwidth]{figures/ct2/all-pages/5-chachahash.png}
   \caption{ChaCha Hash Function page}
 \end{subfigure}
-\caption[All pages of the ChaCha visualization plugin]{All pages of the ChaCha visualization plugin in their initial state}
+\caption[All pages of the ChaCha visualization plug-in]{All pages of the ChaCha visualization plugin in their initial state}
 \label{fig:allpages}
 \end{figure}
 
@@ -96,7 +96,7 @@ I have used hexadecimal text inputs because the alternative, individual buttons 
 
 Since when studying the diffusion property of a cipher, one is more interested in the difference of values (XOR) during two cipher runs instead of their actual values, the user can also explicitly input the XOR between the primary and secondary value. Additionally, if diffusion is active, the user can toggle between showing the XOR or the actual values by using the button in the top-right corner of each page.
 
-To help with the input, the input fields show an error message if the user entered invalid characters or a too large string since the secondary hexstring must be of equal size as the primary value. If the hex string is too short, it gets left-padded with zeroes to align it with the primary value.
+To help with the input, the input fields show an error message if the user entered invalid characters or a too large string since the secondary hex string must be of equal size as the primary value. If the hex string is too short, it gets left-padded with zeroes to align it with the primary value.
 
 Last but not least, the amount of flipped bits is shown in the second to last row together with a state indication in the last row if the diffusion is active or not. The diffusion is active if at least one bit was flipped.
 
@@ -160,42 +160,42 @@ The last parameter is the IV. It is encoded exactly the same as the key. \\
 
 \subsubsection{ChaCha Hash Function page}
 
-The ChaCha Hash Function page visualizes the generation of a keystream block by using two kind of visualizations: The quarterround visualization  and the addition / reverse bytes step at the end of the hash function.
+The ChaCha Hash Function page visualizes the generation of a keystream block by using two kind of visualizations: The quarter-round visualization  and the addition / reverse bytes step at the end of the hash function.
 
 At the top, you can see the current state together with a description about the ChaCha hash function.\\
-At the bottom, if we are still in the ChaCha hash function loop, you can see the visualization of the quarterrounds (Figure \ref{fig:chachahash.mid.qr}). The quarterround visualization is split into four cells on either side and four boxes in the middle . The boxes on the two ends contain the four input and output values of the quarterround. The boxes in the middle visualize one quarterround step as was described in Section \ref{sec:chacha.qr}.
+At the bottom, if we are still in the ChaCha hash function loop, you can see the visualization of the quarter-rounds (Figure \ref{fig:chachahash.mid.qr}). The quarter-round visualization is split into four cells on either side and four boxes in the middle . The boxes on the two ends contain the four input and output values of the quarter-round. The boxes in the middle visualize one quarter-round step as was described in Section \ref{sec:chacha.qr}.
 
-I have used a circuit diagram to visualize the quarterround similar to the one found in the ChaCha section on the Wikipedia page about Salsa20 (see Figure \ref{fig:wiki.qr.circuit}). This way, I could easily show the intermediate values by putting them on the circuit lines. Furthermore, following along the visualization was very clear because all next steps are already shown just with empty values yet.
+I have used a circuit diagram to visualize the quarter-round similar to the one found in the ChaCha section on the Wikipedia page about Salsa20 (see Figure \ref{fig:wiki.qr.circuit}). This way, I could easily show the intermediate values by putting them on the circuit lines. Furthermore, following along the visualization was very clear because all next steps are already shown just with empty values yet.
 
 If we are finished with the loop, you can see the original state at the left, the result of adding the original state with the state after all rounds in the middle, and at the right the result of reversing the byte order of each state entry of the state in the middle (Figure \ref{fig:chachahash.end}). This is the final state and thus one 512-bit block inside the keystream with which the input message is later XOR'ed .
 
-Below the visualization and just above the slider for the page actions is another navigation bar. This helps the user to quickly navigate through the ChaCha hash function. He can use the arrow buttons to traverse through the keystream blocks, rounds or quarterrounds or enter a number to directly go to a specific step. \\
-For example, if he wants to go to the second quarterround of the fourth round, he can enter "4" into the text input which is labeled with "Round" and press Enter or use the arrow buttons to go to the fourth round. This will take him to the start of the fourth round. He can then proceed to enter "2" into the "Quarterround" text input. Since this will also take him to the start of the quarterround, he can use the buttons to the right of the quarterround input to jump to the end of specific quarterrounds of the current round. For example, if he now wants to go to the end of the second quarterround, he can click on "End" of the second button of the buttons which are labeled with "Quarterround". \\
-They also show the state indices in parentheses that will get updated during their quarterround. Since column and diagonal rounds take turns, these state indices will get updated according to the current round.
+Below the visualization and just above the slider for the page actions is another navigation bar. This helps the user to quickly navigate through the ChaCha hash function. He can use the arrow buttons to traverse through the keystream blocks, rounds or quarter-rounds or enter a number to directly go to a specific step. \\
+For example, if he wants to go to the second quarter-round of the fourth round, he can enter "4" into the text input which is labelled with "Round" and press Enter or use the arrow buttons to go to the fourth round. This will take him to the start of the fourth round. He can then proceed to enter "2" into the "Quarter-round" text input. Since this will also take him to the start of the quarter-round, he can use the buttons to the right of the quarter-round input to jump to the end of specific quarter-rounds of the current round. For example, if he now wants to go to the end of the second quarter-round, he can click on "End" of the second button of the buttons which are labelled with "Quarter-round". \\
+They also show the state indices in parentheses that will get updated during their quarter-round. Since column and diagonal rounds take turns, these state indices will get updated according to the current round.
 
-Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary how the page looks like at the end of each quarterround for round 1 (column round) and round 2 (diagonal round). As you can see, the corresponding state entry is highlighted with a light blue background. This light blue background is also used throughout the visualization to catch the user's attention about which UI elements will be updated in the next step.\\
+Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary how the page looks like at the end of each quarter-round for round 1 (column round) and round 2 (diagonal round). As you can see, the corresponding state entry is highlighted with a light blue background. This light blue background is also used throughout the visualization to catch the user's attention about which UI elements will be updated in the next step.\\
 
 \begin{figure}
 \centering
 \begin{subfigure}{\textwidth}
   \centering
   \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-mid-qr.png}
-  \caption{Quarterround visualization (without diffusion)}
+  \caption{Quarter-round visualization (without diffusion)}
   \label{fig:chachahash.mid.qr.without.diffusion}
 \end{subfigure}
 \begin{subfigure}[t]{0.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-mid-qr-diffusion.png}
-  \caption{Quarterround visualization\\(with diffusion)}
+  \caption{Quarter-round visualization\\(with diffusion)}
   \label{fig:chachahash.mid.qr.with.diffusion}
 \end{subfigure}%
 \begin{subfigure}[t]{0.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-mid-qr-diffusion-xor.png}
-  \caption{Quarterround visualization\\(with diffusion and XOR)}
+  \caption{Quarter-round visualization\\(with diffusion and XOR)}
 \label{fig:chachahash.md.qr.with.diffusion.xor}
 \end{subfigure}
-\caption[Quarterround visualization]{Quarterround visualization during ChaCha hash function}
+\caption[Quarter-round visualization]{Quarter-round visualization during ChaCha hash function}
 \label{fig:chachahash.mid.qr}
 \end{figure}
 
@@ -204,16 +204,16 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
 \begin{subfigure}[t]{0.5\textwidth}
   \centering
   \includegraphics[width=\textwidth]{figures/wiki-qr-circuit/salsa-wiki-qr-circuit.png}
-  \caption{Salsa quarterround circuit diagram}
+  \caption{Salsa quarter-round circuit diagram}
   \label{fig:wiki.qr.circuit.salsa}
 \end{subfigure}
 \begin{subfigure}[t]{0.5\textwidth}
   \centering
   \includegraphics[width=\textwidth]{figures/wiki-qr-circuit/chacha-wiki-qr-circuit.png}
-  \caption{ChaCha quarterround circuit diagram}
+  \caption{ChaCha quarter-round circuit diagram}
   \label{fig:wiki.qr.circuit.chacha}
 \end{subfigure}
-\caption{Quarterround circuit diagram}
+\caption{Quarter-round circuit diagram}
 \label{fig:wiki.qr.circuit}
 \end{figure}
 
@@ -222,22 +222,22 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
 \begin{subfigure}{\textwidth}
   \centering
   \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-end.png}
-  \caption{Addition and Little-Endian step visualization (without diffusion)}
+  \caption{Addition and little-endian step visualization (without diffusion)}
   \label{fig:chachahash.end.without.diffusion}
 \end{subfigure}
 \begin{subfigure}[t]{0.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-end-diffusion.png}
-  \caption{Addition and Little-Endian step visualization\\(with diffusion)}
+  \caption{Addition and little-endian step visualization\\(with diffusion)}
   \label{fig:chachahash.end.with.diffusion}
 \end{subfigure}%
 \begin{subfigure}[t]{0.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-end-diffusion-xor.png}
-  \caption{Addition and Little-Endian step visualization\\(with diffusion and XOR)}
+  \caption{Addition and little-endian step visualization\\(with diffusion and XOR)}
 \label{fig:chachahash.end.with.diffusion.xor}
 \end{subfigure}
-\caption[Addition and Little-Endian step visualization]{Addition and Little-Endian step visualization at the end of the ChaCha hash function}
+\caption[Addition and little-endian step visualization]{Addition and little-endian step visualization at the end of the ChaCha hash function}
 \label{fig:chachahash.end}
 \end{figure}
 
@@ -246,52 +246,52 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
 \begin{subfigure}{0.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-cr1-end.png}
-  \caption{End of first column round}
+  \caption{End of first quarter-round of a column round}
   \label{fig:chachahash.cr.1}
 \end{subfigure}%
 \begin{subfigure}{0.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-cr2-end.png}
-  \caption{End of second column round}
+  \caption{End of second quarter-round of a column round}
   \label{fig:chachahash.cr.2}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-cr3-end.png}
-  \caption{End of third column round}
+  \caption{End of third quarter-round of a column round}
   \label{fig:chachahash.cr.3}
 \end{subfigure}%
 \begin{subfigure}{0.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-cr4-end.png}
-  \caption{End of fourth column round}
+  \caption{End of fourth quarter-round of a column round}
   \label{fig:chachahash.cr.4}
 \end{subfigure}
-\caption[End of column rounds]{End of each quarterround execution of a column round\\(here: round 1)}
+\caption[End of column rounds]{End of each quarter-round execution of a column round\\(here: round 1)}
 \label{fig:chachahash.cr}
 \centering
 \begin{subfigure}{0.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-dr1-end.png}
-  \caption{End of first diagonal round}
+  \caption{End of first quarter-round of a diagonal round}
   \label{fig:chachahash.dr.1}
 \end{subfigure}%
 \begin{subfigure}{0.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-dr2-end.png}
-  \caption{End of second diagonal round}
+  \caption{End of second quarter-round of a diagonal round}
   \label{fig:chachahash.dr.2}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-dr3-end.png}
-  \caption{End of third diagonal round}
+  \caption{End of third quarter-round of a diagonal round}
   \label{fig:chachahash.dr.3}
 \end{subfigure}%
 \begin{subfigure}{0.5\textwidth}
   \centering
   \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-dr4-end.png}
-  \caption{End of fourth diagonal round}
+  \caption{End of fourth quarter-round of a diagonal round}
   \label{fig:chachahash.dr.4}
 \end{subfigure}
 \caption[End of diagonal rounds]{End of each quarterround execution of a diagonal round\\(here: round 2)}
@@ -312,7 +312,7 @@ The second part is about the action navigation system which plays a huge role re
 \subsubsection{MVVM architecture}
 
 I have used a MVVM architecture because in previous attempts, I have discovered that the code becomes quite complicated over time if one is not following a design pattern with its standards and rules. This makes it harder to fix bugs or implement new features. \\
-Even though I tried to follow some self-chosen guidelines like naming conventions and which code should go where, most of the time I went the path of least effort to have results as fast as possible which I could showcase to my supervisors and ask for feedback. The internal code structure was of no importance as long as the feature worked. Only when I realized that it got too cumbersome to maintain this workflow, I read about using design patterns in WPF applications and found out that MVVM is the most popular design pattern to use in conjuction with WPF \cite{mvvm-wpf}.
+Even though I tried to follow some self-chosen guidelines like naming conventions and which code should go where, most of the time I went the path of least effort to have results as fast as possible which I could showcase to my supervisors and ask for feedback. The internal code structure was of no importance as long as the feature worked. Only when I realized that it got too cumbersome to maintain this workflow, I read about using design patterns in WPF applications and found out that MVVM is the most popular design pattern to use in conjunction with WPF \cite{mvvm-wpf}.
 
 As the name suggest, MVVM is all about separating the code into three parts: Models, Views and View Models.
 
@@ -385,7 +385,7 @@ On page exit, \texttt{ChaChaPresentationViewModel}, which is the view model whic
 \label{fig:mvvm.chachatrigger}
 \end{figure}
 
-Before execution, a flag was set which instructs the list getters into which the ChaCha component would save its intermediate values to return a different list. This means that the ChaCha component is agnostic of where it ultimately saves its intermediate values. During the execution, the intermediate values for the diffusion run are therefore saved in parallel lists. This is shown exemplary for the quarterround input values in Figure \ref{fig:mvvm.chacha}. The other pages then simply bind to these lists to display the intermediate values of the diffusion run. Converting the 32-bit unsigned integers into hex strings and marking their characters which are different red is then done in the view models.
+Before execution, a flag was set which instructs the list getters into which the ChaCha component would save its intermediate values to return a different list. This means that the ChaCha component is agnostic of where it ultimately saves its intermediate values. During the execution, the intermediate values for the diffusion run are therefore saved in parallel lists. This is shown exemplary for the quarter-round input values in Figure \ref{fig:mvvm.chacha}. The other pages then simply bind to these lists to display the intermediate values of the diffusion run. Converting the 32-bit unsigned integers into hex strings and marking their characters which are different red is then done in the view models.
 
 \begin{figure}
 \centering
@@ -413,7 +413,7 @@ I came to the conclusion that the best trade-off would be to have a navigation s
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{figures/navigationsystem-diagram/navigationsystem-central-overview.png}
-\caption[Navigation paths in centralized navigation system]{Navigation paths between actions in the centralized navigation system. \\The colorized state is the reset state which corresponds to the initial state.}
+\caption[Navigation paths in centralized navigation system]{Navigation paths between actions in the centralized navigation system. \\The colourized state is the reset state which corresponds to the initial state.}
 \label{fig:navsystem.central.overview}
 \end{figure}
 
@@ -445,11 +445,11 @@ As one can see in the documentation of \texttt{IActionCreator}, I also wanted ne
 \label{fig:navsystem.test}
 \end{figure}
 
-This was very helpful for implementing the actions for the ChaCha Hash Function page. Since each keystream block started with a cleared quarterround visualization and the initial state visible in the state matrix, it made sense to declare a sequence for each keystream block. The same was true for each round and quarterround. This meant that I would not introduce too much computational overhead inside the transitional code (even though only one transition was executed by design) since I could just reset the sequence if it made no longer sense to include the code of previous actions.
+This was very helpful for implementing the actions for the ChaCha Hash Function page. Since each keystream block started with a cleared quarter-round visualization and the initial state visible in the state matrix, it made sense to declare a sequence for each keystream block. The same was true for each round and quarter-round. This meant that I would not introduce too much computational overhead inside the transitional code (even though only one transition was executed by design) since I could just reset the sequence if it made no longer sense to include the code of previous actions.
 
 Essentially, this prevented the system degrading back to a linear navigation system as will be described in Section \ref{sec:encounteredProblems}. The system would have less transitions but would still execute the same code as a linear navigation system would when moving from action 0 to any other action; undoing any positive effect this approach of minimizing transitions could have had.
 
-The weakness of this design was that there was still some overhead when navigating through the page in a linear manner since the system is basically designed to always go back to the first action first and from there to the desired action. This leads to a lot of unnecessary resetting because as mentioned, most of the times the next page state is only a slight modification of the previous one. But this is the trade-off I had to make for a good overall performance. To summarize, this design had a higher overhead for small steps but did scale much better for bigger steps which were necessary for the keystream, round and quarterround navigation. 
+The weakness of this design was that there was still some overhead when navigating through the page in a linear manner since the system is basically designed to always go back to the first action first and from there to the desired action. This leads to a lot of unnecessary resetting because as mentioned, most of the times the next page state is only a slight modification of the previous one. But this is the trade-off I had to make for a good overall performance. To summarize, this design had a higher overhead for small steps but did scale much better for bigger steps which were necessary for the keystream, round and quarter-round navigation. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -460,7 +460,7 @@ In this section, I will discuss the main problems I encountered during implement
 
 The author of the AES visualization has mentioned in his thesis that to create a fluent user experience where he can navigate back and forth between all steps, the intermediate values need to be calculated beforehand and saved since we don't want to stop at each step to calculate the next value or recalculate everything from the start if the user wants to go backwards. I came to the same conclusion. But as I will describe on the next pages, this was not all that was needed to ensure such an experience.
 
-I hope that the description of these problems and the solutions I have found may help future students in writing their own plugins.
+I hope that the description of these problems and the solutions I have found may help future students in writing their own plug-ins.
 
 \subsubsection{Linear navigation system}
 
@@ -471,7 +471,7 @@ I hope that the description of these problems and the solutions I have found may
 \label{fig:navsystem.performance.linear}
 \end{figure}
 
-The peformance of the plugin was essentially coupled to how the navigation system was designed. Other things like the aforementioned calculation of the intermediate values for the visualization were compared to the navigation system design unsignificant because they are created by the ChaCha cipher anyway and must just be saved somewhere to not lose them. This means that storing them was only a necessary but not sufficient condition for a overall good performance. \\
+The performance of the plug-in was essentially coupled to how the navigation system was designed. Other things like the aforementioned calculation of the intermediate values for the visualization were compared to the navigation system design insignificant because they are created by the ChaCha cipher anyway and must just be saved somewhere to not lose them. This means that storing them was only a necessary but not sufficient condition for a overall good performance. \\
 I realized this early in development when I had my first page with many page actions on it and wanted to skip ahead a lot of actions. While implementing this feature which would enable the user to skip from any action to any other action, I realized that when skipping more than 100 actions, it already took about 750ms during which the UI was unresponsive. As can be seen in Figure \ref{fig:navsystem.performance.linear}, this time increased linearly so it was quite clear that I needed to do something about this, especially because the page with the most actions had over 3000 actions. All measurements were taken by starting at action 0 and skipping to the action specified at the x axis.
 
 The root cause of the problem was the navigation system design which I called in hindsight \textbf{\textit{linear navigation system}}. It consisted of defining actions which build upon each other. This means that if we are at action 0 (initial state of the page) and want to go to action 5, we need to execute all the code inside the action definitions between 0 and 5 to arrive at the page state as it should be at action 5. This is resembled in Figure \ref{fig:navsystem.linear.overview}. \\
@@ -500,14 +500,14 @@ The problem with that architecture was that the state saving and the execution l
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-qr-cache.png}
-\caption{Performance of linear navigation system with caches for each quarterround}
+\caption{Performance of linear navigation system with caches for each quarter-round}
 \label{fig:navsystem.performance.qr}
 \end{figure}
 
-After identifying the two underlying issues, I implemented what I called a \textbf{\textit{linear navigation system with caches}}. As the name suggests, I implemented cache entries to be able to navigate in constant time between an action and an action for which I created a cache. To not only increase peformance during these transitions but between all transitions, we check before each transition, if first moving to a cached entry would decrease the amount of hops needed to go to our destination. \\
+After identifying the two underlying issues, I implemented what I called a \textbf{\textit{linear navigation system with caches}}. As the name suggests, I implemented cache entries to be able to navigate in constant time between an action and an action for which I created a cache. To not only increase performance during these transitions but between all transitions, we check before each transition, if first moving to a cached entry would decrease the amount of hops needed to go to our destination. \\
 The cache entries consisted of instructions to restore the complete state of a page at the action index for which this cache entry was for. They contained instructions for the complete state instead of only the difference between two actions because now, moving to that cache must initialize the page, independent at which action / page state we were before. This means that there was some overhead in initializing the page because essentially, I cleared the whole page and then initialized the page elements with their appropriate content, potentially leading to some unnecessary code execution because the content prior to cleaning was already the one we needed. 
 
-Figure \ref{fig:navsystem.cache.overview} demonstrates that the navigation system now needs less hops between any two given actions. Creating a cache entry for every start of a round increased performance significantly as can be seen in \ref{fig:navsystem.performance.qr}. The maximum response time went down from 40 seconds in the system without any caches to 1.5 seconds. This could further be decreased to 200 milliseconds by creating cache entries for every start of a quarterround (see Figure \ref{fig:navsystem.performance.qr}). Since it was not feasible to time every single data point, the data points marked as squares were just interpolated using previously timed data points. This means that for example, for the interpolated cache data points, I took the average of all previous measurements for skips to cached actions.
+Figure \ref{fig:navsystem.cache.overview} demonstrates that the navigation system now needs less hops between any two given actions. Creating a cache entry for every start of a round increased performance significantly as can be seen in \ref{fig:navsystem.performance.qr}. The maximum response time went down from 40 seconds in the system without any caches to 1.5 seconds. This could further be decreased to 200 milliseconds by creating cache entries for every start of a quarter-round (see Figure \ref{fig:navsystem.performance.qr}). Since it was not feasible to time every single data point, the data points marked as squares were just interpolated using previously timed data points. This means that for example, for the interpolated cache data points, I took the average of all previous measurements for skips to cached actions.
 
 Further, to decrease the load on the CPU while dragging the action slider, I implemented a very simple asynchronous navigation. It was implemented by using a stack as a buffer for the values received from the slider during dragging. Every 50ms, the last value from the buffer is read and the page moves to that action. Afterwards, the buffer is cleared. \\
 This did only enhance the slider but not the overall performance because at its core, it used the same navigation logic; just asynchronously. Nonetheless, it improved the performance during dragging significantly which I found quite impressing for how minimal the code for it is. In fact, the whole code for the asynchronous navigation can be seen in Figure \ref{fig:async.navigation}.
@@ -517,7 +517,7 @@ One of the major drawbacks for this enhanced design was that the automatic actio
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{figures/navigationsystem-diagram/navigationsystem-cache-overview-2.png}
-\caption[Navigation paths in linear navigation system with caches]{Navigation paths between actions in the linear navigation system with caches. The colorized state has a corresponding cache entry.}
+\caption[Navigation paths in linear navigation system with caches]{Navigation paths between actions in the linear navigation system with caches. The colourized state has a corresponding cache entry.}
 \label{fig:navsystem.cache.overview}
 \end{figure}
 
@@ -562,4 +562,4 @@ Essentially, the problem was that I used a lot of code-behind which was highly c
 \textit{\textbf{Requirement}}: The new system should make it clear what piece of code is responsible for what and thus be highly modular. This should also make it clear where new code must be added to implement a new feature without increasing technical debt; while also decreasing the possibility to introduce bugs since code is less coupled. To summarize, the new architecture should strive for high cohesion, but low coupling.
 \end{description}
 
-All these problems were solved using the MVVM design pattern with a new navigation system design. To implement them, I completely rewrote the existing code from scratch, which was time-consuming (took about two weeks) but in the end worth it. Figure \ref{fig:navsystem.performance.central} shows the performance of the final navigation system. As one can see, the time it takes to skip actions is constantly very low and only varies between a few milliseconds, making the user interface very responsive.
+All these problems were solved using the MVVM design pattern with a new navigation system design. To implement them, I completely rewrote the existing code from scratch, which was time-consuming (took about two weeks) but in the end worth it. Figure \ref{fig:navsystem.performance.central} shows the performance of the final navigation system. As one can see, the time it takes to skip actions is constantly very low and only varies between a few milliseconds; making the user interface very responsive.
