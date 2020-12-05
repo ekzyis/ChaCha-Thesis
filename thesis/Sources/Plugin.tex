@@ -540,10 +540,19 @@ I summarized all the problems I currently had with my code which not only consis
 Essentially, the problem was that I used a lot of code-behind which was highly coupled to the XAML code. I did it like this because it was very straight-forward to do so and lead to fast results. At first, I thought the trade-off between loss of maintainability/flexibility in the future and not having to spend precious time to learn design patterns for WPF applications was worth it. I thought so because I was not writing software on which the long-term success of a company depended and which would get regular updates in the future thus high maintainability or being easy to extend was not a priority. I got proven wrong when I realized I already reached the limit of "code smells" I could handle about one month before I had to hand in my thesis. Every code change kept increasing the accumulated technical debt; killing any motivation I still had left to work on the existing code base. Continuing like this for another month seemed impossible. So I created a list of all current problems together with what requirements a new software architecture would need to meet to solve them:
 
 \begin{figure}
+\begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=\textwidth]{figures/ct2/scaling-bug-example.png}
-\caption{Example for bad scaling property in previous plugin versions}
+\includegraphics[width=0.99\textwidth]{figures/ct2/scaling-bug-example.png}
+\caption{Bad scaling property}
 \label{fig:plugin.scaling.bug}
+\end{subfigure}%
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.99\textwidth]{figures/ct2/scaling-bug-fixed.png}
+\caption{Fixed scaling property}
+\label{fig:plugin.scaling.fix}
+\end{subfigure}%
+\caption{Example for bad scaling property in previous plugin versions}
 \end{figure}
 
 \begin{figure}
