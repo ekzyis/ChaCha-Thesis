@@ -477,25 +477,25 @@ Essentially, the problem was that I used a lot of code-behind which was highly c
 \textit{\textbf{Requirement}}: The new system should make it clear what piece of code is responsible for what and thus be highly modular. This should also make it clear where new code must be added to implement a new feature without increasing technical debt; while also decreasing the possibility to introduce bugs since code is less coupled. To summarize, the new architecture should strive for high cohesion, but low coupling.
 \end{description}
 
-All these problems were solved using the MVVM design pattern with a new navigation system design. To implement them, I completely rewrote the existing code from scratch, which was time-consuming (took about two weeks) but in the end worth it. Figure \ref{fig:navsystem.performance.central} shows the performance of the final navigation system. As one can see, the time it takes to skip actions is constantly very low and only varies between a few milliseconds; making the user interface very responsive.
-
-\begin{figure}[hbt]
+\begin{figure}[!hbt]
 \centering
-\makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{figures/pyplot/performance_navsystem-linear.png}}
+\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-linear.png}
 \caption{Performance of linear navigation system}
 \label{fig:navsystem.performance.linear}
 \centering
-\makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{figures/pyplot/performance_navsystem-central.png}}
+\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-central.png}
 \caption{Performance of final (centralized) navigation system}
 \label{fig:navsystem.performance.central}
 \end{figure}
 
+All these problems were solved using the MVVM design pattern with a new navigation system design. To implement them, I completely rewrote the existing code from scratch, which was time-consuming (took about two weeks) but in the end worth it. Figure \ref{fig:navsystem.performance.central} shows the performance of the final navigation system. As one can see, the time it takes to skip actions is constantly very low and only varies between a few milliseconds; making the user interface very responsive.
+
 \begin{figure}
 \centering
-\makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{figures/pyplot/performance_navsystem-round-cache.png}}
+\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-round-cache.png}
 \caption{Performance of linear navigation system with caches for each round}
 \label{fig:navsystem.performance.round}
-\makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{figures/pyplot/performance_navsystem-qr-cache.png}}
+\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-qr-cache.png}
 \caption{Performance of linear navigation system with caches for each quarter-round}
 \label{fig:navsystem.performance.qr}
 \end{figure}
