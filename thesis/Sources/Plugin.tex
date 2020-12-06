@@ -271,7 +271,21 @@ Views define how the data should be presented. They consist mainly of XAML code 
 
 View models connect the model data with the views. However, they do not directly manipulate the views but just define properties and methods which implement the logic for user interactions. The views then use data binding to be notified about any property changes or call methods if a button is clicked etc. This means that view models should not rely on any code inside a view. This essentially decouples the backend from the frontend.
 
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/code/mvvm-arch/page-navigation-template.png}
+\caption[Page navigation]{Implementation of page navigation using data binding}
+\label{fig:mvvm.pagenavigation}
+\end{figure}
+
 In Figure \ref{fig:mvvm.pagenavigation}, I have provided an example for how this data binding looks in code. What you see is the view code for the page navigation.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/code/mvvm-arch/action-navigation-template.png}
+\caption[Action navigation]{Implementation of action navigation inside a control template}
+\label{fig:mvvm.actionnavigation}
+\end{figure}
 
 Another technique (that you can also see in the mentioned Figure) is the use of templates. I have used data templates to attach views to view models and control templates to implement the general UI structure with the three sections I mentioned in Section \ref{sec:userInterface}. This enabled me to define the UI layout for all pages in one place and also reuse a single implementation of the page and action navigation across all pages. This way, view modifications down the road which applied to all pages were easy and fast. In Figure \ref{fig:mvvm.actionnavigation}, you can see the view implementation of the action navigation bar which is only visible on pages which do have actions.
 
@@ -287,9 +301,38 @@ Since data binding works by notifying the view if a variable has changed, WPF pr
 
 The notification raising and the implementation of the \texttt{INotifyPropertyChanged} interface can be seen in Figure \ref{fig:mvvm.databindingnotification}. The setter of \texttt{DiffusionInputKey} raises multiple notifications because other variables which depend on \texttt{DiffusionInputKey} also need updating. (The first call of \texttt{OnPropertyChanged}  in the setter has no argument because the attribute \texttt{CallerMemberName} in the function signature automatically enters the name of the caller if no argument is provided.)
 
-On page exit, \texttt{ChaChaPresentationViewModel}, which is the view model which implements navigation between the different pages (which have their own view models), calls \texttt{Teardown} on the page we are leaving. This triggers the ChaCha execution with the given secondary values. This can be seen in Figure \ref{fig:mvvm.chachatrigger}.
+\begin{figure}
+\centering
+\begin{subfigure}[t]{0.6\textwidth}
+\centering
+\includegraphics[width=\textwidth]{figures/code/mvvm-arch/onpropertychanged.png}
+\caption{Data binding notification in setter of \texttt{DiffusionInputKey}}
+\label{fig:mvvm.onpropertychanged}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
+\centering
+\includegraphics[width=\textwidth]{figures/code/mvvm-arch/viewmodelbase.png}
+\caption{\texttt{ViewModelBase} implementation with \texttt{INotifyPropertyChanged} interface}
+\label{fig:mvvm.viewmodelbase}
+\end{subfigure}
+\caption{Data binding notification implementation}
+\label{fig:mvvm.databindingnotification}
+\end{figure}
+
+On page exit, \texttt{ChaChaPresentationViewModel}, which is the view model which implements navigation between the different pages (which have their own view models), calls \texttt{Teardown} on the page we are leaving. This triggers the ChaCha execution with the given secondary values.
 
 Before execution, a flag was set which instructs the list getters into which the ChaCha component would save its intermediate values to return a different list. This means that the ChaCha component is agnostic of where it ultimately saves its intermediate values. During the execution, the intermediate values for the diffusion run are therefore saved in parallel lists. This is shown exemplary for the quarter-round input values in Figure \ref{fig:mvvm.chacha}. The other pages then simply bind to these lists to display the intermediate values of the diffusion run. Converting the 32-bit unsigned integers into hex strings and marking their characters which are different red is then done in the view models.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/code/mvvm-arch/chacha.png}
+\caption[Intermediate values saving]{Saving of intermediate values during ChaCha execution in lists}
+\label{fig:mvvm.chacha}
+\end{figure}
+
+\vfill
+
+\FloatBarrier
 
 \subsubsection{Centralized navigation system}
 
@@ -318,6 +361,13 @@ During implementation, I realized I could bring the amount of new transitions fo
 
 Unfortunately, I saw the issue of code duplication quickly arising with this design. Since most of the time, the next page state is only a slight modification of the previous page state, the code for following actions was almost the same. To mitigate this issue, I started to think about my actions as sequences. A sequence of actions would mean that every action inside a sequence is an extension of all previous actions of the same sequence. Extension in this context means that if action $A$ extends action $B$, action $A$ contains at least all the code of action $B$. To use terminology of set theory, one could also say that $A$ is a superset of $B$; viewing individual code statements as objects.
 
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/code/nav-arch/action-extensions.png}
+\caption[Extending \texttt{Action} type]{Extension method for the \texttt{Action} type to extend actions}
+\label{fig:navsystem.sequences.extension}
+\end{figure}
+
 To implement this concept, I created an extension method for the \texttt{Action} type in C\# together with an interface to create action sequences. Figure \ref{fig:navsystem.sequences.extension} shows the method which extends the built-in \texttt{Action} type.
 
 I also wanted nested sequences. This means that a sequence could be started inside another sequence. A nested or child sequence would extend all the actions from its parent sequence. From the perspective of the nested sequence, it is no different than if all the actions from the parent sequence were created inside it. When ending a nested sequence, from the perspective of the parent sequence, the nested sequence never existed. Figure \ref{fig:navsystem.test} shows a test which asserts that this nesting does indeed work as expected.
@@ -332,78 +382,9 @@ This was very helpful for implementing the actions for the ChaCha Hash Function 
 
 Essentially, this prevented the system degrading back to a linear navigation system as will be described in Section \ref{sec:encounteredProblems}. The system would have less transitions but would still execute the same code as a linear navigation system would when moving from action 0 to any other action; undoing any positive effect this approach of minimizing transitions could have had.
 
-The weakness of this design was that there was still some overhead when navigating through the page in a linear manner since the system is basically designed to always go back to the first action first and from there to the desired action. This leads to a lot of unnecessary resetting because as mentioned, most of the times the next page state is only a slight modification of the previous one. But this is the trade-off I had to make for a good overall performance. To summarize, this design had a higher overhead for small steps but did scale much better for bigger steps which were necessary for the keystream, round and quarter-round navigation. 
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth]{figures/code/mvvm-arch/page-navigation-template.png}
-\caption[Page navigation]{Implementation of page navigation using data binding}
-\label{fig:mvvm.pagenavigation}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/code/mvvm-arch/action-navigation-template.png}
-\caption[Action navigation]{Implementation of action navigation inside a control template}
-\label{fig:mvvm.actionnavigation}
-\end{figure}
-
-\begin{figure}
-\centering
-\begin{subfigure}[t]{0.5\textwidth}
-\centering
-\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/onpropertychanged.png}
-\caption{Data binding notification in setter of \texttt{DiffusionInputKey}}
-\label{fig:mvvm.onpropertychanged}
-\end{subfigure}%
-\begin{subfigure}[t]{0.5\textwidth}
-\centering
-\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/viewmodelbase.png}
-\caption{\texttt{ViewModelBase} implementation with \texttt{INotifyPropertyChanged} interface}
-\label{fig:mvvm.viewmodelbase}
-\end{subfigure}
-\caption{Data binding notification implementation}
-\label{fig:mvvm.databindingnotification}
-\end{figure}
-
-\begin{figure}
-\centering
-\begin{subfigure}[t]{\textwidth}
-\centering
-\includegraphics[width=\textwidth]{figures/code/mvvm-arch/chachaPresentationViewModel.png}
-\caption{\texttt{ChaChaPresentationViewModel}: Implements page navigation and has access to the ChaCha component}\label{fig:mvvm.chachapresentationviewmodel}
-\end{subfigure}
-\end{figure}
-
-\begin{figure}
-\ContinuedFloat
-\begin{subfigure}[t]{\textwidth}
-\centering
-\includegraphics[width=\textwidth]{figures/code/mvvm-arch/diffusionViewModel.png}
-\caption{\texttt{DiffusionViewModel}: Triggers ChaCha execution on page exit using the \texttt{ChaChaPresentationViewModel} instance that was passed in its constructor}
- \label{fig:mvvm.viewmodelbase}
-\end{subfigure}
-\caption[ChaCha diffusion execution]{Triggering ChaCha execution with values entered in Diffusion page}
-\label{fig:mvvm.chachatrigger}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/code/mvvm-arch/chacha.png}
-\caption[Intermediate values saving]{Saving of intermediate values during ChaCha execution in lists}
-\label{fig:mvvm.chacha}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/code/nav-arch/action-extensions.png}
-\caption[Extending \texttt{Action} type]{Extension method for the \texttt{Action} type to extend actions}
-\label{fig:navsystem.sequences.extension}
-\end{figure}
+The weakness of this design was that there was still some overhead when navigating through the page in a linear manner since the system is basically designed to always go back to the first action first and from there to the desired action. This leads to a lot of unnecessary resetting because as mentioned, most of the times the next page state is only a slight modification of the previous one. But this is the trade-off I had to make for a good overall performance. To summarize, this design had a higher overhead for small steps but did scale much better for bigger steps which were necessary for the keystream, round and quarter-round navigation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\pagebreak
 
 \section{Encountered Problems}
 \label{sec:encounteredProblems}
@@ -438,7 +419,14 @@ The problem with that architecture was that the state saving and the execution l
 After identifying the two underlying issues, I implemented what I called a \textbf{\textit{linear navigation system with caches}}. As the name suggests, I implemented cache entries to be able to navigate in constant time between an action and an action for which I created a cache. To not only increase performance during these transitions but between all transitions, we check before each transition, if first moving to a cached entry would decrease the amount of hops needed to go to our destination. \\
 The cache entries consisted of instructions to restore the complete state of a page at the action index for which this cache entry was for. They contained instructions for the complete state instead of only the difference between two actions because now, moving to that cache must initialize the page, independent at which action / page state we were before. This means that there was some overhead in initializing the page because essentially, I cleared the whole page and then initialized the page elements with their appropriate content, potentially leading to some unnecessary code execution because the content prior to cleaning was already the one we needed. 
 
-Figure \ref{fig:navsystem.cache.overview} demonstrates that the navigation system now needs less hops between any two given actions. Creating a cache entry for every start of a round increased performance significantly as can be seen in \ref{fig:navsystem.performance.qr}. The maximum response time went down from 40 seconds in the system without any caches to 1.5 seconds. This could further be decreased to 200 milliseconds by creating cache entries for every start of a quarter-round (see Figure \ref{fig:navsystem.performance.qr}). Since it was not feasible to time every single data point, the data points marked as squares were just interpolated using previously timed data points. This means that for example, for the interpolated cache data points, I took the average of all previous measurements for skips to cached actions.
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/navigationsystem-diagram/navigationsystem-cache-overview-2.png}
+\caption[Navigation paths in linear navigation system with caches]{Navigation paths between actions in the linear navigation system with caches. The colourized state has a corresponding cache entry.}
+\label{fig:navsystem.cache.overview}
+\end{figure}
+
+Figure \ref{fig:navsystem.cache.overview} demonstrates that the navigation system now needs less hops between any two given actions. Creating a cache entry for every start of a round increased performance significantly as can be seen in Figure \ref{fig:navsystem.performance.qr}. The maximum response time went down from 40 seconds in the system without any caches to 1.5 seconds. This could further be decreased to 200 milliseconds by creating cache entries for every start of a quarter-round (see Figure \ref{fig:navsystem.performance.qr}). Since it was not feasible to time every single data point, the data points marked as squares were just interpolated using previously timed data points. This means that for example, for the interpolated cache data points, I took the average of all previous measurements for skips to cached actions.
 
 Further, to decrease the load on the CPU while dragging the action slider, I implemented a very simple asynchronous navigation. It was implemented by using a stack as a buffer for the values received from the slider during dragging. Every 50ms, the last value from the buffer is read and the page moves to that action. Afterwards, the buffer is cleared. \\
 This did only enhance the slider but not the overall performance because at its core, it used the same navigation logic; just asynchronously. Nonetheless, it improved the performance during dragging significantly which I found quite impressing for how minimal the code for it is. In fact, the whole code for the asynchronous navigation can be seen in Figure \ref{fig:async.navigation}.
@@ -447,10 +435,12 @@ One of the major drawbacks for this enhanced design was that the automatic actio
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{figures/navigationsystem-diagram/navigationsystem-cache-overview-2.png}
-\caption[Navigation paths in linear navigation system with caches]{Navigation paths between actions in the linear navigation system with caches. The colourized state has a corresponding cache entry.}
-\label{fig:navsystem.cache.overview}
+\includegraphics[width=0.9\textwidth]{figures/code/nav-arch/async-navigation.png}
+\caption{Asynchronous navigation subsystem}
+\label{fig:async.navigation}
 \end{figure}
+
+\FloatBarrier
 
 \subsubsection{Centralized navigation system}
 
@@ -459,54 +449,6 @@ Some navigation bugs were easy to notice because due to the overall still linear
 Nonetheless, this did not help in tracking down the bug because I did not know on which action the error happened. This only further incentivised me to reiterate on the navigation system again.
 
 I summarized all the problems I currently had with my code which not only consisted of performance problems but also with visualization problems. Resizing the window did not appropriately scale the UI elements as can be seen in Figure \ref{fig:plugin.scaling.bug}. Additionally, the current navigation system was quite restricted in what kind of UI elements it supported without further hassle. Since I only updated the existing code during the last time I revisited the navigation system, the core design was still all about directly manipulating and creating UI elements on demand. The functions I wrote revolved around the UI elements I was using thus I could not reuse them if I wanted to use different UI elements; leading to the limited support of the navigation system I mentioned.
-
-Essentially, the problem was that I used a lot of code-behind which was highly coupled to the XAML code. I did it like this because it was very straight-forward to do so and lead to fast results. At first, I thought the trade-off between loss of maintainability/flexibility in the future and not having to spend precious time to learn design patterns for WPF applications was worth it. I thought so because I was not writing software on which the long-term success of a company depended and which would get regular updates in the future thus high maintainability or being easy to extend was not a priority. I got proven wrong when I realized I already reached the limit of "code smells" I could handle about one month before I had to hand in my thesis. Every code change kept increasing the accumulated technical debt; killing any motivation I still had left to work on the existing code base. Continuing like this for another month seemed impossible. So I created a list of all current problems together with what requirements a new software architecture would need to meet to solve them:
-
-\begin{description}
-\item [(Inconsistent) Performance] The underlying linear design was crippling the performance for the reasons already mentioned. The introduction of caches did only fight the symptoms and not solve the main issue. Further, it made the performance confusing for the users. Sometimes, it took close to no time at all to move to a certain action (action was cached) and on other times, it took quite a lot of time to move to a different action (action was not cached). \\
-\textit{\textbf{Requirement}}: Moving to any action should be done in $O(1)$. This means, it should not matter how many actions we needed to skip to arrive at the destination.
-\item [Error-prone design for action creation] Writing new actions was error-prone because I needed to write code for forward and backwards navigation which introduced mental overhead because it depended on the code of all previous actions. This also lead to error propagation. Errors were easily noticeable by users but were hard to track down to their origin.\\
-\textit{\textbf{Requirement}}: New actions should be able to be written without having to write backwards navigation code. Backwards navigation should be handled automatically and thus be "error-free by design".
-\item [No coherent system design] Adding new code without following a design pattern made it hard to grasp the system architecture over the long run. Additionally, the high coupling of the backend (code-behind) with the frontend (XAML) made it harder to implement new features in one part without needing to modify the other part. The system essentially got very rigid and over time, even seemingly small changes took quite some time to implement.\\
-\textit{\textbf{Requirement}}: The new system should make it clear what piece of code is responsible for what and thus be highly modular. This should also make it clear where new code must be added to implement a new feature without increasing technical debt; while also decreasing the possibility to introduce bugs since code is less coupled. To summarize, the new architecture should strive for high cohesion, but low coupling.
-\end{description}
-
-All these problems were solved using the MVVM design pattern with a new navigation system design. To implement them, I completely rewrote the existing code from scratch, which was time-consuming (took about two weeks) but in the end worth it. Figure \ref{fig:navsystem.performance.central} shows the performance of the final navigation system. As one can see, the time it takes to skip actions is constantly very low and only varies between a few milliseconds; making the user interface very responsive.
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-linear.png}
-\caption{Performance of linear navigation system}
-\label{fig:navsystem.performance.linear}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-round-cache.png}
-\caption{Performance of linear navigation system with caches for each round}
-\label{fig:navsystem.performance.round}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-qr-cache.png}
-\caption{Performance of linear navigation system with caches for each quarter-round}
-\label{fig:navsystem.performance.qr}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-central.png}
-\caption{Performance of final (centralized) navigation system}
-\label{fig:navsystem.performance.central}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/code/nav-arch/async-navigation.png}
-\caption{Asynchronous navigation subsystem}
-\label{fig:async.navigation}
-\end{figure}
 
 \begin{figure}
 \begin{subfigure}{\textwidth}
@@ -522,4 +464,41 @@ All these problems were solved using the MVVM design pattern with a new navigati
 \label{fig:plugin.scaling.fix}
 \end{subfigure}
 \caption{Example for bad scaling property in previous plugin versions}
+\end{figure}
+
+Essentially, the problem was that I used a lot of code-behind which was highly coupled to the XAML code. I did it like this because it was very straight-forward to do so and lead to fast results. At first, I thought the trade-off between loss of maintainability/flexibility in the future and not having to spend precious time to learn design patterns for WPF applications was worth it. I thought so because I was not writing software on which the long-term success of a company depended and which would get regular updates in the future thus high maintainability or being easy to extend was not a priority. I got proven wrong when I realized I already reached the limit of "code smells" I could handle about one month before I had to hand in my thesis. Every code change kept increasing the accumulated technical debt; killing any motivation I still had left to work on the existing code base. Continuing like this for another month seemed impossible. So I created a list of all current problems together with what requirements a new software architecture would need to meet to solve them:
+
+\begin{description}
+\item [(Inconsistent) Performance] The underlying linear design was crippling the performance for the reasons already mentioned. The introduction of caches did only fight the symptoms and not solve the main issue. Further, it made the performance confusing for the users. Sometimes, it took close to no time at all to move to a certain action (action was cached) and on other times, it took quite a lot of time to move to a different action (action was not cached). \\
+\textit{\textbf{Requirement}}: Moving to any action should be done in $O(1)$. This means, it should not matter how many actions we needed to skip to arrive at the destination.
+\item [Error-prone design for action creation] Writing new actions was error-prone because I needed to write code for forward and backwards navigation which introduced mental overhead because it depended on the code of all previous actions. This also lead to error propagation. Errors were easily noticeable by users but were hard to track down to their origin.\\
+\textit{\textbf{Requirement}}: New actions should be able to be written without having to write backwards navigation code. Backwards navigation should be handled automatically and thus be "error-free by design".
+\item [No coherent system design] Adding new code without following a design pattern made it hard to grasp the system architecture over the long run. Additionally, the high coupling of the backend (code-behind) with the frontend (XAML) made it harder to implement new features in one part without needing to modify the other part. The system essentially got very rigid and over time, even seemingly small changes took quite some time to implement.\\
+\textit{\textbf{Requirement}}: The new system should make it clear what piece of code is responsible for what and thus be highly modular. This should also make it clear where new code must be added to implement a new feature without increasing technical debt; while also decreasing the possibility to introduce bugs since code is less coupled. To summarize, the new architecture should strive for high cohesion, but low coupling.
+\end{description}
+
+All these problems were solved using the MVVM design pattern with a new navigation system design. To implement them, I completely rewrote the existing code from scratch, which was time-consuming (took about two weeks) but in the end worth it. Figure \ref{fig:navsystem.performance.central} shows the performance of the final navigation system. As one can see, the time it takes to skip actions is constantly very low and only varies between a few milliseconds; making the user interface very responsive.
+
+\begin{figure}[b]
+\centering
+\makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{figures/pyplot/performance_navsystem-linear.png}}
+\caption{Performance of linear navigation system}
+\label{fig:navsystem.performance.linear}
+\end{figure}
+
+\begin{figure}
+\centering
+\makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{figures/pyplot/performance_navsystem-round-cache.png}}
+\caption{Performance of linear navigation system with caches for each round}
+\label{fig:navsystem.performance.round}
+\makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{figures/pyplot/performance_navsystem-qr-cache.png}}
+\caption{Performance of linear navigation system with caches for each quarter-round}
+\label{fig:navsystem.performance.qr}
+\end{figure}
+
+\begin{figure}
+\centering
+\makebox[\textwidth][c]{\includegraphics[width=1.3\textwidth]{figures/pyplot/performance_navsystem-central.png}}
+\caption{Performance of final (centralized) navigation system}
+\label{fig:navsystem.performance.central}
 \end{figure}
