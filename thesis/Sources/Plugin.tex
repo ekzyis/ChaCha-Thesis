@@ -354,19 +354,17 @@ Before execution, a flag was set which instructs the list getters into which the
 
 \subsubsection{Centralized navigation system}
 
-The final design of the navigation system was characterized by reflecting on the problems previous iterations had. In this subsection, I will only describe the current, final implementation of the navigation system. The previous implementations with their problems are described in Section \ref{sec:encounteredProblems}.
-
-The core idea of the navigation system was to decrease hops between actions without having too many possible transitions since for every transition from action $A$ to another action $B$ and vice versa, code needs to be written to perform the transition. Figure \ref{fig:navsystem.all.overview} shows how a navigation system would look like where the maximum amount of hops is minimized to one. Total transitions are $2n(n-1)$ and for every new action, transitions increase by $2(n-1)$ ($n$ is the total number of actions). The factor 2 comes from the fact that for every transition from action $A$ to $B$, we also need a transition back from $B$ to $A$. We can conclude that such an architecture does not scale very well from the perspective of a developer who needs to write all of that transitional code. \\
-On the other hand, decreasing the amount of possible transitions by introducing more hops would degrade performance due to computational overhead, so a system with a very high average amount of hops would not scale very well regarding performance.
-
-I came to the conclusion that the best trade-off would be to have a navigation system where every action has a transition to a centralized state and this central state then has a transition to all other actions. This would result in a maximum of two hops between any two actions. Further, adding a new action would only add two new transitions to the system. This system design is shown in Figure \ref{fig:navsystem.central.overview}.
-
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{figures/navigationsystem-diagram/navigationsystem-all-overview.png}
 \caption[Navigation paths (no reset state)]{Navigation paths between actions if no reset state was used.}
 \label{fig:navsystem.all.overview}
 \end{figure}
+
+The final design of the navigation system was characterized by reflecting on the problems previous iterations had. In this subsection, I will only describe the current, final implementation of the navigation system. The previous implementations with their problems are described in Section \ref{sec:encounteredProblems}.
+
+The core idea of the navigation system was to decrease hops between actions without having too many possible transitions since for every transition from action $A$ to another action $B$ and vice versa, code needs to be written to perform the transition. Figure \ref{fig:navsystem.all.overview} shows how a navigation system would look like where the maximum amount of hops is minimized to one. Total transitions are $2n(n-1)$ and for every new action, transitions increase by $2(n-1)$ ($n$ is the total number of actions). The factor 2 comes from the fact that for every transition from action $A$ to $B$, we also need a transition back from $B$ to $A$. We can conclude that such an architecture does not scale very well from the perspective of a developer who needs to write all of that transitional code. \\
+On the other hand, decreasing the amount of possible transitions by introducing more hops would degrade performance due to computational overhead, so a system with a very high average amount of hops would not scale very well regarding performance.
 
 \begin{figure}
 \centering
@@ -375,13 +373,15 @@ I came to the conclusion that the best trade-off would be to have a navigation s
 \label{fig:navsystem.central.overview}
 \end{figure}
 
+I came to the conclusion that the best trade-off would be to have a navigation system where every action has a transition to a centralized state and this central state then has a transition to all other actions. This would result in a maximum of two hops between any two actions. Further, adding a new action would only add two new transitions to the system. This system design is shown in Figure \ref{fig:navsystem.central.overview}.
+
 During implementation, I realized I could bring the amount of new transitions for each action down to one. Defining the initial state as the central state meant that transitioning from any action to it could be done by just resetting the whole page to the first action. Due to this, I started calling the central state the reset or initial state since they were the same.
 
 Unfortunately, I saw the issue of code duplication quickly arising with this design. Since most of the time, the next page state is only a slight modification of the previous page state, the code for following actions was almost the same. To mitigate this issue, I started to think about my actions as sequences. A sequence of actions would mean that every action inside a sequence is an extension of all previous actions of the same sequence. Extension in this context means that if action $A$ extends action $B$, action $A$ contains at least all the code of action $B$. To use terminology of set theory, one could also say that $A$ is a superset of $B$; viewing individual code statements as objects.
 
-To implement this concept, I created an extension method for the \texttt{Action} type in C\# together with an interface to create action sequences. Figure \ref{fig:navsystem.sequences.extension} shows the extension method and Figure \ref{fig:navsystem.iactioncreator} the interface including its documentation.
+To implement this concept, I created an extension method for the \texttt{Action} type in C\# together with an interface to create action sequences. Figure \ref{fig:navsystem.sequences.extension} shows the method which extends the built-in \texttt{Action} type.
 
-As one can see in the documentation of \texttt{IActionCreator}, I also wanted nested sequences. This means that a sequence could be started inside another sequence. A nested or child sequence would extend all the actions from its parent sequence. From the perspective of the nested sequence, it is no different than if all the actions from the parent sequence were created inside it. When ending a nested sequence, from the perspective of the parent sequence, the nested sequence never existed. Figure \ref{fig:navsystem.test} shows a test which asserts that this nesting does indeed work as expected.
+I also wanted nested sequences. This means that a sequence could be started inside another sequence. A nested or child sequence would extend all the actions from its parent sequence. From the perspective of the nested sequence, it is no different than if all the actions from the parent sequence were created inside it. When ending a nested sequence, from the perspective of the parent sequence, the nested sequence never existed. Figure \ref{fig:navsystem.test} shows a test which asserts that this nesting does indeed work as expected.
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{figures/code/nav-arch/TestNestedSequentialExecutionOrder.png}
@@ -395,11 +395,15 @@ Essentially, this prevented the system degrading back to a linear navigation sys
 
 The weakness of this design was that there was still some overhead when navigating through the page in a linear manner since the system is basically designed to always go back to the first action first and from there to the desired action. This leads to a lot of unnecessary resetting because as mentioned, most of the times the next page state is only a slight modification of the previous one. But this is the trade-off I had to make for a good overall performance. To summarize, this design had a higher overhead for small steps but did scale much better for bigger steps which were necessary for the keystream, round and quarter-round navigation. 
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{figures/code/mvvm-arch/page-navigation-template.png}
 \caption[Page navigation]{Implementation of page navigation using data binding}
 \label{fig:mvvm.pagenavigation}
+\end{figure}
+
+\begin{figure}
+\centering
 \includegraphics[width=\textwidth]{figures/code/mvvm-arch/action-navigation-template.png}
 \caption[Action navigation]{Implementation of action navigation inside a control template}
 \label{fig:mvvm.actionnavigation}
@@ -425,14 +429,18 @@ The weakness of this design was that there was still some overhead when navigati
 
 \begin{figure}
 \centering
-\begin{subfigure}[t]{0.5\textwidth}
+\begin{subfigure}[t]{\textwidth}
 \centering
-\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/chachaPresentationViewModel.png}
+\includegraphics[width=\textwidth]{figures/code/mvvm-arch/chachaPresentationViewModel.png}
 \caption{\texttt{ChaChaPresentationViewModel}: Implements page navigation and has access to the ChaCha component}\label{fig:mvvm.chachapresentationviewmodel}
-\end{subfigure}%
-\begin{subfigure}[t]{0.5\textwidth}
+\end{subfigure}
+\end{figure}
+
+\begin{figure}
+\ContinuedFloat
+\begin{subfigure}[t]{\textwidth}
 \centering
-\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/diffusionViewModel.png}
+\includegraphics[width=\textwidth]{figures/code/mvvm-arch/diffusionViewModel.png}
 \caption{\texttt{DiffusionViewModel}: Triggers ChaCha execution on page exit using the \texttt{ChaChaPresentationViewModel} instance that was passed in its constructor}
  \label{fig:mvvm.viewmodelbase}
 \end{subfigure}
@@ -454,14 +462,9 @@ The weakness of this design was that there was still some overhead when navigati
 \label{fig:navsystem.sequences.extension}
 \end{figure}
 
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/code/nav-arch/IActionCreator-full.png}
-\caption[Sequence interface implementation]{\texttt{IActionCreator}: Interface to implement sequences}
-\label{fig:navsystem.iactioncreator}
-\end{figure}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagebreak
 
 \section{Encountered Problems}
 \label{sec:encounteredProblems}
@@ -474,6 +477,13 @@ I hope that the description of these problems and the solutions I have found may
 
 \subsubsection{Linear navigation system}
 
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/navigationsystem-diagram/navigationsystem-linear-overview.png}
+\caption[Navigation paths in linear navigation system]{Navigation paths between actions in the linear navigation system}
+\label{fig:navsystem.linear.overview}
+\end{figure}
+
 The performance of the plug-in was essentially coupled to how the navigation system was designed. Other things like the aforementioned calculation of the intermediate values for the visualization were compared to the navigation system design insignificant because they are created by the ChaCha cipher anyway and must just be saved somewhere to not lose them. This means that storing them was only a necessary but not sufficient condition for a overall good performance. \\
 I realized this early in development when I had my first page with many page actions on it and wanted to skip ahead a lot of actions. While implementing this feature which would enable the user to skip from any action to any other action, I realized that when skipping more than 100 actions, it already took about 750ms during which the UI was unresponsive. As can be seen in Figure \ref{fig:navsystem.performance.linear}, this time increased linearly so it was quite clear that I needed to do something about this, especially because the page with the most actions had over 3000 actions. All measurements were taken by starting at action 0 and skipping to the action specified at the x axis.
 
@@ -483,13 +493,6 @@ I came up with this design to have a smooth implementation experience where I on
 Since this "design flaw" was not the leading cause of the performance problem (going through a for-loop of size 3000 does not directly lead to performance issues), I want to briefly explain how the actual action implementation looked like.\\
 During the transition between two page states, the state of the page elements which will change is saved such that we can undo the changes if the user decides to navigate back. This enabled me to skip writing transitional code for backwards navigation, since I could just write a function which retrieves the state corresponding to the transition and then applies it. This function would then work for all backwards navigation without further intervention which was very convenient during development. \\
 The problem with that architecture was that the state saving and the execution logic inside the action definitions were changing a lot of page elements directly by accessing them via their name that I gave them in the XAML code. That this was against best practices in writing WPF applications I only noticed later on, when I read more about them. This issue combined with the restricted, linear pathing between actions resulted in that huge performance loss that was described in Figure \ref{fig:navsystem.performance.linear}.
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/navigationsystem-diagram/navigationsystem-linear-overview.png}
-\caption[Navigation paths in linear navigation system]{Navigation paths between actions in the linear navigation system}
-\label{fig:navsystem.linear.overview}
-\end{figure}
 
 \subsubsection{Linear navigation system with caches}
 
