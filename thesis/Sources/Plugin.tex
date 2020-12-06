@@ -37,7 +37,7 @@ The last subsection then goes into technical details to explain how the plug-in 
 \end{figure}
 
 The plug-in offers the user the ability to input his own plaintext, key, initialization vector and initial counter using the concept of visual programming (around which CT2 is built) as one can see in Figure \ref{fig:plugin.template}. The counter is optional and defaults to zero. These values are then used to visualize the cipher execution comprehensively. Descriptions complement the visualization by providing information about what is happening. \\
-As mentioned in Section \ref{sec:goals}, if the user wants to see the diffusion property of the cipher, he can enter secondary values on a dedicated page inside the plug-in. This is shown in Figure \ref{fig:diffusion}. \\
+As mentioned in Section \ref{sec:goals}, if the user wants to see the diffusion property of the cipher, he can enter secondary values on a dedicated page inside the plug-in. \\
 The version (original DJB version or IETF version) and how often the ChaCha hash function should be run per keystream block can be chosen in the plug-in settings.
 
 \subsection{User Interface}
@@ -57,9 +57,16 @@ If a page does not have actions, the action navigation is hidden but the space i
 
 I will now go into greater detail about the pages which do not have fully static content. These pages are the Diffusion page, the State Matrix Initialization page and the ChaCha Hash Function page.
 
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/ct2/all-pages/3-diffusion.png}
+\caption{Diffusion page in its initial state}
+\label{fig:diffusionpage}
+\end{figure}
+
 \subsubsection{Diffusion page}
 
-As already mentioned in Section \ref{sec:keyFeatures}, on the Diffusion page, the user can enter secondary values for the key, IV and initial counter in hexadecimal. They will be used to visualize the diffusion property. This means that during cipher execution, hexadecimal letters which are different are marked red. An example of this is shown on the Diffusion page at the right side (see Figure \ref{fig:diffusion}).
+As already mentioned in Section \ref{sec:keyFeatures}, on the Diffusion page (Figure \ref{fig:diffusionpage}), the user can enter secondary values for the key, IV and initial counter in hexadecimal. They will be used to visualize the diffusion property. This means that during cipher execution, hexadecimal letters which are different are marked red. An example of this is shown on the Diffusion page at the right side.
 
 I have used hexadecimal text inputs because the alternative, individual buttons for each bit, would have resulted in a lot of buttons because the key can be 256-bit. Together with the 128-bit from the counter and IV, this would have resulted in 384 individual buttons. Furthermore, clicking on individual buttons instead of entering text was more cumbersome.
 
@@ -67,11 +74,25 @@ Since when studying the diffusion property of a cipher, one is more interested i
 
 To help with the input, the input fields show an error message if the user entered invalid characters or a too large string since the secondary hex string must be of equal size as the primary value. If the hex string is too short, it gets left-padded with zeroes to align it with the primary value.
 
-Last but not least, the amount of flipped bits is shown in the second to last row together with a state indication in the last row if the diffusion is active or not. The diffusion is active if at least one bit was flipped.
+Last but not least, the amount of flipped bits is shown in the second to last row together with a state indication in the last row if the diffusion is active or not. The diffusion is active if at least one bit was flipped. This is shown in Figure \ref{fig:diffusion.active}.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/ct2/diffusion/diffusion-active.png}
+\caption{Diffusion page in its active state}
+\label{fig:diffusion.active}
+\end{figure}
 
 \subsubsection{State Matrix Initialization page}
 
-On the State Matrix Initialization page, it is shown how the initial 512-bit state for the first keystream block is build up. The generation of the next keystream blocks start with the same state but just with a different counter (as was described in Chapter \ref{chap:chacha}).
+On the State Matrix Initialization page (Figure \ref{fig:statematrixpage}), it is shown how the initial 512-bit state for the first keystream block is build up. The generation of the next keystream blocks start with the same state but just with a different counter (as was described in Chapter \ref{chap:chacha}).
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/ct2/all-pages/4-statematrix.png}
+\caption{State Matrix Initialization page in its initial state}
+\label{fig:statematrixpage}
+\end{figure}
 
 This means that only the construction of the state for the very first keystream block is shown in this page. This was done this way because I wanted to focus on one thing inside a page. I did not want to disrupt the flow of the ChaCha Hash Function page by jumping back to the visualization of the state matrix initialization just to encode a different counter. The information which is provided to the user in the first and only state matrix initialization should be enough for him to construct all following initial states without further guidance. Therefore, I focused on a comprehensive visualization of the encoding for each state parameter (constants, key, IV, counter). 
 
@@ -82,67 +103,6 @@ First, the constants are encoded. Since they are shown in ASCII format in the st
 Afterwards, the key is encoded. It is just split into 4 byte chunks whose order is then reversed. \\
 When encoding the counter, the complete byte order is first reversed, and then it is split into 4 byte chunks whose byte order is then again reversed. \\
 The last parameter is the IV. It is encoded exactly the same as the key. \\
-
-\subsubsection{ChaCha Hash Function page}
-
-The ChaCha Hash Function page visualizes the generation of a keystream block by using two kind of visualizations: The quarter-round visualization  and the addition / reverse bytes step at the end of the hash function.
-
-At the top, you can see the current state together with a description about the ChaCha hash function.\\
-At the bottom, if we are still in the ChaCha hash function loop, you can see the visualization of the quarter-rounds (Figure \ref{fig:chachahash.mid.qr}). The quarter-round visualization is split into four cells on either side and four boxes in the middle . The boxes on the two ends contain the four input and output values of the quarter-round. The boxes in the middle visualize one quarter-round step as was described in Section \ref{sec:chacha.qr}.
-
-I have used a circuit diagram to visualize the quarter-round similar to the one found in the ChaCha section on the Wikipedia page about Salsa20 (see Figure \ref{fig:wiki.qr.circuit}). This way, I could easily show the intermediate values by putting them on the circuit lines. Furthermore, following along the visualization was very clear because all next steps are already shown just with empty values yet.
-
-If we are finished with the loop, you can see the original state at the left, the result of adding the original state with the state after all rounds in the middle, and at the right the result of reversing the byte order of each state entry of the state in the middle (Figure \ref{fig:chachahash.end}). This is the final state and thus one 512-bit block inside the keystream with which the input message is later XOR'ed .
-
-Below the visualization and just above the slider for the page actions is another navigation bar. This helps the user to quickly navigate through the ChaCha hash function. He can use the arrow buttons to traverse through the keystream blocks, rounds or quarter-rounds or enter a number to directly go to a specific step. \\
-For example, if he wants to go to the second quarter-round of the fourth round, he can enter "4" into the text input which is labelled with "Round" and press Enter or use the arrow buttons to go to the fourth round. This will take him to the start of the fourth round. He can then proceed to enter "2" into the "Quarter-round" text input. Since this will also take him to the start of the quarter-round, he can use the buttons to the right of the quarter-round input to jump to the end of specific quarter-rounds of the current round. For example, if he now wants to go to the end of the second quarter-round, he can click on "End" of the second button of the buttons which are labelled with "Quarter-round". \\
-They also show the state indices in parentheses that will get updated during their quarter-round. Since column and diagonal rounds take turns, these state indices will get updated according to the current round.
-
-Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary how the page looks like at the end of each quarter-round for round 1 (column round) and round 2 (diagonal round). As you can see, the corresponding state entry is highlighted with a light blue background. This light blue background is also used throughout the visualization to catch the user's attention about which UI elements will be updated in the next step.\\
-
-\begin{figure}
-\centering
-\begin{subfigure}{\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{figures/ct2/all-pages/1-start.png}
-  \caption{Start page}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{figures/ct2/all-pages/2-overview.png}
-  \caption{Overview page}
-\end{subfigure}
-\end{figure}
-\begin{figure}
-\ContinuedFloat
-\begin{subfigure}{\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{figures/ct2/all-pages/3-diffusion.png}
-  \caption{Diffusion page}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{figures/ct2/all-pages/4-statematrix.png}
-  \caption{State Matrix Initialization page}
-\end{subfigure}
-\end{figure}
-\begin{figure}
-\ContinuedFloat
-\begin{subfigure}{\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{figures/ct2/all-pages/5-chachahash.png}
-  \caption{ChaCha Hash Function page}
-\end{subfigure}
-\caption[All pages of the ChaCha visualization plug-in]{All pages of the ChaCha visualization plugin in their initial state}
-\label{fig:allpages}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/ct2/diffusion/diffusion-active.png}
-\caption{Diffusion page in its active state}
-\label{fig:diffusion}
-\end{figure}
 
 \begin{figure}
 \begin{subfigure}{\textwidth}
@@ -176,11 +136,24 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
 \label{fig:statematrix.encoding}
 \end{figure}
 
+\FloatBarrier
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{figures/ct2/all-pages/5-chachahash.png}
+\caption{ChaCha Hash Function page in its initial state}
+\label{fig:chachahashpage}
+\end{figure}
+
+\subsubsection{ChaCha Hash Function page}
+
+The ChaCha Hash Function page (Figure \ref{fig:chachahashpage}) visualizes the generation of a keystream block by using two kind of visualizations: The quarter-round visualization and the addition / reverse bytes step at the end of the hash function.
+
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-mid-qr.png}
-  \caption{Quarter-round visualization (without diffusion)}
-  \label{fig:chachahash.mid.qr.without.diffusion}
+  \caption{Quarter-round visualization}
+  \label{fig:chachahash.mid.qr}
 \end{figure}
 
 \begin{figure}
@@ -201,51 +174,29 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
 \label{fig:wiki.qr.circuit}
 \end{figure}
 
-\begin{figure}
-\begin{subfigure}[t]{\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-mid-qr-diffusion.png}
-  \caption{Quarter-round visualization with diffusion (showing both values)}
-  \label{fig:chachahash.mid.qr.with.diffusion}
-\end{subfigure}
-\begin{subfigure}[t]{\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-mid-qr-diffusion-xor.png}
-  \caption{Quarter-round visualization with diffusion (XOR)}
-\label{fig:chachahash.md.qr.with.diffusion.xor}
-\end{subfigure}
-\caption{Quarter-round visualization with diffusion}
-\label{fig:chachahash.mid.qr}
-\end{figure}
+At the top, you can see the current state together with a description about the ChaCha hash function.\\
+At the bottom, if we are still in the ChaCha hash function loop, you can see the visualization of the quarter-rounds (Figure \ref{fig:chachahash.mid.qr}). The quarter-round visualization is split into four cells on either side and four boxes in the middle . The boxes on the two ends contain the four input and output values of the quarter-round. The boxes in the middle visualize one quarter-round step as was described in Section \ref{sec:chacha.qr}.
+
+I have used a circuit diagram to visualize the quarter-round similar to the one found in the ChaCha section on the Wikipedia page about Salsa20 (see Figure \ref{fig:wiki.qr.circuit}). This way, I could easily show the intermediate values by putting them on the circuit lines. Furthermore, following along the visualization was very clear because all next steps are already shown just with empty values yet.
 
 \begin{figure}
-\centering
-\begin{subfigure}{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-cr1-end.png}
-  \caption{End of first quarter-round (column round)}
-  \label{fig:chachahash.cr.1}
-\end{subfigure}%
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-cr2-end.png}
-  \caption{End of second quarter-round (column round)}
-  \label{fig:chachahash.cr.2}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-cr3-end.png}
-  \caption{End of third quarter-round (column round)}
-  \label{fig:chachahash.cr.3}
-\end{subfigure}%
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-cr4-end.png}
-  \caption{End of fourth quarter-round (column round)}
-  \label{fig:chachahash.cr.4}
-\end{subfigure}
-\caption[End of column rounds]{End of each quarter-round execution of a column round}
-\label{fig:chachahash.cr}
+  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-end.png}
+  \caption{Addition and little-endian step visualization}
+  \label{fig:chachahash.end}
+\end{figure}
+
+If we are finished with the loop, you can see the original state at the left, the result of adding the original state with the state after all rounds in the middle, and at the right the result of reversing the byte order of each state entry of the state in the middle (Figure \ref{fig:chachahash.end}). This is the final state and thus one 512-bit block inside the keystream with which the input message is later XOR'ed .
+
+Below the visualization and just above the slider for the page actions is another navigation bar. This helps the user to quickly navigate through the ChaCha hash function. He can use the arrow buttons to traverse through the keystream blocks, rounds or quarter-rounds or enter a number to directly go to a specific step. \\
+For example, if he wants to go to the second quarter-round of the fourth round, he can enter "4" into the text input which is labelled with "Round" and press Enter or use the arrow buttons to go to the fourth round. This will take him to the start of the fourth round. He can then proceed to enter "2" into the "Quarter-round" text input. Since this will also take him to the start of the quarter-round, he can use the buttons to the right of the quarter-round input to jump to the end of specific quarter-rounds of the current round. For example, if he now wants to go to the end of the second quarter-round, he can click on "End" of the second button of the buttons which are labelled with "Quarter-round". \\
+They also show the state indices in parentheses that will get updated during their quarter-round. Since column and diagonal rounds take turns, these state indices will get updated according to the current round.
+
+Figure \ref{fig:chachahash.dr} shows exemplary how the page looks like at the end of each quarter-round of a diagonal round. As you can see, the corresponding state entry is highlighted with a light blue background. This light blue background is also used throughout the visualization to catch the user's attention about which UI elements will be updated in the next step.
+
+Figure \ref{fig:chachahash.mid.qr.diffusion} shows the quarter-round visualization as an example how diffusion is visualized throughout the plug-in. Figure \ref{fig:chachahash.mid.qr.diffusion.both} shows the visualization with the XOR button in the top-right corner not toggled; thus showing the values from both cipher runs whereas Figure \ref{fig:chachahash.mid.qr.diffusion.xor} shows the visualization with the XOR button toggled.
+
+\begin{figure}
 \centering
 \begin{subfigure}{0.5\textwidth}
   \centering
@@ -276,38 +227,26 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
 \end{figure}
 
 \begin{figure}
-\centering
-\begin{subfigure}{\textwidth}
+\begin{subfigure}[t]{\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-end.png}
-  \caption{Addition and little-endian step visualization (without diffusion)}
-  \label{fig:chachahash.end.without.diffusion}
+  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-mid-qr-diffusion.png}
+  \caption{Quarter-round visualization with diffusion (showing both values)}
+  \label{fig:chachahash.mid.qr.diffusion.both}
 \end{subfigure}
 \begin{subfigure}[t]{\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-end-diffusion.png}
-  \caption{Addition and little-endian step visualization\\(with diffusion)}
-  \label{fig:chachahash.end.with.diffusion}
+  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-mid-qr-diffusion-xor.png}
+  \caption{Quarter-round visualization with diffusion (XOR)}
+  \label{fig:chachahash.mid.qr.diffusion.xor}
 \end{subfigure}
-\end{figure}
-\begin{figure}
-\ContinuedFloat
-\begin{subfigure}[t]{\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-end-diffusion-xor.png}
-  \caption{Addition and little-endian step visualization\\(with diffusion and XOR)}
-\label{fig:chachahash.end.with.diffusion.xor}
-\end{subfigure}
-\caption[Addition and little-endian step visualization]{Addition and little-endian step visualization}
-\label{fig:chachahash.end}
+\caption{Quarter-round visualization with diffusion}
+\label{fig:chachahash.mid.qr.diffusion}
 \end{figure}
 
-\vfill
-
-\pagebreak
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\FloatBarrier
 \subsection{Architecture}
 \label{sec:Architecture}
 
