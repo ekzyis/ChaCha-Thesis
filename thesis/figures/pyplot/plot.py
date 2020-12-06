@@ -9,6 +9,18 @@ import matplotlib.pyplot as plt
 import numpy as np
 import random
 
+SMALL_SIZE = 8
+MEDIUM_SIZE = 10
+BIGGER_SIZE = 24
+
+plt.rc('font', size=BIGGER_SIZE)          # controls default text sizes
+plt.rc('axes', titlesize=BIGGER_SIZE)     # fontsize of the axes title
+plt.rc('axes', labelsize=BIGGER_SIZE)    # fontsize of the x and y labels
+plt.rc('xtick', labelsize=BIGGER_SIZE)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=BIGGER_SIZE)    # fontsize of the tick labels
+plt.rc('legend', fontsize=BIGGER_SIZE)    # legend fontsize
+plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
 def avg(n):
   return sum(n)/len(n)
 
@@ -85,7 +97,7 @@ def insert_interpolation(plotData: PlotData, cache_step: int):
     if t is None:
       plotData.data.append(CacheDataPoint(action=x, samples=[avg_mid_cache_time], cache=False, interpolated=True))
 
-def plot_cache(plotData: PlotData, title, ylim):
+def plot_cache(plotData: PlotData, ylim=None):
   fig, ax = plt.subplots(figsize=(20, 5))
   x, y = plotData.x(), plotData.y()
 
@@ -104,8 +116,8 @@ def plot_cache(plotData: PlotData, title, ylim):
   ax.scatter(cache_x_int, cache_y_int, marker='s', c='g', zorder=4, label='cached actions (interpolated)')
 
   ax.legend()
-  ax.set(title=title, xlabel='action', ylabel='time [ms]')
-  plt.ylim(0, ylim)
+  ax.set(xlabel='action', ylabel='time [ms]')
+  plt.ylim(0, ylim or max(y) + 10)
   plt.show()
 
 def plot_cache_qr(plotData: PlotData):
@@ -113,7 +125,7 @@ def plot_cache_qr(plotData: PlotData):
   Create the plot for the navigation system with caches at every quarterround.
   """
   insert_interpolation(plotData, 46)
-  plot_cache(plotData, 'Performance of navigation system with caches for every quarterround', 1500)
+  plot_cache(plotData)
 
 plot_cache_qr(data[0])
 
@@ -122,7 +134,7 @@ def plot_cache_round(plotData: PlotData):
   Create the plot for the navigation system with caches at every round.
   """
   insert_interpolation(plotData, 184)
-  plot_cache(plotData, 'Performance of navigation system with caches for every round', 1500)
+  plot_cache(plotData, 1500)
   
 plot_cache_round(data[1])
 
@@ -131,7 +143,7 @@ def plot_linear(plotData: PlotData):
   x, y = plotData.x(), plotData.y()
 
   ax.plot(x, y, '-o')
-  ax.set(title='Performance of linear navigation system', xlabel='action', ylabel='time [ms]')
+  ax.set(xlabel='action', ylabel='time [ms]')
   plt.ylim(0, 45000)
   plt.show()
 
@@ -142,8 +154,8 @@ def plot_central(plotData: PlotData):
   x, y = plotData.x(), plotData.y()
 
   ax.plot(x, y, '-o')
-  ax.set(title='Performance of centralized navigation system', xlabel='action', ylabel='time [ms]')
-  plt.ylim(0, 200)
+  ax.set(xlabel='action', ylabel='time [ms]')
+  plt.ylim(0, 20)
   plt.show()
 
 plot_central(data[2])
