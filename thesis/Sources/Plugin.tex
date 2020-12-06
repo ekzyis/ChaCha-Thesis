@@ -296,9 +296,7 @@ Furthermore, I am using converters which are also built into WPF to convert data
 
 Since data binding works by notifying the view if a variable has changed, WPF provides an interface named \texttt{INotifyPropertyChanged} which helps with implementing these data binding notifications. It provides a method named \texttt{OnPropertyChanged} and  an event named \texttt{PropertyChangedEventHandler} which must be called with the name of the variable to raise such an notification. The data binding system then updates the variables in the view.
 
-The notification raising and the implementation of the \texttt{INotifyPropertyChanged} interface can be seen in Figure \ref{fig:mvvm.databindingnotification}. The setter of \texttt{DiffusionInputKey} raises multiple notifications because other variables which depend on \texttt{DiffusionInputKey} also need updating. (The first call of \texttt{OnPropertyChanged}  in the setter has no argument because the attribute \texttt{CallerMemberName} in the function signature automatically enters the name of the caller if no argument is provided.)
-
-\begin{figure}
+\begin{figure}[!hbt]
 \centering
 \begin{subfigure}[t]{0.6\textwidth}
 \centering
@@ -315,6 +313,8 @@ The notification raising and the implementation of the \texttt{INotifyPropertyCh
 \caption{Data binding notification implementation}
 \label{fig:mvvm.databindingnotification}
 \end{figure}
+
+The notification raising and the implementation of the \texttt{INotifyPropertyChanged} interface can be seen in Figure \ref{fig:mvvm.databindingnotification}. The setter of \texttt{DiffusionInputKey} raises multiple notifications because other variables which depend on \texttt{DiffusionInputKey} also need updating. (The first call of \texttt{OnPropertyChanged}  in the setter has no argument because the attribute \texttt{CallerMemberName} in the function signature automatically enters the name of the caller if no argument is provided.)
 
 On page exit, \texttt{ChaChaPresentationViewModel}, which is the view model which implements navigation between the different pages (which have their own view models), calls \texttt{Teardown} on the page we are leaving. This triggers the ChaCha execution with the given secondary values.
 
