@@ -45,37 +45,6 @@ The version (original DJB version or IETF version) and how often the ChaCha hash
 
 \subsubsection{General interface structure}
 
-\begin{figure}
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/all-pages/1-start.png}
-  \caption{Start page}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/all-pages/2-overview.png}
-  \caption{Overview page}
-\end{subfigure}
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/all-pages/3-diffusion.png}
-  \caption{Diffusion page}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/all-pages/4-statematrix.png}
-  \caption{State Matrix Initialization page}
-\end{subfigure}
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/all-pages/5-chachahash.png}
-  \caption{ChaCha Hash Function page}
-\end{subfigure}
-\caption[All pages of the ChaCha visualization plug-in]{All pages of the ChaCha visualization plugin in their initial state}
-\label{fig:allpages}
-\end{figure}
-
 All pages have a common interface layout which consists of three sections. Each section is inside a own dedicated row.
 
 The first section implements the navigation to move between pages. It also shows the title of the current page.
@@ -101,50 +70,6 @@ To help with the input, the input fields show an error message if the user enter
 Last but not least, the amount of flipped bits is shown in the second to last row together with a state indication in the last row if the diffusion is active or not. The diffusion is active if at least one bit was flipped.
 
 \subsubsection{State Matrix Initialization page}
-
-\begin{figure}
-\centering
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/diffusion/diffusion-inactive.png}
-  \caption{Diffusion inactive (no user input)}
-  \label{fig:diffusion.inactive}
-\end{subfigure}%
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/diffusion/diffusion-active.png}
-  \caption{Diffusion active}
-  \label{fig:diffusion.active}
-\end{subfigure}
-\caption{Diffusion page}
-\label{fig:diffusion}
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/state-matrix/1-state-matrix-constants.png}
-  \caption{Constants encoding}
-  \label{fig:statematrix.encoding.constants}
-\end{subfigure}%
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/state-matrix/2-state-matrix-key.png}
-  \caption{Key encoding}
-  \label{fig:statematrix.encoding.key}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/state-matrix/3-state-matrix-counter.png}
-  \caption{Counter encoding}
-  \label{fig:statematrix.encoding.counter}
-\end{subfigure}%
-\begin{subfigure}{0.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/state-matrix/4-state-matrix-iv.png}
-  \caption{IV encoding}
-  \label{fig:statematrix.encoding.iv}
-\end{subfigure}
-\caption[State Matrix Initialization page]{Encoding of the state parameters on the State Matrix Initialization page}
-\label{fig:statematrix.encoding}
-\end{figure}
 
 On the State Matrix Initialization page, it is shown how the initial 512-bit state for the first keystream block is build up. The generation of the next keystream blocks start with the same state but just with a different counter (as was described in Chapter \ref{chap:chacha}).
 
@@ -179,37 +104,96 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
 \centering
 \begin{subfigure}{\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-mid-qr.png}
-  \caption{Quarter-round visualization (without diffusion)}
-  \label{fig:chachahash.mid.qr.without.diffusion}
+  \includegraphics[width=\textwidth]{figures/ct2/all-pages/1-start.png}
+  \caption{Start page}
 \end{subfigure}
-\begin{subfigure}[t]{0.5\textwidth}
+\begin{subfigure}{\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-mid-qr-diffusion.png}
-  \caption{Quarter-round visualization\\(with diffusion)}
-  \label{fig:chachahash.mid.qr.with.diffusion}
-\end{subfigure}%
-\begin{subfigure}[t]{0.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-mid-qr-diffusion-xor.png}
-  \caption{Quarter-round visualization\\(with diffusion and XOR)}
-\label{fig:chachahash.md.qr.with.diffusion.xor}
+  \includegraphics[width=\textwidth]{figures/ct2/all-pages/2-overview.png}
+  \caption{Overview page}
 \end{subfigure}
-\caption[Quarter-round visualization]{Quarter-round visualization during ChaCha hash function}
-\label{fig:chachahash.mid.qr}
+\end{figure}
+\begin{figure}
+\ContinuedFloat
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/all-pages/3-diffusion.png}
+  \caption{Diffusion page}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/all-pages/4-statematrix.png}
+  \caption{State Matrix Initialization page}
+\end{subfigure}
+\end{figure}
+\begin{figure}
+\ContinuedFloat
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/all-pages/5-chachahash.png}
+  \caption{ChaCha Hash Function page}
+\end{subfigure}
+\caption[All pages of the ChaCha visualization plug-in]{All pages of the ChaCha visualization plugin in their initial state}
+\label{fig:allpages}
 \end{figure}
 
 \begin{figure}
 \centering
-\begin{subfigure}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{figures/ct2/diffusion/diffusion-active.png}
+\caption{Diffusion page in its active state}
+\label{fig:diffusion}
+\end{figure}
+
+\begin{figure}
+\begin{subfigure}{\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{figures/wiki-qr-circuit/salsa-wiki-qr-circuit.png}
+  \includegraphics[width=\textwidth]{figures/ct2/state-matrix/1-state-matrix-constants.png}
+  \caption{Constants encoding}
+  \label{fig:statematrix.encoding.constants}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/state-matrix/2-state-matrix-key.png}
+  \caption{Key encoding}
+  \label{fig:statematrix.encoding.key}
+\end{subfigure}
+\end{figure}
+\begin{figure}
+\ContinuedFloat
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/state-matrix/3-state-matrix-counter.png}
+  \caption{Counter encoding}
+  \label{fig:statematrix.encoding.counter}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/state-matrix/4-state-matrix-iv.png}
+  \caption{IV encoding}
+  \label{fig:statematrix.encoding.iv}
+\end{subfigure}
+\caption[State Matrix Initialization page]{Encoding of the state parameters on the State Matrix Initialization page}
+\label{fig:statematrix.encoding}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-mid-qr.png}
+  \caption{Quarter-round visualization (without diffusion)}
+  \label{fig:chachahash.mid.qr.without.diffusion}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}[t]{0.47\textwidth}
+  \centering
+  \includegraphics[width=0.99\textwidth]{figures/wiki-qr-circuit/salsa-wiki-qr-circuit.png}
   \caption{Salsa quarter-round circuit diagram}
   \label{fig:wiki.qr.circuit.salsa}
-\end{subfigure}
-\begin{subfigure}[t]{0.5\textwidth}
+\end{subfigure}%
+\begin{subfigure}[t]{0.47\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{figures/wiki-qr-circuit/chacha-wiki-qr-circuit.png}
+  \includegraphics[width=0.99\textwidth]{figures/wiki-qr-circuit/chacha-wiki-qr-circuit.png}
   \caption{ChaCha quarter-round circuit diagram}
   \label{fig:wiki.qr.circuit.chacha}
 \end{subfigure}
@@ -218,27 +202,20 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
 \end{figure}
 
 \begin{figure}
-\centering
-\begin{subfigure}{\textwidth}
+\begin{subfigure}[t]{\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-end.png}
-  \caption{Addition and little-endian step visualization (without diffusion)}
-  \label{fig:chachahash.end.without.diffusion}
+  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-mid-qr-diffusion.png}
+  \caption{Quarter-round visualization with diffusion (showing both values)}
+  \label{fig:chachahash.mid.qr.with.diffusion}
 \end{subfigure}
-\begin{subfigure}[t]{0.5\textwidth}
+\begin{subfigure}[t]{\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-end-diffusion.png}
-  \caption{Addition and little-endian step visualization\\(with diffusion)}
-  \label{fig:chachahash.end.with.diffusion}
-\end{subfigure}%
-\begin{subfigure}[t]{0.5\textwidth}
-  \centering
-  \includegraphics[width=0.99\textwidth]{figures/ct2/chachahash/chachahash-end-diffusion-xor.png}
-  \caption{Addition and little-endian step visualization\\(with diffusion and XOR)}
-\label{fig:chachahash.end.with.diffusion.xor}
+  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-mid-qr-diffusion-xor.png}
+  \caption{Quarter-round visualization with diffusion (XOR)}
+\label{fig:chachahash.md.qr.with.diffusion.xor}
 \end{subfigure}
-\caption[Addition and little-endian step visualization]{Addition and little-endian step visualization at the end of the ChaCha hash function}
-\label{fig:chachahash.end}
+\caption{Quarter-round visualization with diffusion}
+\label{fig:chachahash.mid.qr}
 \end{figure}
 
 \begin{figure}
@@ -267,7 +244,7 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
   \caption{End of fourth quarter-round (column round)}
   \label{fig:chachahash.cr.4}
 \end{subfigure}
-\caption[End of column rounds]{End of each quarter-round execution of a column round\\(here: round 1)}
+\caption[End of column rounds]{End of each quarter-round execution of a column round}
 \label{fig:chachahash.cr}
 \centering
 \begin{subfigure}{0.5\textwidth}
@@ -294,9 +271,42 @@ Figure \ref{fig:chachahash.cr} and Figure \ref{fig:chachahash.dr} show exemplary
   \caption{End of fourth quarter-round (diagonal round)}
   \label{fig:chachahash.dr.4}
 \end{subfigure}
-\caption[End of diagonal rounds]{End of each quarterround execution of a diagonal round\\(here: round 2)}
+\caption[End of diagonal rounds]{End of each quarterround execution of a diagonal round}
 \label{fig:chachahash.dr}
 \end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-end.png}
+  \caption{Addition and little-endian step visualization (without diffusion)}
+  \label{fig:chachahash.end.without.diffusion}
+\end{subfigure}
+\begin{subfigure}[t]{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-end-diffusion.png}
+  \caption{Addition and little-endian step visualization\\(with diffusion)}
+  \label{fig:chachahash.end.with.diffusion}
+\end{subfigure}
+\end{figure}
+\begin{figure}
+\ContinuedFloat
+\begin{subfigure}[t]{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-end-diffusion-xor.png}
+  \caption{Addition and little-endian step visualization\\(with diffusion and XOR)}
+\label{fig:chachahash.end.with.diffusion.xor}
+\end{subfigure}
+\caption[Addition and little-endian step visualization]{Addition and little-endian step visualization}
+\label{fig:chachahash.end}
+\end{figure}
+
+\vfill
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Architecture}
 \label{sec:Architecture}
@@ -326,16 +336,6 @@ In Figure \ref{fig:mvvm.pagenavigation}, I have provided an example for how this
 
 Another technique (that you can also see in the mentioned Figure) is the use of templates. I have used data templates to attach views to view models and control templates to implement the general UI structure with the three sections I mentioned in Section \ref{sec:userInterface}. This enabled me to define the UI layout for all pages in one place and also reuse a single implementation of the page and action navigation across all pages. This way, view modifications down the road which applied to all pages were easy and fast. In Figure \ref{fig:mvvm.actionnavigation}, you can see the view implementation of the action navigation bar which is only visible on pages which do have actions.
 
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/code/mvvm-arch/page-navigation-template.png}
-\caption[Page navigation]{Implementation of page navigation using data binding}
-\label{fig:mvvm.pagenavigation}
-\includegraphics[width=\textwidth]{figures/code/mvvm-arch/action-navigation-template.png}
-\caption[Action navigation]{Implementation of action navigation inside a control template}
-\label{fig:mvvm.actionnavigation}
-\end{figure}
-
 Since the most interesting part about the MVVM architecture is probably how the diffusion visualization works, I will explain this feature in more detail.
 
 \subsubsection{Diffusion implementation using MVVM}
@@ -348,51 +348,9 @@ Since data binding works by notifying the view if a variable has changed, WPF pr
 
 The notification raising and the implementation of the \texttt{INotifyPropertyChanged} interface can be seen in Figure \ref{fig:mvvm.databindingnotification}. The setter of \texttt{DiffusionInputKey} raises multiple notifications because other variables which depend on \texttt{DiffusionInputKey} also need updating. (The first call of \texttt{OnPropertyChanged}  in the setter has no argument because the attribute \texttt{CallerMemberName} in the function signature automatically enters the name of the caller if no argument is provided.)
 
-\begin{figure}
-\centering
-\begin{subfigure}[t]{0.5\textwidth}
-\centering
-\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/onpropertychanged.png}
-\caption{Data binding notification in setter of \texttt{DiffusionInputKey}}
-\label{fig:mvvm.onpropertychanged}
-\end{subfigure}%
-\begin{subfigure}[t]{0.5\textwidth}
-\centering
-\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/viewmodelbase.png}
-\caption{\texttt{ViewModelBase} implementation with \texttt{INotifyPropertyChanged} interface}
-\label{fig:mvvm.viewmodelbase}
-\end{subfigure}
-\caption{Data binding notification implementation}
-\label{fig:mvvm.databindingnotification}
-\end{figure}
-
 On page exit, \texttt{ChaChaPresentationViewModel}, which is the view model which implements navigation between the different pages (which have their own view models), calls \texttt{Teardown} on the page we are leaving. This triggers the ChaCha execution with the given secondary values. This can be seen in Figure \ref{fig:mvvm.chachatrigger}.
 
-\begin{figure}
-\centering
-\begin{subfigure}[t]{0.5\textwidth}
-\centering
-\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/chachaPresentationViewModel.png}
-\caption{\texttt{ChaChaPresentationViewModel}: Implements page navigation and has access to the ChaCha component}\label{fig:mvvm.chachapresentationviewmodel}
-\end{subfigure}%
-\begin{subfigure}[t]{0.5\textwidth}
-\centering
-\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/diffusionViewModel.png}
-\caption{\texttt{DiffusionViewModel}: Triggers ChaCha execution on page exit using the \texttt{ChaChaPresentationViewModel} instance that was passed in its constructor}
- \label{fig:mvvm.viewmodelbase}
-\end{subfigure}
-\caption[ChaCha diffusion execution]{Triggering ChaCha execution with values entered in Diffusion page}
-\label{fig:mvvm.chachatrigger}
-\end{figure}
-
 Before execution, a flag was set which instructs the list getters into which the ChaCha component would save its intermediate values to return a different list. This means that the ChaCha component is agnostic of where it ultimately saves its intermediate values. During the execution, the intermediate values for the diffusion run are therefore saved in parallel lists. This is shown exemplary for the quarter-round input values in Figure \ref{fig:mvvm.chacha}. The other pages then simply bind to these lists to display the intermediate values of the diffusion run. Converting the 32-bit unsigned integers into hex strings and marking their characters which are different red is then done in the view models.
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/code/mvvm-arch/chacha.png}
-\caption[Intermediate values saving]{Saving of intermediate values during ChaCha execution in lists}
-\label{fig:mvvm.chacha}
-\end{figure}
 
 \subsubsection{Centralized navigation system}
 
@@ -423,20 +381,6 @@ Unfortunately, I saw the issue of code duplication quickly arising with this des
 
 To implement this concept, I created an extension method for the \texttt{Action} type in C\# together with an interface to create action sequences. Figure \ref{fig:navsystem.sequences.extension} shows the extension method and Figure \ref{fig:navsystem.iactioncreator} the interface including its documentation.
 
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{figures/code/nav-arch/action-extensions.png}
-\caption[Extending \texttt{Action} type]{Extension method for the \texttt{Action} type to extend actions}
-\label{fig:navsystem.sequences.extension}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/code/nav-arch/IActionCreator-full.png}
-\caption[Sequence interface implementation]{\texttt{IActionCreator}: Interface to implement sequences}
-\label{fig:navsystem.iactioncreator}
-\end{figure}
-
 As one can see in the documentation of \texttt{IActionCreator}, I also wanted nested sequences. This means that a sequence could be started inside another sequence. A nested or child sequence would extend all the actions from its parent sequence. From the perspective of the nested sequence, it is no different than if all the actions from the parent sequence were created inside it. When ending a nested sequence, from the perspective of the parent sequence, the nested sequence never existed. Figure \ref{fig:navsystem.test} shows a test which asserts that this nesting does indeed work as expected.
 \begin{figure}
 \centering
@@ -451,6 +395,72 @@ Essentially, this prevented the system degrading back to a linear navigation sys
 
 The weakness of this design was that there was still some overhead when navigating through the page in a linear manner since the system is basically designed to always go back to the first action first and from there to the desired action. This leads to a lot of unnecessary resetting because as mentioned, most of the times the next page state is only a slight modification of the previous one. But this is the trade-off I had to make for a good overall performance. To summarize, this design had a higher overhead for small steps but did scale much better for bigger steps which were necessary for the keystream, round and quarter-round navigation. 
 
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/code/mvvm-arch/page-navigation-template.png}
+\caption[Page navigation]{Implementation of page navigation using data binding}
+\label{fig:mvvm.pagenavigation}
+\includegraphics[width=\textwidth]{figures/code/mvvm-arch/action-navigation-template.png}
+\caption[Action navigation]{Implementation of action navigation inside a control template}
+\label{fig:mvvm.actionnavigation}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}[t]{0.5\textwidth}
+\centering
+\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/onpropertychanged.png}
+\caption{Data binding notification in setter of \texttt{DiffusionInputKey}}
+\label{fig:mvvm.onpropertychanged}
+\end{subfigure}%
+\begin{subfigure}[t]{0.5\textwidth}
+\centering
+\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/viewmodelbase.png}
+\caption{\texttt{ViewModelBase} implementation with \texttt{INotifyPropertyChanged} interface}
+\label{fig:mvvm.viewmodelbase}
+\end{subfigure}
+\caption{Data binding notification implementation}
+\label{fig:mvvm.databindingnotification}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}[t]{0.5\textwidth}
+\centering
+\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/chachaPresentationViewModel.png}
+\caption{\texttt{ChaChaPresentationViewModel}: Implements page navigation and has access to the ChaCha component}\label{fig:mvvm.chachapresentationviewmodel}
+\end{subfigure}%
+\begin{subfigure}[t]{0.5\textwidth}
+\centering
+\includegraphics[width=0.99\textwidth]{figures/code/mvvm-arch/diffusionViewModel.png}
+\caption{\texttt{DiffusionViewModel}: Triggers ChaCha execution on page exit using the \texttt{ChaChaPresentationViewModel} instance that was passed in its constructor}
+ \label{fig:mvvm.viewmodelbase}
+\end{subfigure}
+\caption[ChaCha diffusion execution]{Triggering ChaCha execution with values entered in Diffusion page}
+\label{fig:mvvm.chachatrigger}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/code/mvvm-arch/chacha.png}
+\caption[Intermediate values saving]{Saving of intermediate values during ChaCha execution in lists}
+\label{fig:mvvm.chacha}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/code/nav-arch/action-extensions.png}
+\caption[Extending \texttt{Action} type]{Extension method for the \texttt{Action} type to extend actions}
+\label{fig:navsystem.sequences.extension}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/code/nav-arch/IActionCreator-full.png}
+\caption[Sequence interface implementation]{\texttt{IActionCreator}: Interface to implement sequences}
+\label{fig:navsystem.iactioncreator}
+\end{figure}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Encountered Problems}
@@ -463,13 +473,6 @@ The author of the AES visualization has mentioned in his thesis that to create a
 I hope that the description of these problems and the solutions I have found may help future students in writing their own plug-ins.
 
 \subsubsection{Linear navigation system}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-linear.png}
-\caption{Performance of linear navigation system}
-\label{fig:navsystem.performance.linear}
-\end{figure}
 
 The performance of the plug-in was essentially coupled to how the navigation system was designed. Other things like the aforementioned calculation of the intermediate values for the visualization were compared to the navigation system design insignificant because they are created by the ChaCha cipher anyway and must just be saved somewhere to not lose them. This means that storing them was only a necessary but not sufficient condition for a overall good performance. \\
 I realized this early in development when I had my first page with many page actions on it and wanted to skip ahead a lot of actions. While implementing this feature which would enable the user to skip from any action to any other action, I realized that when skipping more than 100 actions, it already took about 750ms during which the UI was unresponsive. As can be seen in Figure \ref{fig:navsystem.performance.linear}, this time increased linearly so it was quite clear that I needed to do something about this, especially because the page with the most actions had over 3000 actions. All measurements were taken by starting at action 0 and skipping to the action specified at the x axis.
@@ -490,20 +493,6 @@ The problem with that architecture was that the state saving and the execution l
 
 \subsubsection{Linear navigation system with caches}
 
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-round-cache.png}
-\caption{Performance of linear navigation system with caches for each round}
-\label{fig:navsystem.performance.round}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-qr-cache.png}
-\caption{Performance of linear navigation system with caches for each quarter-round}
-\label{fig:navsystem.performance.qr}
-\end{figure}
-
 After identifying the two underlying issues, I implemented what I called a \textbf{\textit{linear navigation system with caches}}. As the name suggests, I implemented cache entries to be able to navigate in constant time between an action and an action for which I created a cache. To not only increase performance during these transitions but between all transitions, we check before each transition, if first moving to a cached entry would decrease the amount of hops needed to go to our destination. \\
 The cache entries consisted of instructions to restore the complete state of a page at the action index for which this cache entry was for. They contained instructions for the complete state instead of only the difference between two actions because now, moving to that cache must initialize the page, independent at which action / page state we were before. This means that there was some overhead in initializing the page because essentially, I cleared the whole page and then initialized the page elements with their appropriate content, potentially leading to some unnecessary code execution because the content prior to cleaning was already the one we needed. 
 
@@ -521,14 +510,6 @@ One of the major drawbacks for this enhanced design was that the automatic actio
 \label{fig:navsystem.cache.overview}
 \end{figure}
 
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/code/nav-arch/async-navigation.png}
-\caption{Asynchronous navigation subsystem}
-\label{fig:async.navigation}
-\end{figure}
-
-
 \subsubsection{Centralized navigation system}
 
 While implementing other features such as the diffusion, I noticed that having to implement for each page action the forward and backwards code, my code became quite error-prone. It was hard to notice bugs because it was not feasible to check every single action from both directions manually and creating a testing framework just because of this was out of scope. \\
@@ -538,29 +519,6 @@ Nonetheless, this did not help in tracking down the bug because I did not know o
 I summarized all the problems I currently had with my code which not only consisted of performance problems but also with visualization problems. Resizing the window did not appropriately scale the UI elements as can be seen in Figure \ref{fig:plugin.scaling.bug}. Additionally, the current navigation system was quite restricted in what kind of UI elements it supported without further hassle. Since I only updated the existing code during the last time I revisited the navigation system, the core design was still all about directly manipulating and creating UI elements on demand. The functions I wrote revolved around the UI elements I was using thus I could not reuse them if I wanted to use different UI elements; leading to the limited support of the navigation system I mentioned.
 
 Essentially, the problem was that I used a lot of code-behind which was highly coupled to the XAML code. I did it like this because it was very straight-forward to do so and lead to fast results. At first, I thought the trade-off between loss of maintainability/flexibility in the future and not having to spend precious time to learn design patterns for WPF applications was worth it. I thought so because I was not writing software on which the long-term success of a company depended and which would get regular updates in the future thus high maintainability or being easy to extend was not a priority. I got proven wrong when I realized I already reached the limit of "code smells" I could handle about one month before I had to hand in my thesis. Every code change kept increasing the accumulated technical debt; killing any motivation I still had left to work on the existing code base. Continuing like this for another month seemed impossible. So I created a list of all current problems together with what requirements a new software architecture would need to meet to solve them:
-
-\begin{figure}
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[width=0.99\textwidth]{figures/ct2/scaling-bug-example.png}
-\caption{Bad scaling property}
-\label{fig:plugin.scaling.bug}
-\end{subfigure}%
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[width=0.99\textwidth]{figures/ct2/scaling-bug-fixed.png}
-\caption{Fixed scaling property}
-\label{fig:plugin.scaling.fix}
-\end{subfigure}%
-\caption{Example for bad scaling property in previous plugin versions}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-central.png}
-\caption{Performance of final (centralized) navigation system}
-\label{fig:navsystem.performance.central}
-\end{figure}
 
 \begin{description}
 \item [(Inconsistent) Performance] The underlying linear design was crippling the performance for the reasons already mentioned. The introduction of caches did only fight the symptoms and not solve the main issue. Further, it made the performance confusing for the users. Sometimes, it took close to no time at all to move to a certain action (action was cached) and on other times, it took quite a lot of time to move to a different action (action was not cached). \\
@@ -572,3 +530,54 @@ Essentially, the problem was that I used a lot of code-behind which was highly c
 \end{description}
 
 All these problems were solved using the MVVM design pattern with a new navigation system design. To implement them, I completely rewrote the existing code from scratch, which was time-consuming (took about two weeks) but in the end worth it. Figure \ref{fig:navsystem.performance.central} shows the performance of the final navigation system. As one can see, the time it takes to skip actions is constantly very low and only varies between a few milliseconds; making the user interface very responsive.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-linear.png}
+\caption{Performance of linear navigation system}
+\label{fig:navsystem.performance.linear}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-round-cache.png}
+\caption{Performance of linear navigation system with caches for each round}
+\label{fig:navsystem.performance.round}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-qr-cache.png}
+\caption{Performance of linear navigation system with caches for each quarter-round}
+\label{fig:navsystem.performance.qr}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/pyplot/performance_navsystem-central.png}
+\caption{Performance of final (centralized) navigation system}
+\label{fig:navsystem.performance.central}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/code/nav-arch/async-navigation.png}
+\caption{Asynchronous navigation subsystem}
+\label{fig:async.navigation}
+\end{figure}
+
+\begin{figure}
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[width=\textwidth]{figures/ct2/scaling-bug-example.png}
+\caption{Bad scaling property}
+\label{fig:plugin.scaling.bug}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[width=\textwidth]{figures/ct2/scaling-bug-fixed.png}
+\caption{Fixed scaling property}
+\label{fig:plugin.scaling.fix}
+\end{subfigure}
+\caption{Example for bad scaling property in previous plugin versions}
+\end{figure}
