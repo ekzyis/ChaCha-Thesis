@@ -11,7 +11,7 @@ This chapter describes the goals of the plug-in and how the implementation accom
 \label{sec:goals}
 
 The main goal of this plug-in was to teach students how messages are encrypted with the ChaCha cipher family. It should focus on creating an easy to understand visualization of its internals without oversimplification.\\
-It should further visualize the diffusion property of the cipher on demand by making it possible for the user to enter secondary values for the key, initialization vector and initial counter.\\
+It should further visualize the diffusion property of the cipher on demand by making it possible for the user to alter the key, initialization vector and initial counter.\\
 The plug-in should also support all variants of the cipher. This means that the user should be able to choose the key size (128-bit or 256-bit) and how often the hash function will be executed per keystream block (8, 12 or 20 rounds).\\
 Since the Internet Engineering Task Force (IETF) introduced a slightly modified version of ChaCha which uses a 32-bit counter and 96-bit initialization vector, the user can also decide if he wants to use the original version by Bernstein with a 64-bit counter and 64-bit initialization vector or the one described by the IETF.
 
@@ -37,7 +37,7 @@ The last subsection then goes into technical details to explain how the plug-in 
 \end{figure}
 
 The plug-in offers the user the ability to input his own plaintext, key, initialization vector and initial counter using the concept of visual programming (around which CT2 is built) as one can see in Figure \ref{fig:plugin.template}. The counter is optional and defaults to zero. These values are then used to visualize the cipher execution comprehensively. Descriptions complement the visualization by providing information about what is happening. \\
-As mentioned in Section \ref{sec:goals}, if the user wants to see the diffusion property of the cipher, he can enter secondary values on a dedicated page inside the plug-in. \\
+As mentioned in Section \ref{sec:goals}, if the user wants to see the diffusion property of the cipher, he can alter the key, initialization vector and counter on a dedicated page inside the plug-in. \\
 The version (original DJB version or IETF version) and how often the ChaCha hash function should be run per keystream block can be chosen in the plug-in settings.
 
 \subsection{User Interface}
@@ -66,13 +66,13 @@ I will now go into greater detail about the pages which do not have fully static
 
 \subsubsection{Diffusion page}
 
-As already mentioned in Section \ref{sec:keyFeatures}, on the Diffusion page (Figure \ref{fig:diffusionpage}), the user can enter secondary values for the key, IV and initial counter in hexadecimal. They will be used to visualize the diffusion property. This means that during cipher execution, hexadecimal letters which are different are marked red. An example of this is shown on the Diffusion page at the right side.
+As already mentioned in Section \ref{sec:keyFeatures}, on the Diffusion page (Figure \ref{fig:diffusionpage}), the user can alter the key, IV and initial counter in hexadecimal. They will be used to visualize the diffusion property. This means that during cipher execution, hexadecimal letters which are different are marked red. An example of this is shown on the Diffusion page at the right side.
 
 I have used hexadecimal text inputs because the alternative, individual buttons for each bit, would have resulted in a lot of buttons because the key can be 256-bit. Together with the 128-bit from the counter and IV, this would have resulted in 384 individual buttons. Furthermore, clicking on individual buttons instead of entering text was more cumbersome.
 
-Since when studying the diffusion property of a cipher, one is more interested in the difference of values (XOR) during two cipher runs instead of their actual values, the user can also explicitly input the XOR between the primary and secondary value. Additionally, if diffusion is active, the user can toggle between showing the XOR or the actual values by using the button in the top-right corner of each page.
+Since when studying the diffusion property of a cipher, one is more interested in the difference of values (XOR) during two cipher runs instead of their actual values, the user can also explicitly input the XOR between the input value and the altered value. Additionally, if diffusion is active, the user can toggle between showing the XOR or the actual values by using the button in the top-right corner of each page.
 
-To help with the input, the input fields show an error message if the user entered invalid characters or a too large string since the secondary hex string must be of equal size as the primary value. If the hex string is too short, it gets left-padded with zeroes to align it with the primary value.
+To help with the input, the input fields show an error message if the user entered invalid characters or a too large string since the hex strings for each value must be of equal size as the input value. If the hex string is too short, it gets left-padded with zeroes to align it with the primary value.
 
 Last but not least, the amount of flipped bits is shown in the second to last row together with a state indication in the last row if the diffusion is active or not. The diffusion is active if at least one bit was flipped. This is shown in Figure \ref{fig:diffusion.active}.
 
@@ -316,7 +316,7 @@ Since data binding works by notifying the view if a variable has changed, WPF pr
 
 The notification raising and the implementation of the \texttt{INotifyPropertyChanged} interface can be seen in Figure \ref{fig:mvvm.databindingnotification}. The setter of \texttt{DiffusionInputKey} raises multiple notifications because other variables which depend on \texttt{DiffusionInputKey} also need updating. (The first call of \texttt{OnPropertyChanged}  in the setter has no argument because the attribute \texttt{CallerMemberName} in the function signature automatically enters the name of the caller if no argument is provided.)
 
-On page exit, \texttt{ChaChaPresentationViewModel}, which is the view model which implements navigation between the different pages (which have their own view models), calls \texttt{Teardown} on the page we are leaving. This triggers the ChaCha execution with the given secondary values.
+On page exit, \texttt{ChaChaPresentationViewModel}, which is the view model which implements navigation between the different pages (which have their own view models), calls \texttt{Teardown} on the page we are leaving. This triggers the ChaCha execution with the given altered values.
 
 Before execution, a flag was set which instructs the list getters into which the ChaCha component would save its intermediate values to return a different list. This means that the ChaCha component is agnostic of where it ultimately saves its intermediate values. During the execution, the intermediate values for the diffusion run are therefore saved in parallel lists. This is shown exemplary for the quarter-round input values in Figure \ref{fig:mvvm.chacha}. The other pages then simply bind to these lists to display the intermediate values of the diffusion run. Converting the 32-bit unsigned integers into hex strings and marking their characters which are different red is then done in the view models.
 
