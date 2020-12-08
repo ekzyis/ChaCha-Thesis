@@ -34,7 +34,7 @@ The specification of Salsa20 is very relevant for ChaCha because the specificati
 \label{fig:salsa.template}
 \end{figure}
 
-CrypTool 2 already has a plug-in for the Salsa20 cipher but without a visualization.
+CrypTool 2 already has a plug-in for the Salsa20 cipher but without a visualization. Figure \ref{fig:salsa.template} shows the CT2 template for the plug-in. Templates are prepared workspaces for a plug-in where all necessary components to run the plug-in already exist and are properly connected.
 
 During my work on the ChaCha visualization, I thought about how I could reuse my code for the ChaCha visualization to create a visualization for the Salsa20 cipher. I figured that it would not be as straight-forward as I assumed in the beginning since the visualization goes very into detail and thus the differences would involve at least different XAML code. For example, since the state is built up differently, the visualization about the state matrix initialization would need to be adapted. Also, the quarter-round is slightly different which also needs to be reflected in the visualization. 
 
