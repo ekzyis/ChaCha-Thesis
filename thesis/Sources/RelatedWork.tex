@@ -4,7 +4,7 @@
 \chapter{Related Work}
 \label{sec:relatedWork}
 
-This chapter discusses relevant work for the ChaCha plugin implementation and was therefore reviewed during the work on this thesis.
+This chapter discusses relevant work for the ChaCha plug-in implementation and was therefore reviewed during the work on this thesis.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Salsa20 Cipher Family}
@@ -24,13 +24,13 @@ The specification of Salsa20 is very relevant for ChaCha because the specificati
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Salsa20 CrypTool 2 Plugin}
+\section{Salsa20 CrypTool 2 Plug-in}
 \label{sec:salsaCT2Plugin}
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{figures/ct2/salsa-crop.png}
-\caption[Salsa20 CT2 template]{CT2 template for the already existing Salsa20 plugin}
+\caption[Salsa20 CT2 template]{CT2 template for the already existing Salsa20 plug-in}
 \label{fig:salsa.template}
 \end{figure}
 
@@ -52,14 +52,14 @@ In this section, I will discuss ideas that I got from existing CrypTool 2 cipher
 
 Matthias Becher created a visualization for the AES cipher during his bachelor thesis in 2016. It was the visualization of which I took the most inspiration from for my own implementation. I also read through his bachelor thesis to see how he solved some of the problems that I encountered. For example, he wrote the following:
 
-``The first big decision that had to be made was whether the states after each encryption operation would be calculated during the visualization or precalculated and stored at the start of the execution. One feature the plugin should have was to not only jump ahead to later operations but also to go back to previous ones. That means if the values were calculated during the visualization every time you went back they would have to be recalculated from the start. Therefore, I decided to precompute and store results of each operation in an array of byte arrays..'' \cite{aesthesis}
+``The first big decision that had to be made was whether the states after each encryption operation would be calculated during the visualization or precalculated and stored at the start of the execution. One feature the plug-in should have was to not only jump ahead to later operations but also to go back to previous ones. That means if the values were calculated during the visualization every time you went back they would have to be recalculated from the start. Therefore, I decided to precompute and store results of each operation in an array of byte arrays..'' \cite{aesthesis}
 
 I came to the exact same conclusion that the values need to be precalculated for the reasons he mentioned.
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{figures/ct2/aes.png}
-\caption{AES visualization plugin}
+\caption{AES visualization plug-in}
 \label{fig:aes}
 \end{figure}
 
@@ -77,7 +77,7 @@ Further, I was confused why I could not use the ``Back'' button during the ``Exp
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{figures/ct2/des.png}
-\caption{DES visualization plugin}
+\caption{DES visualization plug-in}
 \label{fig:des}
 \end{figure}
 
@@ -104,7 +104,7 @@ I used the same colouring approach but noticed that since the ChaCha cipher was 
   \caption{AES-128 avalanche visualization: General overview}
   \label{fig:avalanche.overview}
 \end{subfigure}
-\caption{Avalanche visualization plugin}
+\caption{Avalanche visualization plug-in}
 \label{fig:avalanche}
 \end{figure}
 

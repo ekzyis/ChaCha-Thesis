@@ -1,7 +1,7 @@
 % !TeX spellcheck = en_GB
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Plugin}
+\chapter{Plug-in}
 \label{chap:Plugin}
 
 This chapter describes the goals of the plug-in and how the implementation accommodates these goals. It also includes the thought process behind some architectural decisions that were made.\\ At the end, alternative solutions that I have taken into consideration but which were eventually abandoned are described. They complement the reasoning about the final architecture.
@@ -20,8 +20,8 @@ Since the Internet Engineering Task Force (IETF) introduced a slightly modified 
 \label{sec:implementationDetails}
 
 In this section, I will go into detail how the goals described in the previous section were achieved. \\
-In the first subsection, the key features of the plug-in are described to give a rough overview what a user can expect from the actual plugin implementation. \\
-The second subsection will then explain the user interface which is used to navigate through the plugin and communicate to the user what is currently happening inside the cipher. \\
+In the first subsection, the key features of the plug-in are described to give a rough overview what a user can expect from the actual plug-in implementation. \\
+The second subsection will then explain the user interface which is used to navigate through the plug-in and communicate to the user what is currently happening inside the cipher. \\
 The last subsection then goes into technical details to explain how the plug-in internally was designed to make the user interface behave as it does.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -460,7 +460,7 @@ I summarized all the problems I currently had with my code which not only consis
 \caption{Fixed scaling property}
 \label{fig:plugin.scaling.fix}
 \end{subfigure}
-\caption{Example for bad scaling property in previous plugin versions}
+\caption{Example for bad scaling property in previous plug-in versions}
 \end{figure}
 
 Essentially, the problem was that I used a lot of code-behind which was highly coupled to the XAML code. I did it like this because it was very straight-forward to do so and lead to fast results. At first, I thought the trade-off between loss of maintainability/flexibility in the future and not having to spend precious time to learn design patterns for WPF applications was worth it. I thought so because I was not writing software on which the long-term success of a company depended and which would get regular updates in the future thus high maintainability or being easy to extend was not a priority. I got proven wrong when I realized I already reached the limit of "code smells" I could handle about one month before I had to hand in my thesis. Every code change kept increasing the accumulated technical debt; killing any motivation I still had left to work on the existing code base. Continuing like this for another month seemed impossible. So I created a list of all current problems together with what requirements a new software architecture would need to meet to solve them:
