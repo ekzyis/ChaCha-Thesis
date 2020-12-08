@@ -70,6 +70,8 @@ y_{12} & y_{13} & y_{14} & y_{15}\\
 Using this matrix representation helps with understanding why Bernstein calls some rounds \textit{column rounds} and others \textit{diagonal rounds} in his paper (one round consists of four quarter-rounds): \\
 The ChaCha hash function first iterates through all columns and then through all diagonals of the matrix; applying the quarter-round function to the four entries of each column/diagonal. After the first four quarter-rounds it therefore has changed all columns of the matrix. This is what Bernstein calls a column round in his paper. After the next four quarter-rounds, it changed all diagonals of the matrix which Bernstein analogously calls a diagonal round.
 
+\pagebreak
+
 To summarize, the following quarter-rounds make up one column round:
 \begin{center}
 \begin{minipage}{0.5\linewidth}
