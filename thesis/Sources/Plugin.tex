@@ -496,6 +496,7 @@ Essentially, the problem was that a lot of the code-behind was highly coupled to
 \label{fig:navsystem.performance.central}
 \end{figure}
 
+\noindent
 All these problems were solved using the MVVM design pattern with a new navigation system design. To implement them, the existing codebase was rewritten from scratch, which was time-consuming (took about two weeks) but in the end worth it. Figure \ref{fig:navsystem.performance.central} shows the performance of the final navigation system. As one can see, the time it takes to skip actions is constantly very low and only varies between a few milliseconds; making the user interface very responsive.
 
 \begin{figure}

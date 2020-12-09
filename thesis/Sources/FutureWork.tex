@@ -4,34 +4,33 @@
 \chapter{Future Work}
 \label{chap:futureWork}
 
-In this chapter, I will describe how the plug-in could be further improved to make it more useful for the audience of CrypTool 2.
+This chapter summarizes how the plug-in could be further improved to make it more useful for the audience of CrypTool 2.
 
 \begin{description}[style=nextline]
 
-\item[Diffusion: Better overview over flipped bits at the end of each round]
+\item[Better overview over flipped bits at the end of each round]
 
-At the end of the Avalanche visualization, I have seen that the author provided a overview over the percentage of flipped bits at the end of each round. I found this very sensible because it shows how the amount of flipped bits goes very fast up to around 50\% and then stays near it which is one would expect from a secure cipher. \\
-I have thought about using a plot instead of the simple text which is updated at the end of each round but due to canvas and time constraints, I did not further pursue this idea. I could imagine to integrate such an overview directly into the Diffusion page. This would need cipher execution while still on the page instead on page exit but this would not be a big problem since a button to start cipher execution would suffice.
+At the end of the Avalanche visualization, the author provided a overview over the percentage of flipped bits at the end of each round. This overview is very useful because it shows how the amount of flipped bits goes up very fast to around 50\% and then stays near it which is exactly what one would expect from a good cipher. \\
+Using a plot instead of the simple text which is updated at the end of each round was considered but due to canvas and time constraints, this idea was not further pursued. However, integrating such an overview into the Diffusion page should be possible. This would need cipher execution while still on the page instead on page exit but this would not be a big problem since a button to start cipher execution would suffice. Therefore, this plot could be an addition instead of replacing the text below the state in the ChaCha hash function visualization.
 
 \item[Improve performance during diffusion]
 
 All measurements in Section \ref{sec:Architecture} were done with inactive diffusion since the performance during active diffusion improved in a similar manner. This means that thanks to the centralized navigation system architecture, moving to any action is still done in constant time even if diffusion is active. \\
-The problem is that it takes around one or two seconds for each move (instead of 5ms if diffusion was inactive) which is quite annoying. I suspect that this is the case because the red colour is implemented by creating an inline element for every character and marking it red if it is different. This was done like this because it was the easiest way to mark single characters in a different colour. \\
-An idea would be to not create these elements on each action move but beforehand. This means that the differences only need to be calculated once and not over and over again. But since this calculation seems to take already a few seconds for one action, calculating it beforehand for every action would probably increase loading time a lot since the ChaCha Hash Function page has a lot of actions. \\
-Fixing this will thus probably be the most difficult point in this list. One needs to first find out where exactly the performance issues come from (basically confirm or disprove my hypothesis) and then find a solution for it. This could result in the need to make some major architectural decisions with a lot of code changes.
+The problem is that it takes around one or two seconds for each move (instead of around 5ms if diffusion was inactive) which is quite annoying. We suspect that this is the case because the red colour is implemented by creating an inline element for every character and marking it red if it is different. \\
+An idea is to create a single element for every possible combination of colour (black and red) and hexadecimal character ([0-9A-F]). Therefore, we would not need to create a new inline element for each character but could reuse the same in multiple places. If the performance issue results from the memory allocation, this approach should solve it. However, first attempts resulted in weird bugs. So fixing this will probably be the most difficult point in this list and could result in once again having to rethink some major design decisions.
 
 \item[Automatic navigation]
 
-In the AES visualization, I have seen a button named ``Auto'' which lets the visualization run without further user interaction needed. A slider was provided to adjust the speed (see Figure \ref{fig:aes}). I think that such a button could be useful for the ChaCha visualization, too, especially for the page about the ChaCha hash function with its many actions. \\
-Since I am already using asynchronous navigation for the action slider (which I think would be needed to let a timer run without blocking the UI), I think implementing this feature could easily be integrated within the existing navigation system. Only page switches could maybe get tricky since the action navigation is handled within each page thus navigating out of a page may not be straight-forward. I have noticed that the automatic navigation in the AES visualization does stop between each step so switching the page automatically may not even be desired.
+The AES visualization includes a button labeled with ``Auto''. It lets the visualization run without further user interaction needed. A slider was provided to adjust the speed (see Figure \ref{fig:aes}). Such a button could be useful for the ChaCha visualization, too, especially for the page about the ChaCha hash function with its many actions. \\
+Since asynchronous navigation is already in sue for the action slider, implementing this feature could easily be integrated within the existing navigation system. Only page switches could maybe get need some clever solutions since the action navigation is handled within each page thus navigating out of a page may not be straight-forward. However, in the AES visualization, the automatic navigation does stop between each step (which roughly corresponds to a page in our visualization) so switching the page automatically may not even be desired.
 
 \item[Salsa20 visualization]
 
-As mentioned in Section \ref{sec:salsaCT2Plugin}, using the now existing codebase for ChaCha visualization to create a Salsa20 visualization would definitely increase the value gained from this thesis. This would at least need adaption of the XAML code for the state matrix initialization and the quarter-round since ChaCha and Salsa20 differ in this aspects from each other. It would most likely even increase the value of the ChaCha visualization, since both ciphers could then be compared side-by-side. Since the visualizations would be very similar, comparing them and their diffusion property should be very easy.
+As mentioned in Section \ref{sec:salsaCT2Plugin}, using the now existing codebase for ChaCha visualization to create a Salsa20 visualization would definitely increase the value gained from this thesis. This would at least need adaption of the XAML code for the state matrix initialization and the quarter-round since ChaCha and Salsa20 differ in this aspects from each other. It would most likely even increase the value of the ChaCha visualization since both ciphers could then be compared side-by-side. Comparing them and their diffusion property should be very easy due to the very similar visualization.
 
 \item[Localization and online help]
 
-Currently, most texts are only localized in English. Only the memo fields, component labels and plaintext value are also available in German. This should be changed in the near future. Further, there should be an online help for the ChaCha plug-in which opens by selecting it and pressing F1.
+Currently, most texts are only localized in English. Only the memo fields, component labels and plaintext value are also available in German. Further, there should be an online help for the ChaCha plug-in which opens by selecting it and pressing F1. Both of these points will be done directly after handing in the thesis.
 
 \end{description}
 
