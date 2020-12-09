@@ -94,7 +94,8 @@ Last but not least, the amount of flipped bits is shown in the second to last ro
 
 \subsubsection{State Matrix Initialization page}
 
-The State Matrix Initialization page shows the setup of the initial 512-bit state for the first keystream block. In Figure \ref{fig:statematrixpage}, you can see the page in its initial state. The generation of the following keystream blocks start with the same state but with a different counter (as described in Chapter \ref{chap:chacha}).
+The State Matrix Initialization page shows the setup of the initial 512-bit state for the first keystream block. \\
+In Figure \ref{fig:statematrixpage}, you can see the page in its initial state. In the top-left, you see the state. It is empty at the beginning because the initialization has not started yet. On the top-right, you see descriptions which inform the user about what the next steps are. At the bottom-left, the encoding will be visualized. At the bottom-right, the state parameters with their original values before encoding are shown. At the bottom above the slider are individual buttons to go to the start and end of each state parameter encoding.
 
 \begin{figure}
 \centering
@@ -103,12 +104,12 @@ The State Matrix Initialization page shows the setup of the initial 512-bit stat
 \label{fig:statematrixpage}
 \end{figure}
 
-This means that only the construction of the state for the very first keystream block is shown on this page. This was done this way because I wanted to focus on one thing inside a page. I did not want to disrupt the flow of the ChaCha Hash Function page by jumping back to the visualization of the state matrix initialization just to encode a different counter. The information which is provided to the user in the first and only state matrix initialization should be enough for him to construct all following initial states without further guidance. Therefore, I focused on a comprehensive visualization of the encoding for each state parameter (constants, key, IV, counter). 
+Only the construction of the state for the very first keystream block is shown on this page. This was done like this because interrupting the page flow by jumping back to the visualization of the state matrix initialization after each keystream block was not reasonable. Further, only the counter would be different for each state so setting up the state again would introduce a lot of noise to the visualization. The information which is provided to the user in the first and only state matrix initialization should be enough for him to construct all following initial states without further guidance. To achieve this, the focus for this page was on developing a comprehensive visualization of the encoding for each state parameter (constants, key, IV, counter).
 
-In Figure \ref{fig:statematrix.encoding}, you can see the page state during the end of each state parameter encoding. In the top-left inside each picture, you see the state. On the top-right, you see descriptions which inform the user about what the next steps are. At the bottom-left, the encoding is visualized. At the bottom-right, the state parameters with their original values before encoding are shown.
+In Figure \ref{fig:statematrix.encoding}, you can see the page state during the end of each state parameter encoding. For each encoding step which corresponds to a row in the encoding section, a page action has been implemented. This means that the user can follow along each encoding step-by-step in his own speed and is not overwhelmed by a lot of information.
 
-For each encoding step which corresponds to a row in the encoding section, a page action has been implemented. This means that the user can follow along each encoding step-by-step in his own speed and is not overwhelmed by a lot of information.\\
-First, the constants are encoded. Since they are shown in ASCII format in the state parameters section, they are first decoded to show the actual byte values. Then the bytes are split into 4 byte chunks whose order is then reversed in the last step. \\
+First, the constants are encoded. Since they are shown in ASCII format in the state parameters section, they are first decoded to show the actual byte values. Then the 
+bytes are split into 4 byte chunks whose order is then reversed in the last step. \\
 Afterwards, the key is encoded. It is just split into 4 byte chunks whose order is then reversed. \\
 When encoding the counter, the complete byte order is first reversed, and then it is split into 4 byte chunks whose byte order is then again reversed. \\
 The last parameter is the IV. It is encoded exactly the same as the key. \\
