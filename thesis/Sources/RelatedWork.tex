@@ -34,12 +34,11 @@ The specification of Salsa20 is very relevant for ChaCha because the specificati
 \label{fig:salsa.template}
 \end{figure}
 
-CrypTool 2 already has a plug-in for the Salsa20 cipher but without a visualization. Figure \ref{fig:salsa.template} shows the CT2 template for the plug-in. Templates are prepared workspaces for a plug-in where all necessary components to run the plug-in already exist and are properly connected.
+CrypTool 2 already has a plug-in for the Salsa20 cipher but without a visualization. Figure \ref{fig:salsa.template} shows the CT2 template for the plug-in. Templates are prepared workspaces for a plug-in where all necessary components to run the plug-in are already included and properly connected.
 
-During my work on the ChaCha visualization, I thought about how I could reuse my code for the ChaCha visualization to create a visualization for the Salsa20 cipher. I figured that it would not be as straight-forward as I assumed in the beginning since the visualization goes very into detail and thus the differences would involve at least different XAML code. For example, since the state is built up differently, the visualization about the state matrix initialization would need to be adapted. Also, the quarter-round is slightly different which also needs to be reflected in the visualization. 
+During the work on the ChaCha visualization, we discussed if the code could be reused to create a visualization for the Salsa20 cipher family. However, this would at least need adaption of the XAML code since the state is built up differently. Also the quarter-round function is slightly different which also needs to be reflected in the visualization.
 
-Nonetheless, I think that most of the codebase used for the ChaCha cipher could be reused to create a Salsa20 visualization, especially the navigation system and how the intermediate results are stored and retrieved for visualization. I will further discuss this in Chapter \ref{chap:futureWork}.
-
+Nonetheless, it should be possible to reuse most of the codebase used for the ChaCha visualization, especially the underlying navigation system and the storage and retrieval mechanism for the intermediate results. This will further be discussed in Chapter \ref{chap:futureWork}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Other CrypTool 2 Cipher Visualizations}
