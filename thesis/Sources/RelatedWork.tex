@@ -44,16 +44,16 @@ Nonetheless, it should be possible to reuse most of the codebase used for the Ch
 \section{Other CrypTool 2 Cipher Visualizations}
 \label{sec:otherCT2CipherVisualizations}
 
-In this section, I will discuss ideas that I got from existing CrypTool 2 cipher visualizations which were also created by students during their bachelor thesis.
+This section is all about other existing CT2 cipher visualizations and which ideas originated from them. The plug-ins were also created by students during their bachelor's thesis.
 
 \subsection{AES Visualization}
 \label{sec:aesVisualization}
 
-Matthias Becher created a visualization for the AES cipher during his bachelor thesis in 2016. It was the visualization of which I took the most inspiration from for my own implementation. I also read through his bachelor thesis to see how he solved some of the problems that I encountered. For example, he wrote the following:
+Matthias Becher created a visualization for the AES cipher during his bachelor's thesis in 2016. It was the visualization of which the most inspiration was taken from for the ChaCha visualization. Reading through his bachelor's thesis was very useful since he encountered similar problems. For example, he wrote the following in his bachelor's thesis:
 
 ``The first big decision that had to be made was whether the states after each encryption operation would be calculated during the visualization or precalculated and stored at the start of the execution. One feature the plug-in should have was to not only jump ahead to later operations but also to go back to previous ones. That means if the values were calculated during the visualization every time you went back they would have to be recalculated from the start. Therefore, I decided to precompute and store results of each operation in an array of byte arrays..'' \cite{aesthesis}
 
-I came to the exact same conclusion that the values need to be precalculated for the reasons he mentioned.
+We came to the exact same conclusion that the values need to be precalculated for the reasons he mentioned.
 
 \begin{figure}
 \centering
@@ -62,13 +62,12 @@ I came to the exact same conclusion that the values need to be precalculated for
 \label{fig:aes}
 \end{figure}
 
-Looking through his visualization, I liked how he changed the background of the elements to catch the user's attention. This is shown in Figure \ref{fig:aes}. I have used a similar mechanic during the ChaCha hash function visualization where I put a light blue background onto the state elements which will be used as the quarter-round input. Also during the quarter-round, I extensively used background colouring to tell the user where he should pay his attention.
+Looking through his visualization, his usage of background colouring was very useful to catch the user's attention. This is shown in Figure \ref{fig:aes}. Therefore, there is a similar mechanic during the ChaCha hash function visualization where a light blue background is put onto the state elements which are used as the quarter-round input. Also during the quarter-round execution, background colouring is extensively used to indicate where the user should pay attention.
 
-Another thing I adopted from his visualization was the navigation in the top-left corner. I placed my page navigation there.
+Another thing adopted from his visualization was the navigation in the top-left corner where the page navigation for the ChaCha visualization is placed. \\
+What is different regarding navigation is to not show so many buttons all the time to the user. It was quite overwhelming to see all the buttons in the bottom navigation bar on the start even though they were disabled. Therefore, on pages which have no actions, there are no buttons in the bottom row. For the ChaCha hash function, which needed more detailed navigation, the navigation bar looks similar expect that it uses arrow buttons and text inputs instead of buttons for every single round. This decreased the amount of buttons while maintaining a similar degree of navigation.
 
-What I wanted to do differently in my navigation was to not show so many buttons all the time to the user. I was quite overwhelmed by all the buttons in the bottom navigation bar on the start even though they were disabled. Therefore, on pages which have no actions, I had no buttons in the bottom row. For the ChaCha hash function, which needed additional navigation, my navigation bar looked similar but still felt in my opinion less crowded, especially because I did not use buttons for every single round but a text input.
-
-Further, I was confused why I could not use the ``Back'' button during the ``Expansion'' or ``Encryption'' step. For my plug-in, I wanted to let the user navigate to any step in the visualization fairly simple. To achieve this, I needed to make sure that the user knows where he is and where he needs to click to go to a particular step. To give the user the information he needed, I used the dedicated page navigation in the top-left corner which stays the same on every page and tells the user on which page he currently is with bold font. Further, I numbered every single action on each page together with an action text input and how many actions a page has. The text input makes it possible for the user to immediately jump to an action.
+Further, it was confusing that the ``Back'' button during the ``Expansion'' or ``Encryption'' step was disabled. For the ChaCha plug-in, the user should be able to navigate to any step in the visualization fairly simple. To achieve this, the page navigation in the top-left corner stays the same on every page and tells the user on which page he currently is with bold font. This means the user knows that if he wants to go to a different page, he needs to select the page there. Additionally, every single action on each page is numbered together with an action text input and how many actions a page has in total. The text input makes it possible for the user to immediately jump to an action. If he does not know the number of the action he wants to go, there are also buttons labeled with descriptive names on the pages with actions. For example, the page about the state setup has buttons to immediately go to the start or end of the key encoding step.
 
 \subsection{DES Visualization}
 \label{sec:desVisualization}
