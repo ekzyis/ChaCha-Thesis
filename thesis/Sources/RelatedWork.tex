@@ -69,6 +69,10 @@ What is different regarding navigation is to not show so many buttons all the ti
 
 Further, it was confusing that the ``Back'' button during the ``Expansion'' or ``Encryption'' step was disabled. For the ChaCha plug-in, the user should be able to navigate to any step in the visualization fairly simple. To achieve this, the page navigation in the top-left corner stays the same on every page and tells the user on which page he currently is with bold font. This means the user knows that if he wants to go to a different page, he needs to select the page there. Additionally, every single action on each page is numbered together with an action text input and how many actions a page has in total. The text input makes it possible for the user to immediately jump to an action. If he does not know the number of the action he wants to go, there are also buttons labeled with descriptive names on the pages with actions. For example, the page about the state setup has buttons to immediately go to the start or end of the key encoding step.
 
+\vfill
+
+\pagebreak
+
 \subsection{DES Visualization}
 \label{sec:desVisualization}
 
@@ -84,6 +88,10 @@ The DES visualization was created by Lars Hoffman. His approach to visualizing t
 Throughout the visualization, all values are shown in binary. This makes it possible to just mark flipped bits red since if a bit is marked red, we immediately know the value of the diffusion run (we just flip the red bit). 
 
 It was  tried to use the same colouring approach but since the ChaCha cipher uses longer keys and 512-bit blocks compared to the 64-bit blocks of DES, hex strings needed to be used for the values to save canvas space. This lead to a loss of information about the concrete values if only marking red the hexadecimal characters which are different. Therefore, the usage of red colour was combined together with showing both values in two rows. In the row for the altered value, the difference is still marked red for easier visual recognition. This is shown later in Figure \ref{fig:chachahash.mid.qr.diffusion}.
+
+\vfill
+
+\pagebreak
 
 \subsection{Avalanche Visualization}
 \label{sec:avalancheVisualization}
