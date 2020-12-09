@@ -28,7 +28,9 @@ It modifies its input values as described in the following pseudo-code:
 \end{minipage}
 \end{center}
 
+\begin{remark}
 We define one row, consisting of one 32-bit addition, one XOR and one shift operation, as one \textit{quarter-round step}. This naming convention will be reused in Section \ref{sec:userInterface}.
+\end{remark}
 
 \section{Little-Endian Function}
 \label{sec:chacha.littleendian}
@@ -79,6 +81,7 @@ To summarize, the following quarter-rounds make up one column round:
 \texttt{quarterround($y_3$, $y_7$, $y_{11}$, $y_{15}$)} \\
 \end{minipage}
 \end{center}
+
 \noindent whereas the following quarterrounds make up one diagonal round:
 \begin{center}
 \begin{minipage}{0.5\linewidth}
