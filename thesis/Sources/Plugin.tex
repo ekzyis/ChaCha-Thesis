@@ -297,11 +297,11 @@ Since the most interesting part about the MVVM architecture is probably how the 
 
 \subsubsection{Diffusion implementation using MVVM}
 
-If the user enters something into the input fields of the Diffusion page, validation of the input occurs. It checks if the input contains only valid hexadecimal characters and if the size is not too large. This is done by using two-way bindings and extending the \texttt{ValidationRule} class which is a built-in module of WPF. Only if the input is valid, the value is saved into a property of the underlying view model. This way, we can be sure that we always have sane data with which we later can execute the cipher with.
+If the user enters something into the input fields of the Diffusion page, validation of the input occurs. The validation checks if the input contains only valid hexadecimal characters and if the size is not too large. This is done by using two-way bindings and extending the \texttt{ValidationRule} class which is a built-in module of WPF. Only if the input is valid, the value is saved into a property of the underlying view model. This way, we can be sure that we always have sane data with which we later can execute the cipher with.
 
-Furthermore, I am using converters which are also built into WPF to convert data into user-friendly formats. Converters are always attached to bindings, so inside the two-way bindings, I am converting the byte arrays into hex strings and vice versa.
+Furthermore, converters which are also built into WPF are used to convert data into user-friendly formats. Converters are always attached to bindings, so inside the two-way bindings, byte arrays are converted into hex strings and vice versa using custom converters.
 
-Since data binding works by notifying the view if a variable has changed, WPF provides an interface named \texttt{INotifyPropertyChanged} which helps with implementing these data binding notifications. It provides a method named \texttt{OnPropertyChanged} and  an event named \texttt{PropertyChangedEventHandler} which must be called with the name of the variable to raise such an notification. The data binding system then updates the variables in the view.
+Since data binding works by notifying the view if a variable has changed, WPF provides an interface named \texttt{INotifyPropertyChanged} which helps with implementing these data binding notifications. It provides a method named \texttt{OnPropertyChanged} and an event named \texttt{PropertyChangedEventHandler} which must be called with the name of the variable to raise such an notification. The data binding system then updates the variables in the view.
 
 \begin{figure}[!hbt]
 \centering
