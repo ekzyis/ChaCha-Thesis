@@ -28,12 +28,12 @@ It modifies its input values as described in the following pseudo-code:
 \end{minipage}
 \end{center}
 
-I will call one row, consisting of one 32-bit addition, one XOR and one shift operation, a \textit{quarter-round step}. This naming convention will be reused in Section \ref{sec:userInterface}.
+We define one row, consisting of one 32-bit addition, one XOR and one shift operation, as one \textit{quarter-round step}. This naming convention will be reused in Section \ref{sec:userInterface}.
 
 \section{Little-Endian Function}
 \label{sec:chacha.littleendian}
 
-The little-endian function takes in one 32-bit unsigned integer and reverses its byte order; also returning a 32-bit unsigned integer.  \\
+The little-endian function takes in one 32-bit unsigned integer and reverses its byte order; also returning a 32-bit unsigned integer.  For example, the hexadecimal value \texttt{0x12345678} would be transformed into \texttt{0x78563412} with this function.\\
 It can be implemented as follows:
 
 \begin{center}
