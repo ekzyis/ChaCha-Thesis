@@ -4,14 +4,12 @@
 \chapter{ChaCha Specification}
 \label{chap:chacha}
 
-To help with understanding the plug-in visualization and for the sake of completeness, I will summarize the specification of the ChaCha cipher in this chapter.
+To help with understanding the plug-in visualization and for the sake of completeness, this chapter will summarize the specification of the ChaCha cipher.
 
 ChaCha is a 256-bit stream cipher based on Salsa20, both developed by Daniel J. Bernstein. It was designed to improve diffusion per round while maintaining or even increasing the performance compared to Salsa20. This makes it more secure than Salsa20 with the same amount of rounds. It was developed in the year 2008, 3 years after Salsa20 \cite{chachaspec}.
 
 The specification can be broken apart into five main points: \\
 The \textit{quarter-round} function, the \textit{little-endian} function, a hash function which utilizes the two other mentioned functions, the setup of the 512-bit state and finally, the encryption/decryption process, bringing all the individual pieces together.
-
-I will start with the quarter round function.
 
 \section{Quarter-round Function}
 \label{sec:chacha.qr}
