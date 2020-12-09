@@ -79,11 +79,11 @@ Further, it was confusing that the ``Back'' button during the ``Expansion'' or `
 \label{fig:des}
 \end{figure}
 
-The DES visualization was created by Lars Hoffman. His approach to visualizing the diffusion had the most influence on my diffusion visualization. In Figure \ref{fig:des}, you can see the page on which the user can flip bits to activate diffusion. The message and key with flipped bits will then be used to show the diffusion property of DES. 
+The DES visualization was created by Lars Hoffman. His approach to visualizing the diffusion had the most influence on the diffusion visualization in the ChaCha plug-in. In Figure \ref{fig:des}, you can see the page on which the user can flip bits to activate diffusion. The message and key with flipped bits will then be used to show the diffusion property of DES. 
 
 Throughout the visualization, all values are shown in binary. This makes it possible to just mark flipped bits red since if a bit is marked red, we immediately know the value of the diffusion run (we just flip the red bit). 
 
-I used the same colouring approach but noticed that since the ChaCha cipher was using longer keys and 512-bit blocks compared to the 64-bit blocks of DES, I needed to use hex strings for my values to save canvas space. This lead to a loss of information about the value of the diffusion run if only marking red the hexadecimal characters which are different. Therefore, I combined the usage of red colour together with showing both values in two rows. In the row for the diffusion value, the difference is still marked red for easier visual recognition. This is shown in Figure \ref{fig:chachahash.mid.qr.diffusion}.
+It was  tried to use the same colouring approach but since the ChaCha cipher uses longer keys and 512-bit blocks compared to the 64-bit blocks of DES, hex strings needed to be used for the values to save canvas space. This lead to a loss of information about the concrete values if only marking red the hexadecimal characters which are different. Therefore, the usage of red colour was combined together with showing both values in two rows. In the row for the altered value, the difference is still marked red for easier visual recognition. This is shown later in Figure \ref{fig:chachahash.mid.qr.diffusion}.
 
 \subsection{Avalanche Visualization}
 \label{sec:avalancheVisualization}
