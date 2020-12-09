@@ -4,14 +4,12 @@
 \chapter{ChaCha Specification}
 \label{chap:chacha}
 
-To help with understanding the plug-in visualization and for the sake of completeness, I will summarize the specification of the ChaCha cipher in this chapter.
+To help with understanding the plug-in visualization and for the sake of completeness, this chapter will summarize the specification of the ChaCha cipher.
 
 ChaCha is a 256-bit stream cipher based on Salsa20, both developed by Daniel J. Bernstein. It was designed to improve diffusion per round while maintaining or even increasing the performance compared to Salsa20. This makes it more secure than Salsa20 with the same amount of rounds. It was developed in the year 2008, 3 years after Salsa20 \cite{chachaspec}.
 
 The specification can be broken apart into five main points: \\
 The \textit{quarter-round} function, the \textit{little-endian} function, a hash function which utilizes the two other mentioned functions, the setup of the 512-bit state and finally, the encryption/decryption process, bringing all the individual pieces together.
-
-I will start with the quarter round function.
 
 \section{Quarter-round Function}
 \label{sec:chacha.qr}
@@ -30,12 +28,14 @@ It modifies its input values as described in the following pseudo-code:
 \end{minipage}
 \end{center}
 
-I will call one row, consisting of one 32-bit addition, one XOR and one shift operation, a \textit{quarter-round step}. This naming convention will be reused in Section \ref{sec:userInterface}.
+\begin{remark}
+We define one row, consisting of one 32-bit addition, one XOR and one shift operation, as one \textit{quarter-round step}. This naming convention will be reused in Section \ref{sec:userInterface}.
+\end{remark}
 
 \section{Little-Endian Function}
 \label{sec:chacha.littleendian}
 
-The little-endian function takes in one 32-bit unsigned integer and reverses its byte order; also returning a 32-bit unsigned integer.  \\
+The little-endian function takes in one 32-bit unsigned integer and reverses its byte order; also returning a 32-bit unsigned integer.  For example, the hexadecimal value \texttt{0x12345678} would be transformed into \texttt{0x78563412} with this function.\\
 It can be implemented as follows:
 
 \begin{center}
@@ -67,11 +67,12 @@ y_{12} & y_{13} & y_{14} & y_{15}\\
 \end{pmatrix}
 \end{equation*}
 
-Using this matrix representation helps with understanding why Bernstein calls some rounds \textit{column rounds} and others \textit{diagonal rounds} in his paper (one round consists of four quarter-rounds): \\
+\noindent
+Bernstein uses this matrix representation in his paper to help with understanding why he calls some rounds \textit{column rounds} and others \textit{diagonal rounds} (one round consists of four quarter-rounds): \\
 The ChaCha hash function first iterates through all columns and then through all diagonals of the matrix; applying the quarter-round function to the four entries of each column/diagonal. After the first four quarter-rounds it therefore has changed all columns of the matrix. This is what Bernstein calls a column round in his paper. After the next four quarter-rounds, it changed all diagonals of the matrix which Bernstein analogously calls a diagonal round.
 
 \pagebreak
-
+\noindent
 To summarize, the following quarter-rounds make up one column round:
 \begin{center}
 \begin{minipage}{0.5\linewidth}
@@ -81,6 +82,7 @@ To summarize, the following quarter-rounds make up one column round:
 \texttt{quarterround($y_3$, $y_7$, $y_{11}$, $y_{15}$)} \\
 \end{minipage}
 \end{center}
+
 \noindent whereas the following quarterrounds make up one diagonal round:
 \begin{center}
 \begin{minipage}{0.5\linewidth}
@@ -91,6 +93,7 @@ To summarize, the following quarter-rounds make up one column round:
 \end{minipage}
 \end{center}
 
+\noindent
 After a set amount of rounds (8, 12, or 20), the input vector is added to the vector on which the rounds were run. Then the byte order of each matrix entry is reversed using the little-endian function.
 
 Having explained the basic structure of the ChaCha hash function, the following pseudo-code should complete the readers comprehension of it:
@@ -123,16 +126,16 @@ Having explained the basic structure of the ChaCha hash function, the following 
 \label{sec:chacha.matrix}
 
 ChaCha internally uses a 512-bit state for keystream generation. The ChaCha hash function modifies this state to generate a keystream block. \\
-In this section, I will explain how the state is setup which is then passed in 32-bit blocks to the ChaCha hash function.
+This section will explain how the state is setup. It is then passed in 32-bit blocks to the ChaCha hash function.
 
-The state is made up of a 128-bit constant, a 256-bit key section and a 128-bit nonce section. To demonstrate that the author had no hidden intent with picking his constants (nothing-up-my-sleeve number), he defined the constants to be ``expand 16-byte k'' for 128-bit keys and ``expand 32-byte k'' for 256-bit keys in ASCII.
+The state is made up of a 128-bit constant, a 256-bit key section and a 128-bit nonce section. To demonstrate that Bernstein had no hidden intent with picking his constants (nothing-up-my-sleeve number), he defined the constants to be ``expand 16-byte k'' for 128-bit keys and ``expand 32-byte k'' for 256-bit keys in ASCII.
 
 In the 128-bit key variant, the key is concatenated with itself to create a 256-bit key. This concatenated key is then used for the state setup. If the key is already 256-bit, we do nothing and just use it as it is for the state setup.
 
 The nonce section, which consists of a block counter and the initialization vector, is where the original version and the IETF version differ. In the original version, a 64-bit counter and a 64-bit initialization vector is used whereas the IETF version is using a 32-bit counter and a 96-bit initialization vector. \\
-This means that the IETF version only partitions the nonce differently. Their reasoning to have a longer initialization vector was that with a 32-bit counter, one can encrypt messages up to 256GiB which should be enough and therefore one could make use of a bigger initialization vector. Since we need to make sure that a initialization vector is never reused with the same key, we can use a bigger initialization vector to make it more secure in cases where the same key is used by multiple senders. This is done by partitioning the 96-bit word into one 32-bit and one 64-bit section. The 32-bit section could be a unique value per sender and the last 64 bits could be a counter which is incremented for every message \cite{rfc8439}.
+This means that the IETF version only partitions the nonce differently. Their reasoning to have a longer initialization vector was that with a 32-bit counter, one can encrypt messages up to 256GiB which should be enough and therefore one could make use of a bigger initialization vector. Since we need to make sure that an initialization vector is never reused with the same key, we can use a bigger initialization vector to make it more secure in cases where the same key is used by multiple senders. This is done by partitioning the 96-bit word into one 32-bit and one 64-bit section. The 32-bit section could be a unique value per sender and the last 64 bits could be a counter which is incremented for every message \cite{rfc8439}.
 
-All state parameters are encoded by first splitting them into 32-bit chunks whose byte order is reversed except for the counter, whose byte order is first completely reversed and afterwards split into 32-bit chunks. Their 32-bit blocks are then ordered as follows to form the 512-bit state matrix:
+All state parameters are encoded by first splitting them into 32-bit blocks whose byte order is reversed except for the counter, whose byte order is first completely reversed and afterwards split into 32-bit blocks. These 32-bit blocks are then ordered as follows to form the 512-bit state matrix:
 
 \begin{equation*}
 \begin{pmatrix}
@@ -143,7 +146,9 @@ All state parameters are encoded by first splitting them into 32-bit chunks whos
 \end{pmatrix}
 \end{equation*}
 
-Example (all numbers are in hexadecimal with \texttt{:} as separation between bytes and already split into 32-bit chunks):\\
+\pagebreak
+
+\begin{example} State parameters (all numbers are in hexadecimal):
 
 \begin{tabular}{ l l }
  \texttt{key (256-bit)} & \texttt{01:02:03:04 05:06:07:08 09:0a:0b:0c 0d:0e:0f:10} \\ 
@@ -170,6 +175,8 @@ Example (all numbers are in hexadecimal with \texttt{:} as separation between by
 \texttt{00:00:00:01} & \texttt{00:00:00:00} & \texttt{33:22:11:00} & \texttt{77:66:55:44} \\
 \end{pmatrix}
 \end{equation*}
+
+\end{example}
 
 \section{Encryption/Decryption}
 \label{sec:chacha.encryption}
