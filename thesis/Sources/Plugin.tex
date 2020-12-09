@@ -10,10 +10,16 @@ This chapter describes the goals of the plug-in and how the implementation accom
 \section{Goals}
 \label{sec:goals}
 
-The main goal of this plug-in was to teach students how messages are encrypted with the ChaCha cipher family. It should focus on creating an easy to understand visualization of its internals without oversimplification.\\
-It should further visualize the diffusion property of the cipher on demand by making it possible for the user to alter the key, initialization vector and initial counter.\\
-The plug-in should also support all variants of the cipher. This means that the user should be able to choose the key size (128-bit or 256-bit) and how often the hash function will be executed per keystream block (8, 12 or 20 rounds).\\
-Since the Internet Engineering Task Force (IETF) introduced a slightly modified version of ChaCha which uses a 32-bit counter and 96-bit initialization vector, the user can also decide if he wants to use the original version by Bernstein with a 64-bit counter and 64-bit initialization vector or the one described by the IETF.
+This section lists which goals the plug-in should meet. Each goal will be marked with a number which will later be reused in Section \ref{sec:conclusion} to summarize how the goals were met.
+
+\begin{enumerate}[label=(\labelenum{G}{{\arabic*}})]
+  \item \textbf{Easy-to-understand visualization of the encryption process}\\
+The main goal of the plug-in was to teach students how the ChaCha cipher family encrypts messages. Therefore, the visualization should be easy to follow without much prior knowledge about ciphers.
+  \item \textbf{Visualization of the diffusion property}\\
+To get a better understanding how the cipher hides the relationship between the ciphertext and the plaintext, the plug-in should contain a visualization of the diffusion property. To achieve this, the user should be able to flip bits of the input values.
+  \item \textbf{Support for all variants of the cipher family}\\
+The plug-in should support 128-bit and 256-bit keys and the default 64-bit counter and 64-bit initialization vector. Since the Internet Engineering Task Force (IETF) introduced a slightly modified version of the cipher which has a 32-bit counter and a 96-bit initialization vector, the plug-in should also support that. Finally, the user should also be able to choose between 8, 12 or 20 rounds.
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementation Details}
