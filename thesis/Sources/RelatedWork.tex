@@ -38,7 +38,7 @@ CrypTool 2 already has a plug-in for the Salsa20 cipher but without a visualizat
 
 During the work on the ChaCha visualization, we discussed if the code could be reused to create a visualization for the Salsa20 cipher family. However, this would at least need adaption of the XAML code since the state is built up differently. Also the quarter-round function is slightly different which also needs to be reflected in the visualization.
 
-Nonetheless, it should be possible to reuse most of the codebase used for the ChaCha visualization, especially the underlying navigation system and the storage and retrieval mechanism for the intermediate results. This will further be discussed in Chapter \ref{chap:futureWork}.
+Nonetheless, it should be possible to reuse most of the codebase used for the ChaCha visualization, especially the underlying navigation system and the storage and retrieval mechanism for the intermediate results. This will further be discussed in Chapter \ref{sec:futureWork}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Other CrypTool 2 Cipher Visualizations}
@@ -94,7 +94,7 @@ It was  tried to use the same coloring approach but since the ChaCha cipher uses
 
 The Avalanche visualization plug-in was created by Camilo Echeverri in 2016. The most noticeable part about it is probably that it is visually very appealing. Camilo seemed to be very experienced in creating nice user interfaces. Especially the pie chart for the amount of flipped bits with its shadow (Figure \ref{fig:avalanche.roundsend}) and the gradient background stood out. It made it clear that the user interface of the ChaCha visualization should also be visually appealing and not just functional.
 
-The overview over all rounds (Figure \ref{fig:avalanche.overview}) was also a remarkable feature. It was discussed that the ChaCha visualization should include a similar overview since seeing how many rounds were needed for half of all bits to be flipped is useful for studying the diffusion property of a cipher. Unfortunately to date, this did not make it into the version of the plug-in but can be added in the future (see Chapter \ref{chap:futureWork}).
+The overview over all rounds (Figure \ref{fig:avalanche.overview}) was also a remarkable feature. It was discussed that the ChaCha visualization should include a similar overview since seeing how many rounds were needed for half of all bits to be flipped is useful for studying the diffusion property of a cipher. Unfortunately to date, this did not make it into the version of the plug-in but can be added in the future (see Chapter \ref{sec:futureWork}).
 
 On the other hand, scrollbars as seen in Figure \ref{fig:avalanche.roundsend} should be prevented because the user should see everything he needs immediately.
 

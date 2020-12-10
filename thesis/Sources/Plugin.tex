@@ -12,7 +12,7 @@ At the end, alternative solutions that were taken into consideration but eventua
 \section{Goals}
 \label{sec:goals}
 
-This section lists which goals the plug-in should meet. Each goal will be marked with a number which will later be reused in Section \ref{sec:conclusion} to summarize how the goals were met.
+This section lists which goals the plug-in should meet. Each goal will be marked with a number which will later be reused in Section \ref{sec:summary} to summarize how the goals were met.
 
 \begin{enumerate}[label=(\labelenum{G}{{\arabic*}})]
   \item \textbf{Easy-to-understand visualization of the encryption process}\\
@@ -477,16 +477,32 @@ To decide if the code only needs to be refactored or indeed rewritten from scrat
 \caption{Example for bad scaling property in previous plug-in versions}
 \end{figure}
 
-Essentially, the problem was that a lot of the code-behind was highly coupled to the XAML code. This was done likt this because it was very straight-forward to do so and lead to fast results. At first, the trade-off between loss of maintainability/flexibility in the future and not having to spend precious time to learn design patterns for WPF applications seemed worth it. This thinking was grounded in the reason that the code for this bachelor's thesis would not get regular updates long into the future thus high maintainability or being easy to extend was not a priority. This assumption turned out to be false when realizing that the amount of "code smells" that could be handled was already to high about one month before the date of handing in the thesis. Every code change kept increasing the accumulated technical debt; killing any motivation still left to work on the existing code base. Continuing like this for another month seemed impossible. Therefore, a list of all current problems was created together with what requirements a new software architecture would need to meet to solve them:
+Essentially, the problem was that a lot of the code-behind was highly coupled to the XAML code. This was done likt this because it was very straight-forward to do so and lead to fast results. At first, the trade-off between loss of maintainability/flexibility in the future and not having to spend precious time to learn design patterns for WPF applications seemed worth it. This thinking was grounded in the reason that the code for this bachelor's thesis would not get regular updates long into the future thus high maintainability or being easy to extend was not a priority. This assumption turned out to be false when realizing that the amount of "code smells" that could be handled was already too high about one month before the date of handing in the thesis. Every code change kept increasing the accumulated technical debt; killing any motivation still left to work on the existing code base. Continuing like this for another month seemed impossible. Therefore, a list of all current problems was created together with what requirements a new software architecture would need to meet to solve them:
 
-\begin{description}
-\item [(Inconsistent) Performance] The underlying linear design was crippling the performance for the reasons already mentioned. The introduction of caches did only fight the symptoms and not solve the main issue. Further, it made the performance confusing for the users. Sometimes, it took close to no time at all to move to a certain action (action was cached) and on other times, it took quite a lot of time to move to a different action (action was not cached). \\
+\begin{enumerate}[wide, labelwidth=!, labelindent=0pt]
+\setlength{\parskip}{0pt}
+
+\item \textbf{(Inconsistent) Performance}\\
+The underlying linear design was crippling the performance for the reasons already mentioned. The introduction of caches did only fight the symptoms and not solve the main issue. Further, it made the performance confusing for the users. Sometimes, it took close to no time at all to move to a certain action (action was cached) and on other times, it took quite a lot of time to move to a different action (action was not cached).
+
+\noindent
 \textit{\textbf{Requirement}}: Moving to any action should be done in $O(1)$. This means, it should not matter how many actions we needed to skip to arrive at the destination.
-\item [Error-prone design for action creation] Writing new actions was error-prone because code needed to be written for forward and backwards navigation which introduced mental overhead because it depended on the code of all previous actions. This also lead to error propagation. Errors were easily noticeable by users but were hard to track down to their origin.\\
+
+\item \textbf{Error-prone design for action creation}\\
+Writing new actions was error-prone because code needed to be written for forward and backwards navigation which introduced mental overhead because it depended on the code of all previous actions. This also lead to error propagation. Errors were easily noticeable by users but were hard to track down to their origin.
+
+\noindent
 \textit{\textbf{Requirement}}: New actions should be able to be written without having to write backwards navigation code. Backwards navigation should be handled automatically and thus be "error-free by design".
-\item [No coherent system design] Adding new code without following a design pattern made it hard to grasp the system architecture over the long run. Additionally, the high coupling of the backend (code-behind) with the frontend (XAML) made it harder to implement new features in one part without needing to modify the other part. The system essentially got very rigid and over time, even seemingly small changes took quite some time to implement.\\
+
+\vfill
+\pagebreak
+
+\item \textbf{No coherent system design}\\
+Adding new code without following a design pattern made it hard to grasp the system architecture over the long run. Additionally, the high coupling of the backend (code-behind) with the frontend (XAML) made it harder to implement new features in one part without needing to modify the other part. The system essentially got very rigid and over time, even seemingly small changes took quite some time to implement.
+
+\noindent
 \textit{\textbf{Requirement}}: The new system should make it clear what piece of code is responsible for what and thus be highly modular. This should also make it clear where new code must be added to implement a new feature without increasing technical debt; while also decreasing the possibility to introduce bugs since code is less coupled. To summarize, the new architecture should strive for high cohesion, but low coupling.
-\end{description}
+\end{enumerate}
 
 \begin{figure}[!hbt]
 \centering
