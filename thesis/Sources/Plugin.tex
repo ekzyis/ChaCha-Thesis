@@ -113,9 +113,9 @@ First, the constants are encoded. Since they are shown in ASCII format in the st
 bytes are split into 4 byte chunks whose order is then reversed in the last step. \\
 Afterwards, the key is encoded. It is just split into 4 byte chunks whose order is then reversed. \\
 When encoding the counter, the complete byte order is first reversed, and then it is split into 4 byte chunks whose byte order is then again reversed. \\
-The last parameter is the IV. It is encoded exactly the same as the key. \\
+The last parameter is the IV. It is encoded exactly the same as the key.
 
-\begin{figure}
+\begin{figure}[!hbt]
 \begin{subfigure}{\textwidth}
   \centering
   \includegraphics[width=\textwidth]{figures/ct2/state-matrix/1-state-matrix-constants.png}
@@ -129,6 +129,7 @@ The last parameter is the IV. It is encoded exactly the same as the key. \\
   \label{fig:statematrix.encoding.key}
 \end{subfigure}
 \end{figure}
+
 \begin{figure}
 \ContinuedFloat
 \begin{subfigure}{\textwidth}
@@ -451,8 +452,6 @@ One of the major drawbacks for this enhanced design  with caches was that the au
 \caption{Asynchronous navigation subsystem}
 \label{fig:async.navigation}
 \end{figure}
-
-\FloatBarrier
 
 \subsubsection{Centralized navigation system}
 
