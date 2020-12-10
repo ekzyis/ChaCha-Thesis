@@ -177,17 +177,20 @@ If we are finished with the loop, we can see the original state at the left, the
 \centering
 \begin{subfigure}[t]{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/wiki-qr-circuit/salsa-wiki-qr-circuit.png}
-  \caption{Salsa quarter-round circuit diagram}
+  \includegraphics[width=\textwidth]{figures/wiki-qr-circuit/salsa-wiki-qr-circuit.png}
+  \caption[Salsa quarter-round circuit diagram]{Salsa quarter-round circuit diagram}
   \label{fig:wiki.qr.circuit.salsa}
 \end{subfigure}%
 \begin{subfigure}[t]{0.5\textwidth}
   \centering
-  \includegraphics[width=0.99\textwidth]{figures/wiki-qr-circuit/chacha-wiki-qr-circuit.png}
-  \caption{ChaCha quarter-round circuit diagram}
+  \includegraphics[width=\textwidth]{figures/wiki-qr-circuit/chacha-wiki-qr-circuit.png}
+  \caption[ChaCha quarter-round circuit diagram]{ChaCha quarter-round circuit diagram}
   \label{fig:wiki.qr.circuit.chacha}
 \end{subfigure}
-\caption{Quarter-round circuit diagram}
+\caption[Quarter-round circuit diagram]{Quarter-round circuit diagram\\
+Source:\\
+(a): \url{https://en.wikipedia.org/wiki/Salsa20}\\
+(b): \url{https://en.wikipedia.org/wiki/Salsa20\#ChaCha_variant}}
 \label{fig:wiki.qr.circuit}
 \centering
 \includegraphics[width=\textwidth]{figures/ct2/chachahash/chachahash-end.png}
@@ -497,6 +500,7 @@ Essentially, the problem was that a lot of the code-behind was highly coupled to
 \label{fig:navsystem.performance.central}
 \end{figure}
 
+\noindent
 All these problems were solved using the MVVM design pattern with a new navigation system design. To implement them, the existing codebase was rewritten from scratch, which was time-consuming (took about two weeks) but in the end worth it. Figure \ref{fig:navsystem.performance.central} shows the performance of the final navigation system. As one can see, the time it takes to skip actions is constantly very low and only varies between a few milliseconds; making the user interface very responsive.
 
 \begin{figure}
