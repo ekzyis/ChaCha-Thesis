@@ -453,7 +453,7 @@ One of the major drawbacks for this enhanced design  with caches was that the au
 \label{fig:async.navigation}
 \end{figure}
 
-\subsubsection{Centralized navigation system}
+\subsubsection{Final architecture}
 
 During the implementation of other features such as the diffusion, it was noticed that having to implement for each page action the forward and backwards code, the code became quite error-prone. It was hard to notice bugs because it was not feasible to check every single action from both directions manually and creating a testing framework just because of this was out of scope. \\
 Some navigation bugs were easy to notice because due to the overall still linear nature of the navigation system, errors did propagate. This means that a error in a previous action most likely did break the page state on future actions because they depend on each other. \\
