@@ -46,9 +46,13 @@ The main points were:
      The values are always shown in hexadecimal and a character which has changed is marked red for easier visual recognition. These two different views were important because when studying the diffusion property of a cipher, one is more interested in the difference between two keystreams instead of their actual values. On the other hand, having access to the concrete values could also be useful thus both views were implemented instead of just one.
      
      Additionally, the percentage of flipped bits is shown below the state at the end of each quarter-round in the ChaCha hash function page.
+     
+     \item \textbf{Support for all variants of the cipher family}\\
+     The support to choose the amount of rounds and the version (original version by Bernstein or IETF version) was implemented by adding appropriate settings to the plug-in. The inputs are then validated accordingly. This means that if the user has chosen the original version by Bernstein, he must enter a 64-bit counter and a 64-bit IV. If he has chosen the IETF version, he must enter a 32-bit counter and a 96-bit IV. The plug-in will not start with wrong inputs. Instead, it will show an error message with the expected size for the input and its actual size.
+     
+     The visualization works not much different with a 128-bit or 256-bit key. It is mentioned that if using a 128-bit key is used, it will be concatenated with itself. This is done in the step where the encoded key is put into the state.\\
+     To reflect the chosen version, only the state setup is slightly different. The last row of the state is partitioned differently.
   \end{enumerate}
-
-
 
 \section{Future Work}
 \label{sec:futureWork}
