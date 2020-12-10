@@ -4,7 +4,8 @@
 \chapter{Plug-in}
 \label{chap:Plugin}
 
-This chapter describes the goals of the plug-in and how the implementation accommodates these goals. It also includes the thought process behind some architectural decisions that were made.\\
+This chapter describes the goals of the plug-in and how the implementation accommodates these goals. It also includes the thought process behind some architectural decisions that were made.
+
 At the end, alternative solutions that were taken into consideration but eventually abandoned are described. They complement the reasoning about the final architecture.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -304,14 +305,14 @@ If the user enters something into the input fields of the Diffusion page, valida
 
 Furthermore, converters which are also built into WPF are used to convert data into user-friendly formats. Converters are always attached to bindings, so inside the two-way bindings, byte arrays are converted into hex strings and vice versa using custom converters.
 
-Since data binding works by notifying the view if a variable has changed, WPF provides an interface named \texttt{INotifyPropertyChanged} which helps with implementing these data binding notifications. It provides a method named \texttt{OnPropertyChanged} and an event named \texttt{PropertyChangedEventHandler} which must be called with the name of the variable to raise such an notification. The data binding system then updates the variables in the view.
+Data binding works by notifying a view if a variable has changed. WPF provides an interface named \texttt{INotifyPropertyChanged} which helps to implement these data binding notifications. It provides a method named \texttt{OnPropertyChanged} and an event named \texttt{PropertyChangedEventHandler} which must be called with the name of the variable to raise such an notification. The data binding system then updates the variables in the view.
 
 \begin{figure}[!hbt]
 \centering
 \begin{subfigure}[t]{0.6\textwidth}
 \centering
 \includegraphics[width=\textwidth]{figures/code/mvvm-arch/onpropertychanged.png}
-\caption{Data binding notification in setter of \texttt{DiffusionInputKey}}
+\caption{Data binding notification in the setter of \texttt{DiffusionInputKey}}
 \label{fig:mvvm.onpropertychanged}
 \end{subfigure}
 \begin{subfigure}[t]{\textwidth}
@@ -358,7 +359,7 @@ On the other hand, decreasing the amount of possible transitions by introducing 
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{figures/navigationsystem-diagram/navigationsystem-central-overview.png}
-\caption[Navigation paths in centralized navigation system]{Navigation paths between actions in the centralized navigation system. \\The colourized state is the reset state which corresponds to the initial state.}
+\caption[Navigation paths in centralized navigation system]{Navigation paths between actions in the centralized navigation system. \\The colored state is the reset state which corresponds to the initial state.}
 \label{fig:navsystem.central.overview}
 \end{figure}
 
@@ -431,7 +432,7 @@ After identifying the two underlying issues, a \textbf{\textit{linear navigation
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{figures/navigationsystem-diagram/navigationsystem-cache-overview-2.png}
-\caption[Navigation paths in linear navigation system with caches]{Navigation paths between actions in the linear navigation system with caches. The colourized state has a corresponding cache entry.}
+\caption[Navigation paths in linear navigation system with caches]{Navigation paths between actions in the linear navigation system with caches. The colored state has a corresponding cache entry.}
 \label{fig:navsystem.cache.overview}
 \end{figure}
 
@@ -457,7 +458,7 @@ One of the major drawbacks for this enhanced design  with caches was that the au
 
 During the implementation of other features such as the diffusion, it was noticed that having to implement for each page action the forward and backwards code, the code became quite error-prone. It was hard to notice bugs because it was not feasible to check every single action from both directions manually and creating a testing framework just because of this was out of scope. \\
 Some navigation bugs were easy to notice because due to the overall still linear nature of the navigation system, errors did propagate. This means that a error in a previous action most likely did break the page state on future actions because they depend on each other. \\
-Nonetheless, this did not help in tracking down the bug because it was not known on which action the error happened. This only lead to further incentivization to reiterate on the navigation system again.
+Nonetheless, this did not help in tracking down the bug because it was not known on which action the error happened. This only gave more reason to reiterate on the navigation system again.
 
 To decide if the code only needs to be refactored or indeed rewritten from scratch, all current problems with the existing codebase were summarized. They not only consisted of performance problems but also with visualization problems. For example, resizing the window did not appropriately scale the UI elements as can be seen in Figure \ref{fig:plugin.scaling.bug}. Additionally, the current navigation system was quite restricted in what kind of UI elements it supported without further hassle. Since during the last navigation system update, the existing code was only updated, the core design was still all about directly manipulating and creating UI elements on demand. The existing functions revolved around the UI elements currently in use thus they could not easily be reused for different, new UI elements; leading to the mentioned limited support of the navigation system.
 
@@ -482,7 +483,7 @@ Essentially, the problem was that a lot of the code-behind was highly coupled to
 \begin{description}
 \item [(Inconsistent) Performance] The underlying linear design was crippling the performance for the reasons already mentioned. The introduction of caches did only fight the symptoms and not solve the main issue. Further, it made the performance confusing for the users. Sometimes, it took close to no time at all to move to a certain action (action was cached) and on other times, it took quite a lot of time to move to a different action (action was not cached). \\
 \textit{\textbf{Requirement}}: Moving to any action should be done in $O(1)$. This means, it should not matter how many actions we needed to skip to arrive at the destination.
-\item [Error-prone design for action creation] Writing new actions was error-prone because codeneeded to be written for forward and backwards navigation which introduced mental overhead because it depended on the code of all previous actions. This also lead to error propagation. Errors were easily noticeable by users but were hard to track down to their origin.\\
+\item [Error-prone design for action creation] Writing new actions was error-prone because code needed to be written for forward and backwards navigation which introduced mental overhead because it depended on the code of all previous actions. This also lead to error propagation. Errors were easily noticeable by users but were hard to track down to their origin.\\
 \textit{\textbf{Requirement}}: New actions should be able to be written without having to write backwards navigation code. Backwards navigation should be handled automatically and thus be "error-free by design".
 \item [No coherent system design] Adding new code without following a design pattern made it hard to grasp the system architecture over the long run. Additionally, the high coupling of the backend (code-behind) with the frontend (XAML) made it harder to implement new features in one part without needing to modify the other part. The system essentially got very rigid and over time, even seemingly small changes took quite some time to implement.\\
 \textit{\textbf{Requirement}}: The new system should make it clear what piece of code is responsible for what and thus be highly modular. This should also make it clear where new code must be added to implement a new feature without increasing technical debt; while also decreasing the possibility to introduce bugs since code is less coupled. To summarize, the new architecture should strive for high cohesion, but low coupling.

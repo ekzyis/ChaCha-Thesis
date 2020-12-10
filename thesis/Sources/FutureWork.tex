@@ -10,14 +10,14 @@ This chapter summarizes how the plug-in could be further improved to make it mor
 
 \item[Better overview over flipped bits at the end of each round]
 
-At the end of the Avalanche visualization, the author provided a overview over the percentage of flipped bits at the end of each round. This overview is very useful because it shows how the amount of flipped bits goes up very fast to around 50\% and then stays near it which is exactly what one would expect from a good cipher. \\
+At the end of the Avalanche visualization, the author provided an overview over the percentage of flipped bits at the end of each round. This overview is very useful because it shows how the amount of flipped bits goes up very fast to around 50\% and then stays near it which is exactly what one would expect from a good cipher. \\
 Using a plot instead of the simple text which is updated at the end of each round was considered but due to canvas and time constraints, this idea was not further pursued. However, integrating such an overview into the Diffusion page should be possible. This would need cipher execution while still on the page instead on page exit but this would not be a big problem since a button to start cipher execution would suffice. Therefore, this plot could be an addition instead of replacing the text below the state in the ChaCha hash function visualization.
 
 \item[Improve performance during diffusion]
 
 All measurements in Section \ref{sec:Architecture} were done with inactive diffusion since the performance during active diffusion improved in a similar manner. This means that thanks to the centralized navigation system architecture, moving to any action is still done in constant time even if diffusion is active. \\
-The problem is that it takes around one or two seconds for each move (instead of around 5ms if diffusion was inactive) which is quite annoying. We suspect that this is the case because the red colour is implemented by creating an inline element for every character and marking it red if it is different. \\
-An idea is to create a single element for every possible combination of colour (black and red) and hexadecimal character ([0-9A-F]). Therefore, we would not need to create a new inline element for each character but could reuse the same in multiple places. If the performance issue results from the memory allocation, this approach should solve it. However, first attempts resulted in weird bugs. So fixing this will probably be the most difficult point in this list and could result in once again having to rethink some major design decisions.
+The problem is that it takes around one or two seconds for each move (instead of around 5 ms if diffusion was inactive) which is quite annoying. We suspect that this is the case because the red color is implemented by creating an inline element for every character and marking it red if it is different. \\
+An idea is to create a single element for every possible combination of color (black and red) and hexadecimal character ([0-9A-F]). Therefore, we would not need to create a new inline element for each character but could reuse the same in multiple places. If the performance issue results from the memory allocation, this approach should solve it. However, first attempts resulted in weird bugs. So fixing this will probably be the most difficult point in this list and could result in once again having to rethink some major design decisions.
 
 \item[Automatic navigation]
 
@@ -26,11 +26,12 @@ Since asynchronous navigation is already in sue for the action slider, implement
 
 \item[Salsa20 visualization]
 
-As mentioned in Section \ref{sec:salsaCT2Plugin}, using the now existing codebase for ChaCha visualization to create a Salsa20 visualization would definitely increase the value gained from this thesis. This would at least need adaption of the XAML code for the state matrix initialization and the quarter-round since ChaCha and Salsa20 differ in this aspects from each other. It would most likely even increase the value of the ChaCha visualization since both ciphers could then be compared side-by-side. Comparing them and their diffusion property should be very easy due to the very similar visualization.
+As mentioned in Section \ref{sec:salsaCT2Plugin}, using the now existing codebase for ChaCha visualization to create a Salsa20 visualization would definitely increase the value gained from this thesis. This would at least need adaption of the XAML code for the state matrix initialization and the quarter-round since ChaCha and Salsa20 differ in these aspects from each other. It would most likely even increase the value of the ChaCha visualization since both ciphers could then be compared side-by-side. Comparing them and their diffusion property should be very easy due to the very similar visualization.
 
 \item[Localization and online help]
 
-Currently, most texts are only localized in English. Only the memo fields, component labels and plaintext value are also available in German. Further, there should be an online help for the ChaCha plug-in which opens by selecting it and pressing F1. Both of these points will be done directly after handing in the thesis.
+Currently, most texts are only localized in English. Only the memo fields, component labels and plaintext value are also available in German. 
+This will be changed in the near future. Then also an online help entry for the ChaCha plug-in will be available. The online help appears when pressing F1.
 
 \end{description}
 

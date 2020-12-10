@@ -62,7 +62,7 @@ We came to the exact same conclusion that the values need to be precalculated fo
 \label{fig:aes}
 \end{figure}
 
-Looking through his visualization, his usage of background colouring was very useful to catch the user's attention. This is shown in Figure \ref{fig:aes}. Therefore, there is a similar mechanic during the ChaCha hash function visualization where a light blue background is put onto the state elements which are used as the quarter-round input. Also during the quarter-round execution, background colouring is extensively used to indicate where the user should pay attention.
+Looking through his visualization, his usage of background coloring was very useful to catch the user's attention. This is shown in Figure \ref{fig:aes}. Therefore, there is a similar mechanic during the ChaCha hash function visualization where a light blue background is put onto the state elements which are used as the quarter-round input. Also during the quarter-round execution, background coloring is extensively used to indicate where the user should pay attention.
 
 Another thing adopted from his visualization was the navigation in the top-left corner where the page navigation for the ChaCha visualization is placed. \\
 What is different regarding navigation is to not show so many buttons all the time to the user. It was quite overwhelming to see all the buttons in the bottom navigation bar on the start even though they were disabled. Therefore, on pages which have no actions, there are no buttons in the bottom row. For the ChaCha hash function, which needed more detailed navigation, the navigation bar looks similar expect that it uses arrow buttons and text inputs instead of buttons for every single round. This decreased the amount of buttons while maintaining a similar degree of navigation.
@@ -87,7 +87,7 @@ The DES visualization was created by Lars Hoffman. His approach to visualizing t
 
 Throughout the visualization, all values are shown in binary. This makes it possible to just mark flipped bits red since if a bit is marked red, we immediately know the value of the diffusion run (we just flip the red bit). 
 
-It was  tried to use the same colouring approach but since the ChaCha cipher uses longer keys and 512-bit blocks compared to the 64-bit blocks of DES, hex strings needed to be used for the values to save canvas space. This lead to a loss of information about the concrete values if only marking red the hexadecimal characters which are different. Therefore, the usage of red colour was combined together with showing both values in two rows. In the row for the altered value, the difference is still marked red for easier visual recognition. This is shown later in Figure \ref{fig:chachahash.mid.qr.diffusion}.
+It was  tried to use the same coloring approach but since the ChaCha cipher uses longer keys and 512-bit blocks compared to the 64-bit blocks of DES, hex strings needed to be used for the values to save canvas space. This lead to a loss of information about the concrete values if only marking red the hexadecimal characters which are different. Therefore, the usage of red color was combined together with showing both values in two rows. In the row for the altered value, the difference is still marked red for easier visual recognition. This is shown later in Figure \ref{fig:chachahash.mid.qr.diffusion}.
 
 \vfill
 
