@@ -302,7 +302,7 @@ If the user enters something into the input fields of the Diffusion page, valida
 
 Furthermore, converters which are also built into WPF are used to convert data into user-friendly formats. Converters are always attached to bindings, so inside the two-way bindings, byte arrays are converted into hex strings and vice versa using custom converters.
 
-Since data binding works by notifying the view if a variable has changed, WPF provides an interface named \texttt{INotifyPropertyChanged} which helps with implementing these data binding notifications. It provides a method named \texttt{OnPropertyChanged} and an event named \texttt{PropertyChangedEventHandler} which must be called with the name of the variable to raise such an notification. The data binding system then updates the variables in the view.
+Data binding works by notifying a view if a variable has changed. WPF provides an interface named \texttt{INotifyPropertyChanged} which helps to implement these data binding notifications. It provides a method named \texttt{OnPropertyChanged} and an event named \texttt{PropertyChangedEventHandler} which must be called with the name of the variable to raise such an notification. The data binding system then updates the variables in the view.
 
 \begin{figure}[!hbt]
 \centering
