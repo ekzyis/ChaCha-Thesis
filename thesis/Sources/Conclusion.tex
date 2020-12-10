@@ -4,10 +4,56 @@
 \chapter{Conclusion}
 \label{chap:conclusion}
 
+This chapter finishes the thesis by summarizing its main points. It also includes suggestions how the plug-in could be further improved in the future.
+
+\section{Summary}
+\label{sec:summary}
+
+This section gives an high level overview over the main points of this thesis. \\
+The main points were:
+
+\begin{enumerate}
+\item How the goals described in Section \ref{sec:goals} were met
+\item What the main problems were
+\item How they were solved
+\end{enumerate}
+
+\subsubsection{Goals}
+
+\begin{enumerate}[label=(\labelenum{G}{{\arabic*}}), wide, labelwidth=!, labelindent=0pt]
+\setlength{\parskip}{0pt}
+    \item \textbf{Easy-to-understand visualization of the encryption process}\\
+    The first goal was met by creating a simple but thought-through user interface for the plug-in visualization.
+    
+     The visualization is split into five pages in the following order:\\
+      A landing page, an overview page, a page to adjust diffusion settings, a page which visualizes the state setup and a page which visualizes the ChaCha hash function.\\
+     Splitting the visualization up into five different pieces made it easier to let the user focus on a single step of the encryption process. This also made it possible to have a new page layout for each step without confusing the user because each page is presented as an individual piece. A new page layout for each step was useful because we then were not restricted to a single layout for the whole visualization. Presenting the pages as individual pieces starts with the clear cut from the landing page to the overview page using the page navigation bar in the top-left of each page. Since at the landing page, only the page navigation bar at the top-left is shown, the user knows that he must use it to advance. After using it, it is clear to the user that this is the place where he can navigate between pages.
+     
+     Each page tells the user with descriptions what it is about. If a page has what we called actions, the user has access to a slider with buttons in the bottom with which he can navigate within a page. At the bottom-right, the total actions a page has (which corresponds to in how many different states a page can be) is shown together with a text input which shows the current action index.
+     
+     Using that text input makes it possible to skip to a certain action. Since the user will not know which action corresponds to which page state when using the plug-in for the first time, additional buttons are shown above the slider which bring the user immediately to important intermediate steps. Looking at the current action index, the user now knows what he has to type in there to immediately jump to that action again. This indirectly helps to better understand the cipher because it enables student and lecturers to talk about a specific step using the action index number.
+     
+     The state setup and the hash function were visualized with attention to detail. \\
+     During the state setup, each parameter is encoded separately and each encoding step is described. During the hash function, the quarter-round circuit diagram makes it possible to show the intermediate results in an intuitive way by placing them above the circuit lines. Intermediate results were important to let the user comprehend every single step of the keystream block generation. Further, background coloring helps to show which elements are used to calculate the next value or which state entries are currently in use by the quarter-round function.
+     
+     \item \textbf{Visualization of the diffusion property}\\
+     The diffusion property is visualized by letting the user enter alternative values on the Diffusion page. Since the ChaCha keystream is independent of the plaintext, the user can only use alternative values for the key, counter and IV.
+     
+     It was important to easily be able to flip bits. Thus, the user can not only enter the explicit alternative value but also the XOR.
+     
+     An example on the same page informs the user what he can expect for the next pages if he activates diffusion by flipping at least one bit. It shows that he can chose between two views: \\
+     A view where he can see both values and a view which can be activated with the button in the top-right corner to only show the XOR between both values.\\
+     The values are always shown in hexadecimal and a character which has changed is marked red for easier visual recognition. These two different views were important because when studying the diffusion property of a cipher, one is more interested in the difference between two keystreams instead of their actual values. On the other hand, having access to the concrete values could also be useful thus both views were implemented instead of just one.
+     
+     Additionally, the percentage of flipped bits is shown below the state at the end of each quarter-round in the ChaCha hash function page.
+  \end{enumerate}
+
+
+
 \section{Future Work}
 \label{sec:futureWork}
 
-This section summarizes how the plug-in could be further improved to make it more useful for the audience of CrypTool 2.
+This section lists suggestions how the plug-in could be further improved to make it more useful for the audience of CrypTool 2.
 
 \begin{description}[style=nextline]
 
