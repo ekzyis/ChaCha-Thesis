@@ -93,7 +93,7 @@ Three goals which the plug-in should meet were defined.
      The support to choose the amount of rounds and the version (original version by Bernstein or IETF version) was implemented by adding appropriate settings to the plug-in. The inputs are then validated accordingly. This means that if the user has chosen the original version by Bernstein, he must enter a 64-bit counter and a 64-bit IV. If he has chosen the IETF version, he must enter a 32-bit counter and a 96-bit IV. The plug-in will not start with wrong inputs. Instead, it will show an error message with the expected size for the input and its actual size.
      
      The visualization works not much different with a 128-bit or 256-bit key. It is mentioned that if using a 128-bit key is used, it will be concatenated with itself. This is done in the step where the encoded key is put into the state.\\
-     To reflect the chosen version, only the state setup is slightly different. The last row of the state is partitioned differently.
+     To reflect the chosen version, only the the overview page and the state setup are slightly different. The overview page shows the correct parameter sizes and the last row of the state in the overview page and state setup page are partitioned accordingly.
   \end{enumerate}
 
 \subsubsection{Main problems (P) and their solutions (S)}
