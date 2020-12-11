@@ -143,7 +143,7 @@ As described in Section \ref{sec:Architecture}, as a result, the navigation syst
 \section{Future Work}
 \label{sec:futureWork}
 
-This section lists suggestions how the plug-in could be further improved to make it more useful for the audience of CrypTool 2.
+This section lists five suggestions how the plug-in could be further improved to make it even more useful for the audience of CrypTool 2. The last point is a todo the author will implement during the next 4 weeks to make the plug-in fully complete.
 
 \begin{enumerate}[wide, labelwidth=!, labelindent=0pt]
 \setlength{\parskip}{0pt}
@@ -154,6 +154,9 @@ At the end of the Avalanche visualization, the author provided an overview over 
 Using a plot instead of the simple text which is updated at the end of each round was considered but due to canvas and time constraints, this idea was not further pursued. 
 
 Nonetheless, integrating such an overview into the Diffusion page should be possible. This would need cipher execution while still on the page instead on page exit but this would not be a big problem since a button to start cipher execution would suffice. Therefore, this plot could be an addition instead of replacing the text below the state in the ChaCha hash function visualization.
+
+\vfill
+\pagebreak
 
 \item \textbf{Improve performance during diffusion}\\
 All measurements in Section \ref{sec:Architecture} were done with inactive diffusion since the performance during active diffusion improved in a similar manner. This means that thanks to the centralized navigation system architecture, moving to any action is still done in constant time even if diffusion is active.
@@ -171,6 +174,9 @@ Such a button could be useful for the ChaCha visualization, too, especially for 
 Since asynchronous navigation is already in use for the action slider, implementing this feature could easily be integrated within the existing navigation system. Only page switches could maybe need some clever solutions since the action navigation is handled within each page thus navigating out of a page may not be straight-forward. 
 
 In the AES visualization though, the automatic navigation does stop between each step (which roughly corresponds to a page in our visualization) so switching the page automatically may even not be desired.
+
+\vfill
+\pagebreak
 
 \item \textbf{Salsa20 visualization}\\
 As mentioned in Section \ref{sec:salsaCT2Plugin}, using the now existing codebase for ChaCha visualization to create a Salsa20 visualization would definitely increase the value gained from this thesis.
