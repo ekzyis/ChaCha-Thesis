@@ -123,8 +123,8 @@ Here are the solutions that were found for the two problems described above.
 \item \textbf{MVVM design pattern}\\
 The first problem was solved by following a design pattern. The MVVM design pattern was chosen because it was the most popular across the WPF community. 
 
-Using a design pattern helped in solving a lot of problems in a very obvious way. Features which previously were implemented with a lot of code smells could now be implemented properly without increasing technical debt. \\
-For example, before using a design pattern, the navigation system was spread across the whole code base. With the MVVM design pattern, the whole navigation system could be written as a single interface. A abstract view model class then implemented this interface. All other view models which had actions then just extended this base class without having to duplicate any navigational logic.
+Using a design pattern helped in solving a lot of problems in a very obvious way. Features which previously were implemented with a lot of code smells (indicators that usually correspond to a deeper problem within an architecture) could now be implemented properly without increasing technical debt.\\
+For example, before using a design pattern, the navigation system was spread across the whole code base. With the MVVM design pattern, the whole navigation system could be written as a single interface. An abstract view model class then implemented this interface. All other view models which had actions then just extended this base class without having to duplicate any navigational logic.
 
 As mentioned in Section \ref{sec:Architecture}, extensive usage of data binding helped in decoupling the view code from the underlying architecture. Therefore, if some things in the view should change, almost no code in the architecture has to change if the MVVM design pattern is properly implemented. Previously, the view code was very rigid. Changing it took a lot of effort because it kept breaking the architecture behind it.
 
