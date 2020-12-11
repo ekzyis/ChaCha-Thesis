@@ -3,6 +3,7 @@ Benchmark for centralized navigation system.
 All action transitions started at action 0.
 
 Commit: 1d2cc923303eecffc3dc4ba8be1d03d067cc4a36
+Build configuration: Debug
 
 ### Benchmark
 Action    Time samples [ms]     Average time [ms]

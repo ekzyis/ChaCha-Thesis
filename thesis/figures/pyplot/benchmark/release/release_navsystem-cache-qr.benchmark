@@ -1,0 +1,38 @@
+Benchmark for linear navigation system with caches.
+
+All action transitions started at action 0.
+
+Commit: 21f7a811ac12e800eaca9de6d26bf63ab6192b6f
+Build configuration: Release
+
+Cache entries @ every quarterround.
+Cache entries every 46 actions, starting at 2.
+See file "navsystem-cache-qr.entries".
+
+### Benchmark
+Action    Cache?  Time samples [ms]                 Average time [ms]
+2         x       10,   12,   7,    6,    8         8.6
+25                43,   198,  165,  201,  183       158
+48        x       8,    9,    8,    11,   6         8.4
+71                262,  331,  234,  151,  365       268.6
+94        x       9,    6,    7,    8,    6         7.2
+117               118,  139,  224,  318,  327       225.2
+140       x       6,    9,    8,    6,    6         7
+400               455,  426,  474,  471,  155       396.2
+462       x       7,    23,   8,    11,   9         11.6
+600       x       7,    7,    7,    8,    21        10
+800               182,  102,  301,  178,  330       218.6
+922       x       7,    9,    26,   8,    12        12.4
+1198      x       9,    8,    10,   8,    9         8.8
+1200              23,   19,   32,   36,   51        32.2
+1382      x       8,    6,    9,    10,   13        9.2
+1600              180,  162,  393,  405,  293       286.6
+1842      x       6,    13,   9,    7,    18        10.6
+2000              170,  177,  274,  362,  120       220.6
+2302      x       20,   7,    6,    8,    10        10.2
+2400              250,  211,  190,  223,  200       214.8
+2762      x       7,    12,   7,    8,    11        9
+2800              40,   13,   14,   13,   49        25.8
+3200              290,  214,  183,  448,  474       321.8
+3222      x       7,    8,    11,   25,   8         11.8
+3636      x       7,    7,    7,    13,   10        8.8
