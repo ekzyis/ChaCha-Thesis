@@ -10,7 +10,7 @@ This chapter finishes the thesis by summarizing its main points. It also include
 \label{sec:summary}
 
 This section gives a high level overview over the main points of this thesis. \\
-In Section \ref{sec:implementationDetails}, the implementation is described. The section gave a detailed overview over how the plug-in was designed to meet the goals defined in Section \ref{sec:goals}. Section \ref{sec:encounteredProblems} described previous architectures and which problems they had.\\
+In Section \autoref{sec:implementationDetails}, the implementation is described. The section gave a detailed overview over how the plug-in was designed to meet the goals defined in Section \autoref{sec:goals}. Section \autoref{sec:encounteredProblems} described previous architectures and which problems they had.\\
 The main point of this thesis is the description how the current implementation meets these goals and how the problems which occurred during development were solved.
 
 \subsubsection{Goals}
@@ -69,7 +69,7 @@ Three goals which the plug-in should meet were defined.
      \item State Matrix Initialization page
      \item ChaCha Hash Function page
      \end{itemize}
-     Splitting the visualization up into five different pieces (Figure \ref{fig:all-pages}) made it easier to let the user focus on a single step of the encryption process. This also made it possible to have a new page layout for each step without confusing the user because each page is presented as an individual piece. A new page layout for each step was useful because we then were not restricted to a single layout for the whole visualization. Presenting the pages as individual pieces starts with the clear cut from the landing page to the overview page using the page navigation bar in the top-left of each page. 
+     Splitting the visualization up into five different pieces (Figure \autoref{fig:all-pages}) made it easier to let the user focus on a single step of the encryption process. This also made it possible to have a new page layout for each step without confusing the user because each page is presented as an individual piece. A new page layout for each step was useful because we then were not restricted to a single layout for the whole visualization. Presenting the pages as individual pieces starts with the clear cut from the landing page to the overview page using the page navigation bar in the top-left of each page. 
      
      At the landing page, only the page navigation bar at the top-left is shown. This means the user must use it to advance. After using it, it is clear to the user that this is the place where he can navigate between pages.
      
@@ -86,7 +86,7 @@ Three goals which the plug-in should meet were defined.
      It was important to easily be able to flip bits. Thus, the user can not only enter the explicit alternative value but also the difference between the two values (XOR).
      
      An example on the same page informs the user what he can expect for the next pages if he activates diffusion by flipping at least one bit. Using the button in the top-right corner enables the user to choose between two vies: \\
-     A view which shows both values (as shown in Figure \ref{fig:chachahash.mid.qr.diffusion.both}) and a view to only show the XOR between both values (as shown in Figure \ref{fig:chachahash.mid.qr.diffusion.xor})\\
+     A view which shows both values (as shown in Figure \autoref{fig:chachahash.mid.qr.diffusion.both}) and a view to only show the XOR between both values (as shown in Figure \autoref{fig:chachahash.mid.qr.diffusion.xor})\\
      The values are always shown in hexadecimal. If a hexadecimal character is different between both cipher runs, it is marked red for easier visual recognition. The two different views were important because when studying the diffusion property of a cipher, one is more interested in the difference between two keystreams instead of their actual values. On the other hand, having access to the concrete values could also be useful thus both views were implemented instead of just one.
      
      Additionally, the percentage of flipped bits is shown below the state at the end of each quarter-round in the ChaCha hash function page.
@@ -126,7 +126,7 @@ The first problem was solved by following a design pattern. The MVVM design patt
 Using a design pattern helped in solving a lot of problems in a very obvious way. Features which previously were implemented with a lot of code smells (indicators that usually correspond to a deeper problem within an architecture) could now be implemented properly without increasing technical debt.\\
 For example, before using a design pattern, the navigation system was spread across the whole codebase. With the MVVM design pattern, the whole navigation system could be written as a single interface. An abstract view model class then implemented this interface. All other view models which had actions then just extended this base class without having to duplicate any navigational logic.
 
-As mentioned in Section \ref{sec:Architecture}, extensive usage of data binding helped in decoupling the view code from the underlying architecture. Therefore, if some things in the view should change, almost no code in the architecture has to change if the MVVM design pattern is properly implemented. Previously, the view code was very rigid. Changing it took a lot of effort because it kept breaking the architecture behind it.
+As mentioned in Section \autoref{sec:Architecture}, extensive usage of data binding helped in decoupling the view code from the underlying architecture. Therefore, if some things in the view should change, almost no code in the architecture has to change if the MVVM design pattern is properly implemented. Previously, the view code was very rigid. Changing it took a lot of effort because it kept breaking the architecture behind it.
 
 \item \textbf{Centralized navigation system}\\
 The second problem was solved by reflecting on the performance problems previous navigation system implementations had and their underlying issues.
@@ -135,7 +135,7 @@ The problem of the first navigation system was that it was designed to execute t
 
 This was tried to solve by introducing caches. Even though the cache implementation brought the response time down to 200 ms, it did not solve the problem to a satisfactory degree. It introduced inconsistencies regarding the performance because with it, it was not obvious to the user why some skips took longer than others. Before, one could easily see that larger skips took longer than smaller.
 
-As described in Section \ref{sec:Architecture}, as a result, the navigation system was optimized to have a consistently good performance for any skip. This means that the overhead of the navigation system design should be approximately equal for any skip. This was possible with the centralized navigation system. Any transition would start with first going back to the first action and then from there straight to the destination action. Therefore, the start action does not matter because moving to the first action from any action is done in $O(1)$ and moving from the first action to any action is done in $O(1)$. This improved performance dramatically. The average response time was now 5 ms with a maximum response time of about 10 ms.
+As described in Section \autoref{sec:Architecture}, as a result, the navigation system was optimized to have a consistently good performance for any skip. This means that the overhead of the navigation system design should be approximately equal for any skip. This was possible with the centralized navigation system. Any transition would start with first going back to the first action and then from there straight to the destination action. Therefore, the start action does not matter because moving to the first action from any action is done in $O(1)$ and moving from the first action to any action is done in $O(1)$. This improved performance dramatically. The average response time was now 5 ms with a maximum response time of about 10 ms.
 
 
 \end{enumerate}
@@ -159,7 +159,7 @@ Nonetheless, integrating such an overview into the Diffusion page should be poss
 \pagebreak
 
 \item \textbf{Improve performance during diffusion}\\
-All measurements in Section \ref{sec:Architecture} were done with inactive diffusion since the performance during active diffusion improved in a similar manner. This means that thanks to the centralized navigation system architecture, moving to any action is still done in constant time even if diffusion is active.
+All measurements in Section \autoref{sec:Architecture} were done with inactive diffusion since the performance during active diffusion improved in a similar manner. This means that thanks to the centralized navigation system architecture, moving to any action is still done in constant time even if diffusion is active.
 
 The problem is that it takes around one or two seconds for each move (instead of around 5 ms if diffusion was inactive) which is quite annoying. We suspect that this is the case because the red color is implemented by creating an inline element for every character and marking it red if it is different.
 
@@ -168,7 +168,7 @@ An idea is to create a single element for every possible combination of color (b
 However, first attempts resulted in weird bugs. So fixing this will probably be the most difficult point in this list and could result in once again having to rethink some major design decisions.
 
 \item \textbf{Automatic navigation}\\
-The AES visualization includes a button labeled with ``Auto''. It lets the visualization run without further user interaction needed. A slider was provided to adjust the speed (see Figure \ref{fig:aes}). 
+The AES visualization includes a button labeled with ``Auto''. It lets the visualization run without further user interaction needed. A slider was provided to adjust the speed (see Figure \autoref{fig:aes}). 
 
 Such a button could be useful for the ChaCha visualization, too, especially for the page about the ChaCha hash function with its many actions.\\
 Since asynchronous navigation is already in use for the action slider, implementing this feature could easily be integrated within the existing navigation system. Only page switches could maybe need some clever solutions since the action navigation is handled within each page thus navigating out of a page may not be straight-forward. 
@@ -179,7 +179,7 @@ In the AES visualization though, the automatic navigation does stop between each
 \pagebreak
 
 \item \textbf{Salsa20 visualization}\\
-As mentioned in Section \ref{sec:salsaCT2Plugin}, using the now existing codebase for ChaCha visualization to create a Salsa20 visualization would definitely increase the value gained from this thesis.
+As mentioned in Section \autoref{sec:salsaCT2Plugin}, using the now existing codebase for ChaCha visualization to create a Salsa20 visualization would definitely increase the value gained from this thesis.
 
 This would at least need adaption of the XAML code for the state matrix initialization and the quarter-round since ChaCha and Salsa20 differ in these aspects from each other. It would most likely even increase the value of the ChaCha visualization since both ciphers could then be compared side-by-side. Comparing them and their diffusion property should be very easy due to the very similar visualization.
 

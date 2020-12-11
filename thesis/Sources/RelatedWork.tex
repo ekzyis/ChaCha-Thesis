@@ -20,7 +20,7 @@ Bernstein later introduced other variants with 8 and 12 rounds, named Salsa20/8 
 
 There is also a variant of Salsa20 called XSalsa20 which supports 192-bit initialization vectors. Since its implementation varies quite a bit from the Salsa20/r variants and Bernstein introduced XSalsa20 as part of a new cipher family (based on Salsa20), this cipher is of no relevance for this thesis \cite{xsalsa20spec}. There is a XChaCha20 variant but it ``is currently not widely implemented outside the libsodium library [a software library for cryptography], due to the absence of formal specification'' \cite{xchacha20}.
 
-The specification of Salsa20 is very relevant for ChaCha because the specification for ChaCha only mentions the differences \cite{chachaspec}. Therefore, to implement ChaCha, one has to also read through the specification of Salsa20.  However, Chapter \ref{chap:chacha} will summarize the specification of ChaCha without assuming prior knowledge about Salsa20.
+The specification of Salsa20 is very relevant for ChaCha because the specification for ChaCha only mentions the differences \cite{chachaspec}. Therefore, to implement ChaCha, one has to also read through the specification of Salsa20.  However, Chapter \autoref{chap:chacha} will summarize the specification of ChaCha without assuming prior knowledge about Salsa20.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -34,11 +34,11 @@ The specification of Salsa20 is very relevant for ChaCha because the specificati
 \label{fig:salsa.template}
 \end{figure}
 
-CrypTool 2 already has a plug-in for the Salsa20 cipher but without a visualization. Figure \ref{fig:salsa.template} shows the CT2 template for the plug-in. Templates are prepared workspaces for a plug-in where all necessary components to run the plug-in are already included and properly connected.
+CrypTool 2 already has a plug-in for the Salsa20 cipher but without a visualization. Figure \autoref{fig:salsa.template} shows the CT2 template for the plug-in. Templates are prepared workspaces for a plug-in where all necessary components to run the plug-in are already included and properly connected.
 
 During the work on the ChaCha visualization, we discussed if the code could be reused to create a visualization for the Salsa20 cipher family. However, this would at least need adaption of the XAML code since the state is built up differently. Also the quarter-round function is slightly different which also needs to be reflected in the visualization.
 
-Nonetheless, it should be possible to reuse most of the codebase used for the ChaCha visualization, especially the underlying navigation system and the storage and retrieval mechanism for the intermediate results. This will further be discussed in Chapter \ref{sec:futureWork}.
+Nonetheless, it should be possible to reuse most of the codebase used for the ChaCha visualization, especially the underlying navigation system and the storage and retrieval mechanism for the intermediate results. This will further be discussed in Chapter \autoref{sec:futureWork}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Other CrypTool 2 Cipher Visualizations}
@@ -62,7 +62,7 @@ We came to the exact same conclusion that the values need to be precalculated fo
 \label{fig:aes}
 \end{figure}
 
-Looking through his visualization, his usage of background coloring was very useful to catch the user's attention. This is shown in Figure \ref{fig:aes}. Therefore, there is a similar mechanic during the ChaCha hash function visualization where a light blue background is put onto the state elements which are used as the quarter-round input. Also during the quarter-round execution, background coloring is extensively used to indicate where the user should pay attention.
+Looking through his visualization, his usage of background coloring was very useful to catch the user's attention. This is shown in Figure \autoref{fig:aes}. Therefore, there is a similar mechanic during the ChaCha hash function visualization where a light blue background is put onto the state elements which are used as the quarter-round input. Also during the quarter-round execution, background coloring is extensively used to indicate where the user should pay attention.
 
 Another thing adopted from his visualization was the navigation in the top-left corner where the page navigation for the ChaCha visualization is placed. \\
 What is different regarding navigation is to not show so many buttons all the time to the user. It was quite overwhelming to see all the buttons in the bottom navigation bar on the start even though they were disabled. Therefore, on pages which have no actions, there are no buttons in the bottom row. For the ChaCha hash function, which needed more detailed navigation, the navigation bar looks similar expect that it uses arrow buttons and text inputs instead of buttons for every single round. This decreased the amount of buttons while maintaining a similar degree of navigation.
@@ -79,11 +79,11 @@ Further, it was confusing that the ``Back'' button during the ``Expansion'' or `
 \label{fig:des}
 \end{figure}
 
-The DES visualization was created by Lars Hoffman. His approach to visualizing the diffusion had the most influence on the diffusion visualization in the ChaCha plug-in. In Figure \ref{fig:des}, you can see the page on which the user can flip bits to activate diffusion. The message and key with flipped bits will then be used to show the diffusion property of DES. 
+The DES visualization was created by Lars Hoffman. His approach to visualizing the diffusion had the most influence on the diffusion visualization in the ChaCha plug-in. In Figure \autoref{fig:des}, you can see the page on which the user can flip bits to activate diffusion. The message and key with flipped bits will then be used to show the diffusion property of DES. 
 
 Throughout the visualization, all values are shown in binary. This makes it possible to just mark flipped bits red since if a bit is marked red, we immediately know the value of the diffusion run (we just flip the red bit). 
 
-It was  tried to use the same coloring approach but since the ChaCha cipher uses longer keys and 512-bit blocks compared to the 64-bit blocks of DES, hex strings needed to be used for the values to save canvas space. This lead to a loss of information about the concrete values if only marking red the hexadecimal characters which are different. Therefore, the usage of red color was combined together with showing both values in two rows. In the row for the altered value, the difference is still marked red for easier visual recognition. This is shown later in Figure \ref{fig:chachahash.mid.qr.diffusion}.
+It was  tried to use the same coloring approach but since the ChaCha cipher uses longer keys and 512-bit blocks compared to the 64-bit blocks of DES, hex strings needed to be used for the values to save canvas space. This lead to a loss of information about the concrete values if only marking red the hexadecimal characters which are different. Therefore, the usage of red color was combined together with showing both values in two rows. In the row for the altered value, the difference is still marked red for easier visual recognition. This is shown later in Figure \autoref{fig:chachahash.mid.qr.diffusion}.
 
 \vfill
 
@@ -92,11 +92,11 @@ It was  tried to use the same coloring approach but since the ChaCha cipher uses
 \subsection{Avalanche Visualization}
 \label{sec:avalancheVisualization}
 
-The Avalanche visualization plug-in was created by Camilo Echeverri in 2016 \cite{AvalancheVisualization}. The most noticeable part about it is probably that it is visually very appealing. Camilo seemed to be very experienced in creating nice user interfaces. Especially the pie chart for the amount of flipped bits with its shadow (Figure \ref{fig:avalanche.roundsend}) and the gradient background stood out. It made it clear that the user interface of the ChaCha visualization should also be visually appealing and not just functional.
+The Avalanche visualization plug-in was created by Camilo Echeverri in 2016 \cite{AvalancheVisualization}. The most noticeable part about it is probably that it is visually very appealing. Camilo seemed to be very experienced in creating nice user interfaces. Especially the pie chart for the amount of flipped bits with its shadow (Figure \autoref{fig:avalanche.roundsend}) and the gradient background stood out. It made it clear that the user interface of the ChaCha visualization should also be visually appealing and not just functional.
 
-The overview over all rounds (Figure \ref{fig:avalanche.overview}) was also a remarkable feature. It was discussed that the ChaCha visualization should include a similar overview since seeing how many rounds were needed for half of all bits to be flipped is useful for studying the diffusion property of a cipher. Unfortunately to date, this did not make it into the version of the plug-in but can be added in the future (see Chapter \ref{sec:futureWork}).
+The overview over all rounds (Figure \autoref{fig:avalanche.overview}) was also a remarkable feature. It was discussed that the ChaCha visualization should include a similar overview since seeing how many rounds were needed for half of all bits to be flipped is useful for studying the diffusion property of a cipher. Unfortunately to date, this did not make it into the version of the plug-in but can be added in the future (see Chapter \autoref{sec:futureWork}).
 
-On the other hand, scrollbars as seen in Figure \ref{fig:avalanche.roundsend} should be prevented because the user should see everything he needs immediately.
+On the other hand, scrollbars as seen in Figure \autoref{fig:avalanche.roundsend} should be prevented because the user should see everything he needs immediately.
 
 \begin{figure}
 \centering
