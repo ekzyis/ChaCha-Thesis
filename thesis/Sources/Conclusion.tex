@@ -22,9 +22,54 @@ Three goals which the plug-in should meet were defined.
     \item \textbf{Easy-to-understand visualization of the encryption process}\\
     The first goal was met by creating a simple but thought-through user interface for the plug-in visualization.
     
-     The visualization is split into five pages in the following order:\\
-      A landing page, an overview page, a page to adjust diffusion settings, a page which visualizes the state setup and a page which visualizes the ChaCha hash function.\\
-     Splitting the visualization up into five different pieces made it easier to let the user focus on a single step of the encryption process. This also made it possible to have a new page layout for each step without confusing the user because each page is presented as an individual piece. A new page layout for each step was useful because we then were not restricted to a single layout for the whole visualization. Presenting the pages as individual pieces starts with the clear cut from the landing page to the overview page using the page navigation bar in the top-left of each page. Since at the landing page, only the page navigation bar at the top-left is shown, the user knows that he must use it to advance. After using it, it is clear to the user that this is the place where he can navigate between pages.
+\begin{figure}
+\begin{subfigure}{0.85\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/all-pages/1-start.png}
+  \caption{Landing page}
+  \label{fig:all-pages.landing.page}
+\end{subfigure}
+\begin{subfigure}{0.85\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/all-pages/2-overview.png}
+  \caption{Overview page}
+  \label{fig:all-pages.overview.page}
+\end{subfigure}
+\begin{subfigure}{0.85\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/all-pages/3-diffusion.png}
+  \caption{Diffusion page}
+  \label{fig:all-pages.diffusion.page}
+\end{subfigure}
+\end{figure}
+\begin{figure}
+\centering
+\ContinuedFloat
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/all-pages/4-statematrix.png}
+  \caption{State Matrix Initialization page}
+  \label{fig:all-pages.overview.page}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figures/ct2/all-pages/5-chachahash.png}
+  \caption{ChaCha Hash Function page}
+  \label{fig:all-pages.chachahash.page}
+\end{subfigure}
+\caption{All pages of the plug-in in their initial state}
+\label{fig:all-pages}
+\end{figure}
+    
+     The visualization is split into five pages in the following order:
+     \begin{itemize}
+     \item Landing page
+     \item Overview page
+     \item Diffusion page
+     \item State Matrix Initialization page
+     \item ChaCha Hash Function page
+     \end{itemize}
+     Splitting the visualization up into five different pieces (Figure \ref{fig:all-pages}) made it easier to let the user focus on a single step of the encryption process. This also made it possible to have a new page layout for each step without confusing the user because each page is presented as an individual piece. A new page layout for each step was useful because we then were not restricted to a single layout for the whole visualization. Presenting the pages as individual pieces starts with the clear cut from the landing page to the overview page using the page navigation bar in the top-left of each page. Since at the landing page, only the page navigation bar at the top-left is shown, the user knows that he must use it to advance. After using it, it is clear to the user that this is the place where he can navigate between pages.
      
      Each page tells the user with descriptions what it is about. If a page has what we called actions, the user has access to a slider with buttons in the bottom with which he can navigate within a page. At the bottom-right, the total actions a page has (which corresponds to in how many different states a page can be) is shown together with a text input which shows the current action index.
      
