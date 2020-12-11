@@ -3,6 +3,7 @@ Benchmark for linear navigation system without caches.
 All action transitions started at action 0.
 
 Commit: 21f7a811ac12e800eaca9de6d26bf63ab6192b6f
+Build configuration: Debug
 
 ### Benchmark
 Action    Time samples [ms]                 Average time [ms]
