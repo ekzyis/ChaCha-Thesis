@@ -245,7 +245,7 @@
 \renewcommand{\raggedpart}{\flushleft}
 
 \setkomafont{part}{\normalfont\huge\scshape}
-\setkomafont{chapter}{\normalfont\huge\sffamily\bfseries\color{BrickRed}}
+\setkomafont{chapter}{\normalfont\huge\sffamily\bfseries\color{black}}
 % \setkomafont{chapter}{\normalfont\huge\bfseries\color{BrickRed}}
 \setkomafont{sectioning}{\normalfont\sffamily\bfseries}
 \setkomafont{descriptionlabel}{\normalfont\bfseries}
