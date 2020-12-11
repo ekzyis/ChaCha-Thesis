@@ -72,10 +72,10 @@ def read_data(file: str) -> PlotData:
     return PlotData(name=file.replace('benchmark/', '').replace('.benchmark.csv', ''), data=data)
 
 data: List[PlotData] = []
-data.append(read_data('benchmark/navsystem-cache-qr.benchmark.csv'))
-data.append(read_data('benchmark/navsystem-cache-round.benchmark.csv'))
-data.append(read_data('benchmark/navsystem-central.benchmark.csv'))
-data.append(read_data('benchmark/navsystem-linear.benchmark.csv'))
+data.append(read_data('benchmark/release/release_navsystem-cache-qr.benchmark.csv'))
+data.append(read_data('benchmark/release/release_navsystem-cache-round.benchmark.csv'))
+data.append(read_data('benchmark/release/release_navsystem-central.benchmark.csv'))
+data.append(read_data('benchmark/release/release_navsystem-linear.benchmark.csv'))
 
 def insert_interpolation(plotData: PlotData, cache_step: int):
   first_cache = 2
